@@ -32,8 +32,8 @@ function name_to_variant {
 function merge_to_artifact {
 	case $1 in
 		"instance-types-transitive") echo "instance-types";;
-		"mappingbased-objects-disjoint-domain" echo "mappingbased-objects";;
-		"mappingbased-objects-disjoint-range"  echo "mappingbased-objects";;
+		"mappingbased-objects-disjoint-domain") echo "mappingbased-objects";;
+		"mappingbased-objects-disjoint-range")  echo "mappingbased-objects";;
 		*) echo $1;;
 		
 	esac
@@ -42,8 +42,8 @@ function merge_to_artifact {
 function additional_content_variants {
 	case $1 in
 		"instance-types-transitive") echo "_transitive";;
-		"mappingbased-objects-disjoint-domain" echo "_disjointDomain";;
-		"mappingbased-objects-disjoint-range"  echo "_disjointRange";;
+		"mappingbased-objects-disjoint-domain") echo "_disjointDomain";;
+		"mappingbased-objects-disjoint-range")  echo "_disjointRange";;
 		*) echo "";;
 	esac
 }
