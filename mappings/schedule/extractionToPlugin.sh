@@ -125,7 +125,7 @@ function prepare_databus_artifacts {
 
 case $artifacts in
 	"@MAPPINGS")
-		prepare_databus_artifacts "instance-types instance-types-transitive mappingbased-literals mappingbased-objects-uncleaned mappingbased-objects specific-mappingbased-properties geo-coordinates-mappingbased" ;;
+		prepare_databus_artifacts "instance-types instance-types-transitive mappingbased-literals mappingbased-objects-uncleaned mappingbased-objects mappingbased-objects-disjoint-domain mappingbased-objects-disjoint-range specific-mappingbased-properties geo-coordinates-mappingbased" ;;
 	"@GENERIC")
 		echo "TODO prepare: @GENERIC" ;;
 	"@ALL")
