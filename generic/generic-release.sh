@@ -19,7 +19,8 @@ DATABUSMAVENPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/generic";
 #override release pom.xml properties
 RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
 RELEASEPACKAGEDIR="/data/extraction/release";
-RELEASEDOWNLOADURL="http://dbpedia-mappings.tib.eu/release";
+RELEASEDOWNLOADURL="http://dbpedia-generic.tib.eu/release";
+RELEASELABELPREFIX=""
 
 #logging directory
 LOGS="/data/extraction/logs/$(date +%Y-%m-%d)";
@@ -78,7 +79,7 @@ postProcessing() {
 prepareRelease() {
     #own config
     cd $SCRIPTROOT;
-    collectExtraction.sh;
+    bash collectExtraction.sh;
 }
 
 setNewVersion() {
@@ -91,7 +92,8 @@ deployRelease() {
     mvn deploy \
 	-Ddatabus.publisher="$RELEASEPUBLISHER" \
 	-Ddatabus.packageDirectory="$RELEASEPACKAGEDIR/\${project.groupId}/\${project.artifactId}" \
-	-Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL/\${project.groupId}/\${project.artifactId}/\${project.version}";
+	-Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL/\${project.groupId}/\${project.artifactId}/\${project.version}" \
+	-Ddatabus.labelPrefix="$RELEASELABELPREFIX";
 }
 
 compressLogs() {

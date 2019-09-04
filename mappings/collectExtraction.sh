@@ -8,7 +8,7 @@ set -e
 BASEDIR="/data/extraction/wikidumps/"
 
 #databus-maven-plugin project, containing release pom
-DATABUSMVNDIR="/data/extraction/databus-maven-plugin/dbpedia/generic"
+DATABUSMVNPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/generic"
 
 #explicit databus version or empty for all
 DUMPDATE=
@@ -91,17 +91,17 @@ copyToMavenPlugin() {
             targetArVe="$artifact/$version"
             targetFile="$artifact$contVars.$extension"
 
-            if [ -d "$DATABUSMVNDIR/$artifact" ]; then
+            if [ -d "$DATABUSMVNPOMDIR/$artifact" ]; then
 
-                if [ ! -d "$DATABUSMVNDIR/$targetArVe" ]; then
+                if [ ! -d "$DATABUSMVNPOMDIR/$targetArVe" ]; then
 
-                    mkdir -p "$DATABUSMVNDIR/$targetArVe"
+                    mkdir -p "$DATABUSMVNPOMDIR/$targetArVe"
                 fi
 
                 if $TRYRUN; then
-                    echo "$path -> $DATABUSMVNDIR/$targetArVe/$targetFile"
+                    echo "$path -> $DATABUSMVNPOMDIR/$targetArVe/$targetFile"
                 else
-                    cp -vn "$path" "$DATABUSMVNDIR/$targetArVe/$targetFile"
+                    cp -vn "$path" "$DATABUSMVNPOMDIR/$targetArVe/$targetFile"
                 fi
             else
 
