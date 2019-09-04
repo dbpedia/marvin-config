@@ -14,7 +14,7 @@ BASEDIR="/data/extraction/wikidumps";
 
 #databus-maven-plugin project, containing release pom
 #https://github.com/dbpedia/databus-maven-plugin/blob/master/dbpedia/mappings/pom.xml
-DATABUSMAVENPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/generic";
+DATABUSMAVENPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/mappings";
 
 #override release pom.xml properties
 RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
@@ -44,7 +44,7 @@ downloadMappings() {
 
 downloadDumps() {
     cd $EXTRACTIONFRAMEWORKDIR/dump;
-    ../run download $SCRIPTROOT/download.generic.properties;
+    ../run download $SCRIPTROOT/download.mappings.properties;
 }
 
 buildExtractionFramework() {
@@ -54,7 +54,7 @@ buildExtractionFramework() {
 
 runExtraction() {
     cd $EXTRACTIONFRAMEWORKDIR/dump;
-    ../run sparkextraction $SCRIPTROOT/extraction.mappings.properties;
+    ../run extraction $SCRIPTROOT/extraction.mappings.properties;
 }
 
 resolveTransitiveLinks() {
@@ -102,7 +102,7 @@ compressLogs() {
 main() {
 
     echo "-------------------------" >&2;
-    echo " Mappingbased Extraction " >&2;
+    echo " Mappings-based Extraction " >&2;
     echo "-------------------------" >&2;
 
     #download
