@@ -1,8 +1,6 @@
 #!/bin/bash
 
-
 # ./marvin-fetch.sh wikidata 2019.08.01 dbpedia-wikidata.tib.eu 
-
 
 GROUP=$1
 VERSION=$2

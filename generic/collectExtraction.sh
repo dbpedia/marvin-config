@@ -2,19 +2,21 @@
 
 set -e
 
-# directory of extracted dumps. (basedir)
+# [CONFIG]
+
+#extracted dumps (basedir)
 BASEDIR="/data/extraction/wikidumps/"
 
-# databus-maven-plugin directory
+#databus-maven-plugin project, containing release pom
 DATABUSMVNDIR="/data/extraction/databus-maven-plugin/dbpedia/generic"
 
-# databus version. empty for all
+#explicit databus version or empty for all
 DUMPDATE=
 
-# if true, just show what will happen
+#if true show dumy output
 TRYRUN=false
 
-#__Maps__
+# [DATASET-MAPPING]
 
 mapLang() {
 
@@ -57,19 +59,12 @@ mapExtraction() {
     esac
 }
 
-#__Functions__
+# [FUNCTIONS]
 
-printStart() {
+collectExtractionFun() {
 
-    >&2 echo "-----------------"
-    >&2 echo " Generic Release "
-    >&2 echo "-----------------"
-}
-
-copyToMavenPlugin() {
-
-    # https://www.tldp.org/LDP/abs/html/string-manipulation.html#Substring%20Removal#Substring Removal
-    # ${string##/*}
+    #how to use ${string##/*}
+    #https://www.tldp.org/LDP/abs/html/string-manipulation.html#Substring%20Removal#Substring Removal
 
     for path in $(find "$BASEDIR" -name "*.ttl.bz2"); do
 
@@ -114,20 +109,17 @@ copyToMavenPlugin() {
                 fi
             else
 
-                >&2 echo "unmapped/notexist artifact: $artifact"
+                >&2 echo "unmapped/notexist artifact: $artifact | $mapped | $extraction"
             fi
         fi
     done
 }
 
 
-#__Main__
+# [Main]
 
 main() {
-
-    printStart
-    copyToMavenPlugin
-
-    #TODO add release
+    collectExtractionFun;
 }
-main
+
+main;

@@ -5,7 +5,6 @@ databus_folder="/data/extraction/databus-maven-plugin/dbpedia/"
 #databus_maven_plugin_structure="src/main/databus"
 databus_maven_plugin_structure=""
 
-
 # @ALL|@GENERIC|@MAPPINGS or seperated by SPACE
 artifacts="@MAPPINGS"
 filter_extension=".ttl.*"
