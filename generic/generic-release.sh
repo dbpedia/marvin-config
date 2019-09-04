@@ -33,29 +33,29 @@ execWithLogging() {
 }
 
 downloadOntology() {
-	cd $EXTRACTIONFRAMEWORKDIR/core;
-	../run download-ontology;
+    cd $EXTRACTIONFRAMEWORKDIR/core;
+    ../run download-ontology;
 }
 
 downloadMappings() {
-	cd $EXTRACTIONFRAMEWORKDIR/core;
-	../run download-mappings;
+    cd $EXTRACTIONFRAMEWORKDIR/core;
+    ../run download-mappings;
 }
 
 downloadDumps() {
-	cd $EXTRACTIONFRAMEWORKDIR/dump;
-	../run download $SCRIPTROOT/download.generic.properties;
+    cd $EXTRACTIONFRAMEWORKDIR/dump;
+    ../run download $SCRIPTROOT/download.generic.properties;
 }
 
 buildExtractionFramework() {
-	cd $EXTRACTIONFRAMEWORKDIR;
-	mvn clean install;
+    cd $EXTRACTIONFRAMEWORKDIR;
+    mvn clean install;
 }
 
 runExtraction() {
-	cd $EXTRACTIONFRAMEWORKDIR/dump;
-	../run sparkextraction $SCRIPTROOT/sparkextraction.generic.properties;
-	../run sparkextraction $SCRIPTROOT/sparkextraction.generic.en.properties;
+    cd $EXTRACTIONFRAMEWORKDIR/dump;
+    ../run sparkextraction $SCRIPTROOT/sparkextraction.generic.properties;
+    ../run sparkextraction $SCRIPTROOT/sparkextraction.generic.en.properties;
 }
 
 resolveTransitiveLinks() {
@@ -76,9 +76,9 @@ postProcessing() {
 }
 
 prepareRelease() {
-	#own config
-	cd $SCRIPTROOT;
-	collectExtraction.sh;
+    #own config
+    cd $SCRIPTROOT;
+    collectExtraction.sh;
 }
 
 setNewVersion() {
@@ -87,11 +87,11 @@ setNewVersion() {
 }
 
 deployRelease() {
-	cd $DATABUSMAVENPOMDIR;
-	mvn deploy \
+    cd $DATABUSMAVENPOMDIR;
+    mvn deploy \
 	-Ddatabus.publisher="$RELEASEPUBLISHER" \
 	-Ddatabus.packageDirectory="$RELEASEPACKAGEDIR/\${project.groupId}/\${project.artifactId}" \
-    -Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL/\${project.groupId}/\${project.artifactId}/\${project.version}";
+	-Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL/\${project.groupId}/\${project.artifactId}/\${project.version}";
 }
 
 compressLogs() {
@@ -102,33 +102,33 @@ compressLogs() {
 
 main() {
 
-	echo "--------------------" >&2;
-	echo " Generic Extraction " >&2;
-	echo "--------------------" >&2;
+    echo "--------------------" >&2;
+    echo " Generic Extraction " >&2;
+    echo "--------------------" >&2;
 
     #download
-	echo "$(date) | extraction-framework | start download ontology" >&2;
-	execWithLogging downloadOntology;
-	echo "$(date) | extraction-framework | start download mappings" >&2;
-	execWithLogging downloadMappings;
-	echo "$(date) | extraction-framework | start download dumps" >&2;
-	execWithLogging downloadDumps;
+    echo "$(date) | extraction-framework | start download ontology" >&2;
+    execWithLogging downloadOntology;
+    echo "$(date) | extraction-framework | start download mappings" >&2;
+    execWithLogging downloadMappings;
+    echo "$(date) | extraction-framework | start download dumps" >&2;
+    execWithLogging downloadDumps;
 
     #extraction
     echo "$(date) | extraction-framework | mvn clean install" >&2;
-	execWithLogging buildExtractionFramework;
+    execWithLogging buildExtractionFramework;
     echo "$(date) | extraction-framework | start extraction" >&2;
-	execWithLogging runExtraction;
+    execWithLogging runExtraction;
     echo "$(date) | extraction-framework | post processing" >&2;
-	postProcessing;
+    postProcessing;
 
-	#release
+    #release
     echo "$(date) | databus-maven-plugin | collect extracted datasets" >&2;
-	execWithLogging prepareRelease;
-	echo "$(date) | databus-maven-plugin | mvn versions:set" >&2;
-	execWithLogging setNewVersion;
+    execWithLogging prepareRelease;
+    echo "$(date) | databus-maven-plugin | mvn versions:set" >&2;
+    execWithLogging setNewVersion;
     echo "$(date) | databus-maven-plugin | mvn deploy" >&2;
-	execWithLogging deployRelease;
+    execWithLogging deployRelease;
 
     #cleanup
     echo "$(date) | main | compress log files" >&2;
