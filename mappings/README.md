@@ -1,4 +1,4 @@
-# Generic Extraction Config
+# Mappingbased Extraction Config
 
 
 ### Cronjob
