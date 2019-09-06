@@ -50,13 +50,6 @@ mapExtraction() {
 
 # [FUNCTIONS]
 
-printStart() {
-
-    >&2 echo "-----------------"
-    >&2 echo " Generic Release "
-    >&2 echo "-----------------"
-}
-
 copyToMavenPlugin() {
 
     # https://www.tldp.org/LDP/abs/html/string-manipulation.html#Substring%20Removal#Substring Removal
@@ -115,10 +108,7 @@ copyToMavenPlugin() {
 # [MAIN]
 
 main() {
-
-    printStart
     copyToMavenPlugin
-
-    #TODO add release
 }
+
 main

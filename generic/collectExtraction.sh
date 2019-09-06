@@ -115,6 +115,11 @@ collectExtractionFun() {
     done
 }
 
+renameRedirected() {
+    cd $DATABUSMVNPOMDIR;
+#    for f in $(find . -name "*_redirected*" ); do rename -n 's/_redirected\.ttl\.bz2$/\.ttl\.bz2$/' $f; done
+    for f in $(find . -name "*_redirected*" ); do rename -n 's/_redirected//' $f; done
+}
 
 # [Main]
 
