@@ -1,6 +1,13 @@
 # MARVIN-config
 
-Configuration files for MARVIN on the TIB servers, public for forking the architecture
+MARVIN is the release bot that does automated DBpedia releases each month on three different servers for generic, mappings, wikidata extraction. 
+
+The repository at https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config can be used to fork the architecture for creating extensions, developing new extractors or debugging old ones. 
+
+Fixes and patches will be manually deployed via `git pull` from the `master` branch of the [DBpedia Extraction Framework](https://github.com/dbpedia/extraction-framework/). 
+
+The architecture and workflow can also be forked and adapted to completely different extractions and derive operations outside of the DBpedia framework. 
+
 
 # Acknowledgements
 We thank Sören Auer and the Technische Informationsbibliothek (TIB) for providing three servers to run:
@@ -9,7 +16,7 @@ We thank Sören Auer and the Technische Informationsbibliothek (TIB) for providi
 * community-provided extractors on Wikipedia, Wikidata or other sources 
 * enrichment, cleaning and parsing services, so-called [Databus mods](https://github.com/dbpedia/databus-mods/) for open data on the Databus
 
-This contribution by TIB is a great push towards incentivizing Open Data and establishing a global and national research and innovation data infrastructure. 
+This contribution by TIB to DBpedia & its community is a great push towards incentivizing Open Data and establishing a global and national research and innovation data infrastructure. 
 
 # Workflow
 
