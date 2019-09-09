@@ -20,7 +20,8 @@ DATABUSMAVENPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/generic";
 RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
 RELEASEPACKAGEDIR="/data/extraction/release";
 RELEASEDOWNLOADURL="http://dbpedia-generic.tib.eu/release";
-RELEASELABELPREFIX=""
+RELEASELABELPREFIX="(pre-release)"
+RELEASECOMMENTPREFIX="(MARVIN is the DBpedia bot, that runs the DBpedia Information Extraction Framework (DIEF) and releases the data as is, i.e. unparsed, unsorted, not redirected for debugging the software. After its releases, data is cleaned and persisted under the dbpedia account.)"
 
 #logging directory
 LOGS="/data/extraction/logs/$(date +%Y-%m-%d)";
@@ -93,7 +94,8 @@ deployRelease() {
 	-Ddatabus.publisher="$RELEASEPUBLISHER" \
 	-Ddatabus.packageDirectory="$RELEASEPACKAGEDIR/\${project.groupId}/\${project.artifactId}" \
 	-Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL/\${project.groupId}/\${project.artifactId}/\${project.version}" \
-	-Ddatabus.labelPrefix="$RELEASELABELPREFIX";
+	-Ddatabus.labelPrefix="$RELEASELABELPREFIX" \
+	-Ddatabus.commentPrefix="$RELEASECOMMENTPREFIX";
 }
 
 compressLogs() {
@@ -137,4 +139,6 @@ main() {
     compressLogs;
 }
 
-execWithLogging main;
+if [ ! -f "$SCRIPTROOT/generic-release.pid" ]; then
+        (execWithLogging main; rm "$SCRIPTROOT/generic-release.pid") & echo $! > "$SCRIPTROOT/generic-release.pid"
+fi
