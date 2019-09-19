@@ -83,17 +83,17 @@ setNewVersion() {
 
 deployRelease() {
 
-#override release pom.xml properties
-RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
-RELEASEPACKAGEDIR="/data/extraction/release/\${project.groupId}/\${project.artifactId}"
-RELEASEDOWNLOADURL="http://dbpedia-mappings.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
-RELEASELABELPREFIX="(pre-release)"
-RELEASECOMMENTPREFIX="(MARVIN is the DBpedia bot, that runs the DBpedia Information Extraction Framework (DIEF) and releases the data as is, i.e. unparsed, unsorted, not redirected for debugging the software. After its releases, data is cleaned and persisted under the dbpedia account.)"
-
     cd $DATABUSMAVENPOMDIR;
+	#override release pom.xml properties
+	RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
+	RELEASEPACKAGEDIR="/data/extraction/release/\${project.groupId}/\${project.artifactId}"
+	RELEASEDOWNLOADURL="http://dbpedia-mappings.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
+	RELEASELABELPREFIX="(pre-release)" ;
+	RELEASECOMMENTPREFIX="(MARVIN is the DBpedia bot, that runs the DBpedia Information Extraction Framework (DIEF) and releases the data as is, i.e. unparsed, unsorted, not redirected for debugging the software. After its releases, data is cleaned and persisted under the dbpedia account.)" ;
+
     # get latest docu
-    git pull 
-    mvn deploy -Ddatabus.publisher="$RELEASEPUBLISHER" -Ddatabus.packageDirectory="$RELEASEPACKAGEDIR" -Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL" -Ddatabus.labelPrefix="$RELEASELABELPREFIX" -Ddatabus.commentPrefix="$RELEASECOMMENTPREFIX";
+    git pull ;
+    mvn clean deploy -Ddatabus.publisher="$RELEASEPUBLISHER" -Ddatabus.packageDirectory="$RELEASEPACKAGEDIR" -Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL" -Ddatabus.labelPrefix="$RELEASELABELPREFIX" -Ddatabus.commentPrefix="$RELEASECOMMENTPREFIX";
 }
 
 compressLogs() {

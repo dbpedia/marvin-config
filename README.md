@@ -69,7 +69,7 @@ cd /media/bigone/25TB/releases/databus-maven-plugin/dbpedia
 
 ```
 
-## Deploy official files
+## Deploy cleaned files to dbpedia
 
 ```
 cd /media/bigone/25TB/releases/databus-maven-plugin/dbpedia/mappings

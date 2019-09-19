@@ -16,11 +16,7 @@ BASEDIR="/data/extraction/wikidumps";
 #https://github.com/dbpedia/databus-maven-plugin/blob/master/dbpedia/wikidata/pom.xml
 DATABUSMAVENPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/wikidata";
 
-#override release pom.xml properties
-RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
-RELEASEPACKAGEDIR="/data/extraction/release";
-RELEASEDOWNLOADURL="http://dbpedia-wikidata.tib.eu/release";
-RELEASELABELPREFIX=""
+
 
 #logging directory
 LOGS="/data/extraction/logs/$(date +%Y-%m-%d)";
@@ -101,11 +97,18 @@ setNewVersion() {
 
 deployRelease() {
     cd $DATABUSMAVENPOMDIR;
-    mvn deploy \
-	-Ddatabus.publisher="$RELEASEPUBLISHER" \
-	-Ddatabus.packageDirectory="$RELEASEPACKAGEDIR/\${project.groupId}/\${project.artifactId}" \
-	-Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL/\${project.groupId}/\${project.artifactId}/\${project.version}" \
-	-Ddatabus.labelPrefix="$RELEASELABELPREFIX";
+	
+	#override release pom.xml properties
+    RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
+    RELEASEPACKAGEDIR="/data/extraction/release/\${project.groupId}/\${project.artifactId}";
+    RELEASEDOWNLOADURL="http://dbpedia-wikidata.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
+    RELEASELABELPREFIX="(pre-release)" ;
+    RELEASECOMMENTPREFIX="(MARVIN is the DBpedia bot, that runs the DBpedia Information Extraction Framework (DIEF) and releases the data as is, i.e. unparsed, unsorted, not redirected for debugging the software. After its releases, data is cleaned and persisted under the dbpedia account.)" ;
+    
+    # get the latest docu
+    git pull ;
+    
+    mvn clean deploy -Ddatabus.publisher="$RELEASEPUBLISHER" -Ddatabus.packageDirectory="$RELEASEPACKAGEDIR" -Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL" -Ddatabus.labelPrefix="$RELEASELABELPREFIX" -Ddatabus.commentPrefix="$RELEASECOMMENTPREFIX";
 }
 
 compressLogs() {
