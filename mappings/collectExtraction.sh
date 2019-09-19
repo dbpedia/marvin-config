@@ -8,7 +8,7 @@ set -e
 BASEDIR="/data/extraction/wikidumps/"
 
 #databus-maven-plugin project, containing release pom
-DATABUSMVNPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/generic"
+DATABUSMVNPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/mappings"
 
 #explicit databus version or empty for all
 DUMPDATE=
