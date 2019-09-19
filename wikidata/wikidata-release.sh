@@ -20,7 +20,8 @@ DATABUSMAVENPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/wikidata";
 RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
 RELEASEPACKAGEDIR="/data/extraction/release";
 RELEASEDOWNLOADURL="http://dbpedia-wikidata.tib.eu/release";
-RELEASELABELPREFIX=""
+RELEASELABELPREFIX="(pre-release)"
+RELEASECOMMENTPREFIX="(MARVIN is the DBpedia bot, that runs the DBpedia Information Extraction Framework (DIEF) and releases the data as is, i.e. unparsed, unsorted, not redirected for debugging the software. After its releases, data is cleaned and persisted under the dbpedia account.)"
 
 #logging directory
 LOGS="/data/extraction/logs/$(date +%Y-%m-%d)";
@@ -105,7 +106,8 @@ deployRelease() {
 	-Ddatabus.publisher="$RELEASEPUBLISHER" \
 	-Ddatabus.packageDirectory="$RELEASEPACKAGEDIR/\${project.groupId}/\${project.artifactId}" \
 	-Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL/\${project.groupId}/\${project.artifactId}/\${project.version}" \
-	-Ddatabus.labelPrefix="$RELEASELABELPREFIX";
+	-Ddatabus.labelPrefix="$RELEASELABELPREFIX" \
+	-Ddatabus.commentPrefix="$RELEASECOMMENTPREFIX";
 }
 
 compressLogs() {
@@ -161,7 +163,9 @@ main() {
     # post-processing;
 }
 
-main
+if [ ! -f "$SCRIPTROOT/wikidata-release.pid" ]; then
+        (execWithLogging main; rm "$SCRIPTROOT/wikidata-release.pid") & echo $! > "$SCRIPTROOT/wikidata-release.pid"
+fi
 
 # [DEPRECATED]
 
@@ -212,3 +216,4 @@ function all-other-extractors(){
     # Run all other extractors
     ../run extraction extraction.wikidataexceptraw.properties
 }
+
