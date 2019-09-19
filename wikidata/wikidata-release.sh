@@ -17,7 +17,6 @@ BASEDIR="/data/extraction/wikidumps";
 DATABUSMAVENPOMDIR="/data/extraction/databus-maven-plugin/dbpedia/wikidata";
 
 
-
 #logging directory
 LOGS="/data/extraction/logs/$(date +%Y-%m-%d)";
 mkdir -p $LOGS;
@@ -97,8 +96,8 @@ setNewVersion() {
 
 deployRelease() {
     cd $DATABUSMAVENPOMDIR;
-	
-	#override release pom.xml properties
+
+    #override release pom.xml properties
     RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
     RELEASEPACKAGEDIR="/data/extraction/release/\${project.groupId}/\${project.artifactId}";
     RELEASEDOWNLOADURL="http://dbpedia-wikidata.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
@@ -164,7 +163,9 @@ main() {
     # post-processing;
 }
 
-main
+if [ ! -f "$SCRIPTROOT/wikidata-release.pid" ]; then
+        (execWithLogging main; rm "$SCRIPTROOT/wikidata-release.pid") & echo $! > "$SCRIPTROOT/wikidata-release.pid"
+fi
 
 # [DEPRECATED]
 
@@ -215,3 +216,4 @@ function all-other-extractors(){
     # Run all other extractors
     ../run extraction extraction.wikidataexceptraw.properties
 }
+
