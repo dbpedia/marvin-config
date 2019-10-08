@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# TODO mvn logging -> stderr
+#      main stdout
+
 # setup
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 DATADIR=$SCRIPTDIR
@@ -94,6 +97,7 @@ extractDumps() {
     sed -i -e 's,$LOGDIR,'$LOGDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
 
     if [ "$SKIPMVNINSTALL" = "false" ]; then
+        echo "extraction-framework: mvn install"
         cd $EXTRACTIONFRAMEWORKDIR && mvn install;
     fi
 
@@ -109,6 +113,44 @@ extractDumps() {
     fi
 }
 
+# post-processing
+postProcessing() {
+
+    if [ "$GROUP" = "mappings"] || [ "$GROUP" = "test" ]; then
+        echo "mappings postProcessing"
+        # TODO check typeConsistencyCheck & MapObjectUris
+        cd $EXTRACTIONFRAMEWORKDIR/scripts;
+        ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
+        ../run TypeConsistencyCheck type.consistency.check.properties;
+        # TODO prepareRelease
+    elif [ "$GROUP" = "wikidata" ]; then
+        echo "wikidata postProcessing"
+        cd $EXTRACTIONFRAMEWORKDIR/scripts;
+        ../run ResolveTransitiveLinks $BASEDIR redirects transitive-redirects .ttl.bz2 wikidata
+        ../run MapObjectUris $BASEDIR transitive-redirects .ttl.bz2 mappingbased-objects-uncleaned,raw -redirected .ttl.bz2 wikidata
+        ../run TypeConsistencyCheck type.consistency.check.properties;
+        # TODO prepareRelease
+    elif [ "$GROUP" = "generic" ]; then
+        echo "generic postProcessing"
+        cd $EXTRACTIONFRAMEWORKDIR/scripts;
+        ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
+        # TODO prepareRelease
+    fi
+}
+
+# release
+release() {
+    if [ "$GROUP" = "mappings" ] || [ "$GROUP" = "test" ]; then
+        echo 1
+    elif [ "$GROUP" = "wikidata" ]; then
+        echo 2 
+    elif [ "$GROUP" =  "generic" ]; then
+        echo 3
+    fi
+}
+
 # clean up: compress log files
 clean() {
     for f in $(find $LOGDIR -type f ); do lbzip2 $f; done;
@@ -116,7 +158,7 @@ clean() {
 
 main() {
 
-    # PRE
+    # PRE-PROCESSING
     createDirectories;
     gitCheckout;
     downloadMetadata &> $LOGDIR/downloadMetadata.log;
@@ -124,14 +166,16 @@ main() {
     # EXTRACT
     extractDumps &> $LOGDIR/extracion.log;
 
-    # POST
+    # POST-PROCESSING
+    # postProcessing &> $LOGDIR/postProcessing.log;
 
     # RELEASE 
-    if [ "$SKIPRELEASE" = "false" ]; then
-        echo true
-    fi
+    # if [ "$SKIPRELEASE" = "false" ]; then
+    #     echo true
+    # fi
 
     # CLEAN
+    # clean;
     
 }
 main
