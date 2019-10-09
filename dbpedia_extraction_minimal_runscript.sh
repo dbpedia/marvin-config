@@ -1,23 +1,20 @@
 #!/bin/bash
 
-# TODO mvn logging -> stderr
-#      main stdout
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # setup
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-DATADIR=$SCRIPTDIR
-LOGDIR=$DATADIR/logs
-EXTRACTIONBASEDIR=$DATADIR/wikidumps
-EXTRACTIONFRAMEWORKDIR=$DATADIR/extraction-framework
-DATAPUSMAVENPLUGINPOMDIR=$DATADIR/databus-maven-plugin
-RELEASEDIR=$DATADIR/release
+LOGDIR="$ROOT/logs/$(date +%Y-%m-%d)"
+EXTRACTIONBASEDIR="$ROOT/wikidumps"
+EXTRACTIONFRAMEWORKDIR="$ROOT/extraction-framework"
+DATAPUSMAVENPLUGINPOMDIR="$ROOT/databus-maven-plugin"
+RELEASEDIR="$ROOT/release"
 
-DATAPUSMAVENPLUGINPOMGIT=https://github.com/dbpedia/databus-maven-plugin.git    
-EXTRACTIONFRAMEWORKGIT=https://github.com/dbpedia/extraction-framework.git
+DATAPUSMAVENPLUGINPOMGIT="https://github.com/dbpedia/databus-maven-plugin.git"    
+EXTRACTIONFRAMEWORKGIT="https://github.com/dbpedia/extraction-framework.git"
 
 # arguments
 HELP="usage: --group={generic|mappings|wikidata} [--skip-release|--skip-mvn-install]"
-GROUP=
+GROUP=""
 SKIPRELEASE=false
 SKIPMVNINSTALL=false
 
@@ -49,7 +46,7 @@ case $i in
 esac
 done
 
-if [ "$GROUP" != "generic" ] && [ "$GROUP" != "mappings" ] && [ "$GROUP" != "test" ]&& [ "$GROUP" != "wikidata" ] || [ -z "$GROUP" ]; then
+if [ "$GROUP" != "generic" ] && [ "$GROUP" != "mappings" ] && [ "$GROUP" != "test" ] && [ "$GROUP" != "wikidata" ] || [ -z "$GROUP" ]; then
     echo $HELP
     exit 1
 fi
@@ -81,7 +78,6 @@ gitCheckout() {
     fi
 }
 
-
 # download ontology, mappings, wikidataR2R
 downloadMetadata() {
     cd $EXTRACTIONFRAMEWORKDIR/core && ../run download-ontology;
@@ -91,8 +87,7 @@ downloadMetadata() {
 
 # downlaod and extract data
 extractDumps() {
-    cd $DATADIR;
-    cp $SCRIPTDIR/config.d/universal.properties.template $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
+    cd $ROOT && cp $ROOT/config.d/universal.properties.template $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
     sed -i -e 's,$BASEDIR,'$EXTRACTIONBASEDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
     sed -i -e 's,$LOGDIR,'$LOGDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
 
@@ -102,14 +97,20 @@ extractDumps() {
     fi
 
     if [ "$GROUP" = "mappings" ]; then
-        echo 1
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run download $ROOT/config.d/download.mappings.properties
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run extraction $ROOT/config.d/extraction.mappings.properties
     elif [ "$GROUP" = "wikidata" ]; then
-        echo 2 
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run download $ROOT/config.d/download.wikidata.properties
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run extraction $ROOT/config.d/extraction.wikidata.properties
     elif [ "$GROUP" =  "generic" ]; then
-        echo 3
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run download $ROOT/config.d/download.generic.properties
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run sparkextraction $ROOT/config.d/sparkextraction.generic.properties
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run sparkextraction $ROOT/config.d/sparkextraction.generic.en.properties
     elif [ "$GROUP" = "test" ]; then
-        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run download $SCRIPTDIR/config.d/download.test.properties
-        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run extraction $SCRIPTDIR/config.d/extraction.test.properties
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run download $ROOT/config.d/download.test.properties
+        cd $EXTRACTIONFRAMEWORKDIR/dump && ../run extraction $ROOT/config.d/extraction.test.properties
+    elif [ "$GROUP" = "abstract" ]; then
+        echo "TODO abstract extraction and download"
     fi
 }
 
@@ -118,10 +119,9 @@ postProcessing() {
 
     if [ "$GROUP" = "mappings"] || [ "$GROUP" = "test" ]; then
         echo "mappings postProcessing"
-        # TODO check typeConsistencyCheck & MapObjectUris
         cd $EXTRACTIONFRAMEWORKDIR/scripts;
         ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
+        ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
         ../run TypeConsistencyCheck type.consistency.check.properties;
         # TODO prepareRelease
     elif [ "$GROUP" = "wikidata" ]; then
@@ -137,18 +137,23 @@ postProcessing() {
         ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
         ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
         # TODO prepareRelease
+    elif [ "$GROUP" = "abstract" ]; then
+        echo "abstract postProcessing"
     fi
 }
 
 # release
 release() {
-    if [ "$GROUP" = "mappings" ] || [ "$GROUP" = "test" ]; then
-        echo 1
-    elif [ "$GROUP" = "wikidata" ]; then
-        echo 2 
-    elif [ "$GROUP" =  "generic" ]; then
-        echo 3
-    fi
+    cd $DATAPUSMAVENPLUGINPOMDIR;
+    mvn versions:set -DnewVersion=$(ls * | grep '^[0-9]\{4\}.[0-9]\{2\}.[0-9]\{2\}$' | sort -u  | tail -1);
+
+    RELEASEPUBLISHER="https://vehnem.github.io/webid.ttl#this";
+    RELEASEPACKAGEDIR="/data/extraction/release/\${project.groupId}/\${project.artifactId}";
+    RELEASEDOWNLOADURL="http://dbpedia-generic.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
+    RELEASELABELPREFIX="(pre-release)";
+    RELEASECOMMENTPREFIX="(MARVIN is the DBpedia bot, that runs the DBpedia Information Extraction Framework (DIEF) and releases the data as is, i.e. unparsed, unsorted, not redirected for debugging the software. After its releases, data is cleaned and persisted under the dbpedia account.)";
+
+    mvn clean deploy -Ddatabus.publisher="$RELEASEPUBLISHER" -Ddatabus.packageDirectory="$RELEASEPACKAGEDIR" -Ddatabus.downloadUrlPath="$RELEASEDOWNLOADURL" -Ddatabus.labelPrefix="$RELEASELABELPREFIX" -Ddatabus.commentPrefix="$RELEASECOMMENTPREFIX";
 }
 
 # clean up: compress log files
