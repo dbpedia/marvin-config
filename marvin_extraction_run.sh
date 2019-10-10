@@ -4,6 +4,7 @@ ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # setup
 LOGDIR="$ROOT/logs/$(date +%Y-%m-%d)"
+CONFIGDIR="$ROOT/extractionConfiguration"
 EXTRACTIONBASEDIR="$ROOT/wikidumps"
 EXTRACTIONFRAMEWORKDIR="$ROOT/extraction-framework"
 DATAPUSMAVENPLUGINPOMDIR="$ROOT/databus-maven-plugin"
@@ -104,30 +105,14 @@ extractDumps() {
 
     cd $EXTRACTIONFRAMEWORKDIR/dump;
 
-    if [ "$GROUP" = "mappings" ]
+    if [ "$GROUP" = "generic" ]
     then
-        >&2 ../run download $ROOT/config.d/download.mappings.properties;
-        >&2 ../run extraction $ROOT/config.d/extraction.mappings.properties;
-    
-    elif [ "$GROUP" = "wikidata" ]
-    then
-        >&2 ../run download $ROOT/config.d/download.wikidata.properties;
-        >&2 ../run extraction $ROOT/config.d/extraction.wikidata.properties;
-    
-    elif [ "$GROUP" =  "generic" ]
-    then
-        >&2 ../run download $ROOT/config.d/download.generic.properties;
-        >&2 ../run sparkextraction $ROOT/config.d/sparkextraction.generic.properties;
-        >&2 ../run sparkextraction $ROOT/config.d/sparkextraction.generic.en.properties;
-    
-    elif [ "$GROUP" = "test" ]
-    then
-        >&2 ../run download $ROOT/config.d/download.test.properties;
-        >&2 ../run extraction $ROOT/config.d/extraction.test.properties;
-
-    elif [ "$GROUP" = "abstract" ]
-    then
-        echo "TODO abstract extraction and download"
+       >&2 ../run download $ROOT/config.d/download.generic.properties;
+       >&2 ../run sparkextraction $ROOT/config.d/sparkextraction.generic.properties;
+       >&2 ../run sparkextraction $ROOT/config.d/sparkextraction.generic.en.properties;
+    else 
+       >&2 ../run download $ROOT/config.d/download.$GROUP.properties;
+       >&2 ../run extraction $ROOT/config.d/extraction.$GROUP.properties;
     fi
 }
 
@@ -143,7 +128,8 @@ postProcessing() {
         >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
         >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
         
-        cd $ROOT/config.d;
+        #TODO databus scripts
+        cd $CONFIGDIR;
         source prepareMappingsArtifacts.sh; BASEDIR=$EXTRACTIONBASEDIR; DATABUSMVNPOMDIR=$DATAPUSMAVENPLUGINPOMDIR;
         prepareM;
 
