@@ -107,8 +107,6 @@ copyToMavenPlugin() {
 
 # [MAIN]
 
-main() {
+prepareM() {
     copyToMavenPlugin
 }
-
-main
