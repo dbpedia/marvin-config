@@ -211,12 +211,12 @@ cleanLogFiles() {
 main() {
 
     # PRE-PROCESSING
-    # createDirectories;
-    # gitCheckout;
-    # downloadMetadata &> $LOGDIR/downloadMetadata.log;
+    createDirectories;
+    gitCheckout;
+    downloadMetadata &> $LOGDIR/downloadMetadata.log;
 
     # EXTRACT
-    # extractDumps &> $LOGDIR/extracion.log;
+    extractDumps &> $LOGDIR/extracion.log;
 
     # POST-PROCESSING
     postProcessing 2> $LOGDIR/postProcessing.log;
