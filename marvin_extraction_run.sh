@@ -18,7 +18,7 @@ description:
 ##############
 # setup paths
 ##############
-ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/marvin-extraction/"
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/marvin-extraction"
 CONFIGDIR="$ROOT/extractionConfiguration"
 
 # set and create
@@ -101,10 +101,10 @@ cd $DIEFDIR/dump
 extractDumps &> $LOGDIR/extraction.log;
 
 # POST-PROCESSING
-postProcessing 2> $LOGDIR/postProcessing.log;
+#postProcessing 2> $LOGDIR/postProcessing.log;
 
 # RELEASE 
-databusRelease 2> $LOGDIR/databusDeploy.log
+#databusRelease 2> $LOGDIR/databusDeploy.log
 
 # CLEANUP
 archiveLogFiles;

@@ -1,15 +1,37 @@
 # MARVIN-config
 
-MARVIN is the release bot that does automated DBpedia releases each month on three different servers for generic, mappings, wikidata extraction. 
-
+MARVIN is the release bot that does automated DBpedia releases each month on three different servers for generic, mappings, wikidata, abstract extraction. 
 The repository at https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config can be used to fork the architecture for creating extensions, developing new extractors or debugging old ones. 
+Fixes and patches will be manually deployed via a freah `git clone` from the `master` branch of the [DBpedia Extraction Framework](https://github.com/dbpedia/extraction-framework/). 
 
-Fixes and patches will be manually deployed via `git pull` from the `master` branch of the [DBpedia Extraction Framework](https://github.com/dbpedia/extraction-framework/). 
+## Contributions & License
+All scripts and config files in this repo are CC-0 (Public Domain). 
+We accept pull requests to improve the config files, all contributions will be merged as CC-0. 
 
-The architecture and workflow can also be forked and adapted to completely different extractions and derive operations outside of the DBpedia framework. 
+## Run a MARVIN extraction
+```
+git clone https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config
+cd marvin-config
+# Romanian extraction, very small
+./marvin_extraction_run.sh --group=test
+```
+
+To run the other extractions, use either
+```
+# around 4-7 days
+./marvin_extraction_run.sh --group=generic
+# around 4-7 days
+./marvin_extraction_run.sh --group=mappings
+# around 7-14 days
+./marvin_extraction_run.sh --group=wikidata
+```
+
+## Cronjobs
+
+Below is a list
 
 
-# Acknowledgements
+## Acknowledgements
 We thank Sören Auer and the Technische Informationsbibliothek (TIB) for providing three servers to run:
 
 * the main DBpedia extraction on a monthly basis 

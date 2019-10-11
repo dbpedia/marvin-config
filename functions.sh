@@ -7,6 +7,7 @@ prepareExtractionFramework(){
 	if [ "$SKIPDIEFINSTALL" = "false" ]
     then
 		# TODO make sure this contains marvin-config/marvin-extraction and replace with -rf
+		echo "deleting $DIEFDIR"
 		rm -rI $DIEFDIR
 		git clone "https://github.com/dbpedia/extraction-framework.git" $DIEFDIR
 		cd $DIEFDIR
@@ -25,18 +26,17 @@ prepareExtractionFramework(){
 # downlaod and extract data
 extractDumps() {
     cd $DIEFDIR/dump;
-
-	# run for all 
-    >&2 ../run extraction $ROOT/config.d/extraction.$GROUP.properties;
-
-    # exceptions
-    
-    ## for generic, as English is big and has to be run separately
+        
+    # exception for generic, 1. spark, 2. as English is big and has to be run separately
     if [ "$GROUP" = "generic" ]
     then
-       >&2 ../run sparkextraction $ROOT/config.d/extraction.generic.en.properties;
-    fi
+       >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.properties;
+       >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.en.properties;
+    else
+		# run for all 
+	    >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
     
+    fi    
    
 }
 
