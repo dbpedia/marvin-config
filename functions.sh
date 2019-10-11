@@ -21,6 +21,79 @@ prepareExtractionFramework(){
     fi
 }
 
+
+# downlaod and extract data
+extractDumps() {
+    cd $DIEFDIR/dump;
+
+	# run for all 
+    >&2 ../run extraction $ROOT/config.d/extraction.$GROUP.properties;
+
+    # exceptions
+    
+    ## for generic, as English is big and has to be run separately
+    if [ "$GROUP" = "generic" ]
+    then
+       >&2 ../run sparkextraction $ROOT/config.d/extraction.generic.en.properties;
+    fi
+    
+   
+}
+
+
+# post-processing
+postProcessing() {
+	
+	# TODO move databus scripts in extra function
+    #       cd $CONFIGDIR;
+    #       source prepareMappingsArtifacts.sh; BASEDIR=$EXTRACTIONBASEDIR; DATABUSMVNPOMDIR=$DATAPUSMAVENPLUGINPOMDIR;
+    #      prepareM;
+
+
+    cd $DIEFDIR/scripts;
+    echo "post-processing of $GROUP"
+    
+    # todo check BASEDIR
+
+    if [ "$GROUP" = "mappings" ]
+    then
+        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        >&2 ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
+        >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
+    elif [ "$GROUP" = "wikidata" ]
+    then
+        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects transitive-redirects .ttl.bz2 wikidata
+        >&2 ../run MapObjectUris $BASEDIR transitive-redirects .ttl.bz2 mappingbased-objects-uncleaned,raw -redirected .ttl.bz2 wikidata
+        >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
+    elif [ "$GROUP" = "generic" ] 
+    then
+        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        >&2 ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
+    elif [ "$GROUP" = "abstract" ]
+    then
+        echo "TODO"
+
+    elif [ "$GROUP" = "test" ]
+    then 
+        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
+        >&2 ../run TypeConsistencyCheckManual mappingbased-objects instance-types ro;
+    fi
+}
+
+# compress log files
+archiveLogFiles() {
+	# todo copy to some archive
+    for f in $(find $LOGDIR -type f ); do lbzip2 $f; done;
+}
+
+
+
+########################################################################
+#### TODO CLEAN UP BELOW
+########################################################################
+
+
 # clone repositories
 gitCheckout() {
     if [ -d $EXTRACTIONFRAMEWORKDIR/.git ]
@@ -52,78 +125,6 @@ downloadMetadata() {
     # curl https://raw.githubusercontent.com/dbpedia/extraction-framework/master/core/src/main/resources/wikidatar2r.json > wikidatar2r.json;
 }
 
-# downlaod and extract data
-extractDumps() {
-    cd $DIEFDIR/dump;
-
-	# run for all 
-    >&2 ../run extraction $ROOT/config.d/extraction.$GROUP.properties;
-
-    # exceptions
-    
-    ## for generic, as English is big and has to be run separately
-    if [ "$GROUP" = "generic" ]
-    then
-       >&2 ../run sparkextraction $ROOT/config.d/extraction.generic.en.properties;
-    fi
-    
-   
-}
-
-# post-processing
-postProcessing() {
-
-    cd $EXTRACTIONFRAMEWORKDIR/scripts;
-
-    if [ "$GROUP" = "mappings" ]
-    then
-        echo "mappings postProcessing"
-        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
-        >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
-        
-        #TODO databus scripts
-        cd $CONFIGDIR;
-        source prepareMappingsArtifacts.sh; BASEDIR=$EXTRACTIONBASEDIR; DATABUSMVNPOMDIR=$DATAPUSMAVENPLUGINPOMDIR;
-        prepareM;
-
-    elif [ "$GROUP" = "wikidata" ]
-    then
-        echo "wikidata postProcessing"
-        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects transitive-redirects .ttl.bz2 wikidata
-        >&2 ../run MapObjectUris $BASEDIR transitive-redirects .ttl.bz2 mappingbased-objects-uncleaned,raw -redirected .ttl.bz2 wikidata
-        >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
-
-        # cd $ROOT/config.d;
-        # source prepareMappingsArtifacts.sh; BASEDIR=$EXTRACTIONBASEDIR; DATABUSMVNPOMDIR=$DATAPUSMAVENPLUGINPOMDIR;
-        # prepareW;
-
-    elif [ "$GROUP" = "generic" ] 
-    then
-        echo "generic postProcessing"
-        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
-
-        # cd $ROOT/config.d;
-        # source prepareMappingsArtifacts.sh; BASEDIR=$EXTRACTIONBASEDIR; DATABUSMVNPOMDIR=$DATAPUSMAVENPLUGINPOMDIR;
-        # prepareG;
-
-    elif [ "$GROUP" = "abstract" ]
-    then
-        echo "abstract postProcessing"
-
-    elif [ "$GROUP" = "test" ]
-    then 
-        echo "test postProcessing"
-        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
-        >&2 ../run TypeConsistencyCheckManual mappingbased-objects instance-types ro;
-
-        cd $ROOT/config.d;
-        source prepareMappingsArtifacts.sh; BASEDIR=$EXTRACTIONBASEDIR; DATABUSMVNPOMDIR=$DATAPUSMAVENPLUGINPOMDIR/databus-maven-plugin/dbpedia/mappings;
-        prepareM;
-    fi
-}
 
 # release
 databusRelease() {
@@ -143,8 +144,4 @@ databusRelease() {
     fi
 }
 
-# clean up: compress log files
-cleanLogFiles() {
-    for f in $(find $LOGDIR -type f ); do lbzip2 $f; done;
-}
 

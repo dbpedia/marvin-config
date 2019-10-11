@@ -107,4 +107,4 @@ postProcessing 2> $LOGDIR/postProcessing.log;
 databusRelease 2> $LOGDIR/databusDeploy.log
 
 # CLEANUP
-cleanLogFiles;
+archiveLogFiles;
