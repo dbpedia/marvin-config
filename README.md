@@ -13,10 +13,11 @@ We accept pull requests to improve the config files, all contributions will be m
 ```
 git clone https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config
 cd marvin-config
-# delete previous versions of the DIEF
+# (optional) delete previous versions of the DIEF
 rm -rf marvin-config/extraction-framework
+# install dief in marvin-extraction/extraction-framework
 ./setup-dief.sh
-# test Romanian extraction, very small
+# test run Romanian extraction, very small
 ./marvin_extraction_run.sh --group=test
 ```
 
@@ -32,7 +33,11 @@ To run the other extractions, use either
 
 ## Cronjobs
 
-Below is a list of cronjobs we use on the different servers
+Below is a list of cronjobs we use on the different servers:
+
+```
+TODO
+```
 
 
 ## Acknowledgements
@@ -44,7 +49,9 @@ We thank Sören Auer and the Technische Informationsbibliothek (TIB) for providi
 
 This contribution by TIB to DBpedia & its community is a great push towards incentivizing Open Data and establishing a global and national research and innovation data infrastructure. 
 
-# Workflow
+# Workflow Description
+
+## 
 
 ## Downloading the wikimedia dumps
 TODO

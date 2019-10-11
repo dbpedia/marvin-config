@@ -1,38 +1,19 @@
 #!/bin/bash
 
 HELP="usage: 
---group={test|generic|mappings|wikidata} [--databus-deploy|--skip-dief-install]
+--group={test|generic|mappings|wikidata} [--databus-deploy]
 
 description:
 --group={test|generic|mappings|wikidata} : required
 	selects download.\$GROUP.properties and extraction.\$GROUP.properties from extractionConfig dir
 	Some exceptions are hard coded like 'extraction.generic.en.properties'
-
-[--skip-dief-install] : optional 
-	'false' -> each run does a fresh checkout install of the DIEF (DBpedia Information Extraction Framework)
-	'true'  -> skipped  
-	
 "
 
+#######################
+# include all functions and path variables
+#######################
+source functions.sh
 
-##############
-# setup paths
-##############
-ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/marvin-extraction"
-CONFIGDIR="$ROOT/extractionConfiguration"
-
-# set and create
-LOGDIR="$ROOT/logs/$(date +%Y-%m-%d)" && mkdir -p $LOGDIR
-DIEFDIR="$ROOT/extraction-framework"
-
-# TODO
-EXTRACTIONBASEDIR="$ROOT/wikidumps"
-DATAPUSMAVENPLUGINPOMDIR="$ROOT/databus-maven-plugin"
-RELEASEDIR="$ROOT/release"
-DATAPUSMAVENPLUGINPOMGIT="https://github.com/dbpedia/databus-maven-plugin.git"    
-
-mkdir -p $EXTRACTIONBASEDIR
-mkdir -p $RELEASEDIR
 
 #################
 #check arguments
@@ -76,23 +57,20 @@ then
 fi
 
 
-#######################
-# include all functions
-#######################
-source functions.sh
+
 
 #######################
 # RUN (requires setup-dief.sh)
 #######################
 
 # DOWNLOAD ONTOLOGY and MAPPINGS
-cd $DIEFDIR/core;
-../run download-ontology &> $LOGDIR/downloadOntology.log;
-../run download-mappings &> $LOGDIR/downloadMappings.log;
+cd $DIEFDIR/core
+../run download-ontology &> $LOGDIR/downloadOntology.log
+../run download-mappings &> $LOGDIR/downloadMappings.log
 
 # DOWNLOAD WIKIDUMPS
 cd $DIEFDIR/dump
-../run download $CONFIGDIR/download.$GROUP.properties &> $LOGDIR/downloadWikidumps.log;
+../run download $CONFIGDIR/download.$GROUP.properties &> $LOGDIR/downloadWikidumps.log 
 
 # EXTRACT
 #extractDumps &> $LOGDIR/extraction.log;
