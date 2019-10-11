@@ -7,8 +7,8 @@
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 CONFIGDIR="$ROOT/extractionConfiguration"
-DIEFDIR="$ROOT/marvin-extraction/extraction-framework" && mkdir -p $LOGDIR
-LOGDIR="$ROOT/marvin-extraction/logs/$(date +%Y-%m-%d)"
+DIEFDIR="$ROOT/marvin-extraction/extraction-framework"
+LOGDIR="$ROOT/marvin-extraction/logs/$(date +%Y-%m-%d)"  && mkdir -p $LOGDIR
 EXTRACTIONBASEDIR="$ROOT/marvin-extraction/wikidumps" && mkdir -p $EXTRACTIONBASEDIR
 
 # TODO
@@ -16,7 +16,7 @@ RELEASEDIR="$ROOT/marvin-extraction/release"
 DATAPUSMAVENPLUGINPOMDIR="$ROOT/databus-maven-plugin"
 DATAPUSMAVENPLUGINPOMGIT="https://github.com/dbpedia/databus-maven-plugin.git"    
 
-mkdir -p $RELEASEDIR
+# mkdir -p $RELEASEDIR
 
 ##############
 # functions
