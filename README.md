@@ -2,17 +2,21 @@
 
 MARVIN is the release bot that does automated DBpedia releases each month on three different servers for generic, mappings, wikidata, abstract extraction. 
 The repository at https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config can be used to fork the architecture for creating extensions, developing new extractors or debugging old ones. 
-Fixes and patches will be manually deployed via a freah `git clone` from the `master` branch of the [DBpedia Extraction Framework](https://github.com/dbpedia/extraction-framework/). 
+Fixes and patches will be manually deployed via a fresh `git clone` from the `master` branch of the [DIEF (DBpedia Information Extraction Framework)](https://github.com/dbpedia/extraction-framework/). 
 
 ## Contributions & License
 All scripts and config files in this repo are CC-0 (Public Domain). 
 We accept pull requests to improve the config files, all contributions will be merged as CC-0. 
 
 ## Run a MARVIN extraction
+
 ```
 git clone https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config
 cd marvin-config
-# Romanian extraction, very small
+# delete previous versions of the DIEF
+rm -rf marvin-config/extraction-framework
+./setup-dief.sh
+# test Romanian extraction, very small
 ./marvin_extraction_run.sh --group=test
 ```
 
@@ -28,7 +32,7 @@ To run the other extractions, use either
 
 ## Cronjobs
 
-Below is a list
+Below is a list of cronjobs we use on the different servers
 
 
 ## Acknowledgements

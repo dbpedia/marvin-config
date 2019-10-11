@@ -1,28 +1,5 @@
 #!/bin/bash
 
-# check git, curl, maven, java (1.8), lbzip2
-
-
-prepareExtractionFramework(){
-	if [ "$SKIPDIEFINSTALL" = "false" ]
-    then
-		# TODO make sure this contains marvin-config/marvin-extraction and replace with -rf
-		echo "deleting $DIEFDIR"
-		rm -rI $DIEFDIR
-		git clone "https://github.com/dbpedia/extraction-framework.git" $DIEFDIR
-		cd $DIEFDIR
-        # todo add config
-        #cd $ROOT && cp $ROOT/config.d/universal.properties.template $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
-		#sed -i -e 's,$BASEDIR,'$EXTRACTIONBASEDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
-		#sed -i -e 's,$LOGDIR,'$LOGDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
-
-		mvn clean install
-    else
-		echo "skipping DIEF installation"
-    fi
-}
-
-
 # downlaod and extract data
 extractDumps() {
     cd $DIEFDIR/dump;

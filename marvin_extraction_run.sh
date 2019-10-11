@@ -82,11 +82,8 @@ fi
 source functions.sh
 
 #######################
-# run
+# RUN (requires setup-dief.sh)
 #######################
-
-# PRE-PROCESSING
-prepareExtractionFramework;
 
 # DOWNLOAD ONTOLOGY and MAPPINGS
 cd $DIEFDIR/core;
@@ -98,7 +95,7 @@ cd $DIEFDIR/dump
 ../run download $CONFIGDIR/download.$GROUP.properties &> $LOGDIR/downloadWikidumps.log;
 
 # EXTRACT
-extractDumps &> $LOGDIR/extraction.log;
+#extractDumps &> $LOGDIR/extraction.log;
 
 # POST-PROCESSING
 #postProcessing 2> $LOGDIR/postProcessing.log;
