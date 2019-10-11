@@ -6,10 +6,15 @@
 prepareExtractionFramework(){
 	if [ "$SKIPDIEFINSTALL" = "false" ]
     then
-		rm -r $DIEFDIR
+		# TODO make sure this contains marvin-config/marvin-extraction and replace with -rf
+		rm -rI $DIEFDIR
 		git clone "https://github.com/dbpedia/extraction-framework.git" $DIEFDIR
 		cd $DIEFDIR
-		# todo add config
+        # todo add config
+        #cd $ROOT && cp $ROOT/config.d/universal.properties.template $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
+		#sed -i -e 's,$BASEDIR,'$EXTRACTIONBASEDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
+		#sed -i -e 's,$LOGDIR,'$LOGDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
+
 		mvn clean install
     else
 		echo "skipping DIEF installation"
@@ -38,27 +43,25 @@ gitCheckout() {
 
 # download ontology, mappings, wikidataR2R
 downloadMetadata() {
-    cd $EXTRACTIONFRAMEWORKDIR/core;
+    cd $DIEFDIR/core;
     ../run download-ontology;
     ../run download-mappings;
-    cd $EXTRACTIONFRAMEWORKDIR/core/src/main/resources;
-    curl https://raw.githubusercontent.com/dbpedia/extraction-framework/master/core/src/main/resources/wikidatar2r.json > wikidatar2r.json;
+    
+	# TODO check prepare above, this line seems unneccessary now	
+    # cd $DIEFDIR/core/src/main/resources;
+    # curl https://raw.githubusercontent.com/dbpedia/extraction-framework/master/core/src/main/resources/wikidatar2r.json > wikidatar2r.json;
 }
 
 # downlaod and extract data
 extractDumps() {
-    cd $ROOT && cp $ROOT/config.d/universal.properties.template $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
-    sed -i -e 's,$BASEDIR,'$EXTRACTIONBASEDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
-    sed -i -e 's,$LOGDIR,'$LOGDIR',g' $EXTRACTIONFRAMEWORKDIR/core/src/main/resources/universal.properties;
-
-    
-    cd $EXTRACTIONFRAMEWORKDIR/dump;
+    cd $DIEFDIR/dump;
 
 	# run for all 
-	>&2 ../run download $ROOT/config.d/download.$GROUP.properties;
     >&2 ../run extraction $ROOT/config.d/extraction.$GROUP.properties;
 
-    # exception for generic, as English is big and has to be run separately
+    # exceptions
+    
+    ## for generic, as English is big and has to be run separately
     if [ "$GROUP" = "generic" ]
     then
        >&2 ../run sparkextraction $ROOT/config.d/extraction.generic.en.properties;

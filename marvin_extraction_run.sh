@@ -11,14 +11,14 @@ description:
 [--skip-dief-install] : optional 
 	'false' -> each run does a fresh checkout install of the DIEF (DBpedia Information Extraction Framework)
 	'true'  -> skipped  
-
+	
 "
 
 
 ##############
 # setup paths
 ##############
-ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/marvin/"
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/marvin-extraction/"
 CONFIGDIR="$ROOT/extractionConfiguration"
 
 # set and create
@@ -79,7 +79,7 @@ fi
 #######################
 # include all functions
 #######################
-source marvin_extraction_functions.sh
+source functions.sh
 
 #######################
 # run
@@ -87,11 +87,18 @@ source marvin_extraction_functions.sh
 
 # PRE-PROCESSING
 prepareExtractionFramework;
-exit
-downloadMetadata &> $LOGDIR/downloadMetadata.log;
+
+# DOWNLOAD ONTOLOGY and MAPPINGS
+cd $DIEFDIR/core;
+../run download-ontology &> $LOGDIR/downloadOntology.log;
+../run download-mappings &> $LOGDIR/downloadMappings.log;
+
+# DOWNLOAD WIKIDUMPS
+cd $DIEFDIR/dump
+../run download $CONFIGDIR/download.$GROUP.properties &> $LOGDIR/downloadWikidumps.log;
 
 # EXTRACT
-extractDumps &> $LOGDIR/extracion.log;
+extractDumps &> $LOGDIR/extraction.log;
 
 # POST-PROCESSING
 postProcessing 2> $LOGDIR/postProcessing.log;
