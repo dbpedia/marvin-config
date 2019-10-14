@@ -52,22 +52,20 @@ postProcessing() {
     cd $DIEFDIR/scripts;
     echo "post-processing of $GROUP"
     
-    # todo check BASEDIR
-
     if [ "$GROUP" = "mappings" ]
     then
-        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
+        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
         >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
     elif [ "$GROUP" = "wikidata" ]
     then
-        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects transitive-redirects .ttl.bz2 wikidata
-        >&2 ../run MapObjectUris $BASEDIR transitive-redirects .ttl.bz2 mappingbased-objects-uncleaned,raw -redirected .ttl.bz2 wikidata
+        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects transitive-redirects .ttl.bz2 wikidata
+        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR transitive-redirects .ttl.bz2 mappingbased-objects-uncleaned,raw -redirected .ttl.bz2 wikidata
         >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
     elif [ "$GROUP" = "generic" ] 
     then
-        >&2 ../run ResolveTransitiveLinks $BASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $BASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
+        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
     elif [ "$GROUP" = "abstract" ]
     then
         echo "TODO"
@@ -83,7 +81,7 @@ postProcessing() {
 # compress log files
 archiveLogFiles() {
 	# todo copy to some archive
-    for f in $(find $LOGDIR -type f ); do lbzip2 $f; done;
+    for f in $(find $LOGDIR -type f ); do lbzip2 -f $f; done;
 }
 
 

@@ -1,27 +1,35 @@
 # MARVIN-config
 
 MARVIN is the release bot that does automated DBpedia releases each month on three different servers for generic, mappings, wikidata, abstract extraction. 
-The repository at https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config can be used to fork the architecture for creating extensions, developing new extractors or debugging old ones. 
-Fixes and patches will be manually deployed via a fresh `git clone` from the `master` branch of the [DIEF (DBpedia Information Extraction Framework)](https://github.com/dbpedia/extraction-framework/). 
+[This repository](https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config) can be used to fork the architecture for creating extensions, developing new extractors or debugging old ones. 
+Fixes and patches will be deployed on the DBpedia servers each month via a fresh `git clone` from the `master` branch of the [DIEF (DBpedia Information Extraction Framework)](https://github.com/dbpedia/extraction-framework/). 
 
 ## Contributions & License
 All scripts and config files in this repo are CC-0 (Public Domain). 
 We accept pull requests to improve the config files, all contributions will be merged as CC-0. 
+Marvin-config is intended to bootstrap developing fixes for the DIEF.
 
 ## Run a MARVIN extraction
 
+Implementation note: the scripts creates a folder `marvin-extraction` where the code, results and logs are. 
+
 ```
+# check out this repo with all config files
 git clone https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config
 cd marvin-config
+
+
 # (optional) delete previous versions of the DIEF
-rm -rf marvin-config/extraction-framework
-# install dief in marvin-extraction/extraction-framework
+# (~10 minutes) install dief in marvin-extraction/extraction-framework
+# if you installed it already you can run `git pull && mvn clean install` to update
+rm -rf marvin-extraction/extraction-framework
 ./setup-dief.sh
+
 # test run Romanian extraction, very small
 ./marvin_extraction_run.sh --group=test
 ```
 
-To run the other extractions, use either
+To run the other extractions, use either of
 ```
 # around 4-7 days
 ./marvin_extraction_run.sh --group=generic
@@ -39,6 +47,7 @@ Below is a list of cronjobs we use on the different servers:
 TODO
 ```
 
+## 
 
 ## Acknowledgements
 We thank Sören Auer and the Technische Informationsbibliothek (TIB) for providing three servers to run:

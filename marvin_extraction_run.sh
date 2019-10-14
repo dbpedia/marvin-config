@@ -73,10 +73,10 @@ cd $DIEFDIR/dump
 ../run download $CONFIGDIR/download.$GROUP.properties &> $LOGDIR/downloadWikidumps.log 
 
 # EXTRACT
-#extractDumps &> $LOGDIR/extraction.log;
+extractDumps &> $LOGDIR/extraction.log;
 
 # POST-PROCESSING
-#postProcessing 2> $LOGDIR/postProcessing.log;
+postProcessing 2> $LOGDIR/postProcessing.log;
 
 # RELEASE 
 #databusRelease 2> $LOGDIR/databusDeploy.log
