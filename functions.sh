@@ -13,8 +13,7 @@ EXTRACTIONBASEDIR="$ROOT/marvin-extraction/wikidumps" && mkdir -p $EXTRACTIONBAS
 
 # TODO
 RELEASEDIR="$ROOT/marvin-extraction/release"
-DATAPUSMAVENPLUGINPOMDIR="$ROOT/databus-maven-plugin"
-DATAPUSMAVENPLUGINPOMGIT="https://github.com/dbpedia/databus-maven-plugin.git"    
+DATABUSDIR="$ROOT/marvin-extraction/databus-maven-plugin"
 
 # mkdir -p $RELEASEDIR
 
@@ -91,36 +90,7 @@ archiveLogFiles() {
 ########################################################################
 
 
-# clone repositories
-gitCheckout() {
-    if [ -d $EXTRACTIONFRAMEWORKDIR/.git ]
-    then
-        cd $EXTRACTIONFRAMEWORKDIR;
-        echo -n "extraction-framework "
-        git pull;
-    else 
-        git clone $EXTRACTIONFRAMEWORKGIT
-    fi
-    if [ -d $DATAPUSMAVENPLUGINPOMDIR/.git ]
-    then
-        cd $DATAPUSMAVENPLUGINPOMDIR;
-        echo -n "databus-maven-plugin "
-        git pull;
-    else 
-        git clone $DATAPUSMAVENPLUGINPOMGIT
-    fi
-}
 
-# download ontology, mappings, wikidataR2R
-downloadMetadata() {
-    cd $DIEFDIR/core;
-    ../run download-ontology;
-    ../run download-mappings;
-    
-	# TODO check prepare above, this line seems unneccessary now	
-    # cd $DIEFDIR/core/src/main/resources;
-    # curl https://raw.githubusercontent.com/dbpedia/extraction-framework/master/core/src/main/resources/wikidatar2r.json > wikidatar2r.json;
-}
 
 
 # release
