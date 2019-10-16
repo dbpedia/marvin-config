@@ -62,6 +62,8 @@ postProcessing() {
     then
         >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
         >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
+		# todo untested line
+		for i in $(find $EXTRACTIONBASEDIR -name "*._redirects.ttl.bz2") ; do cp $i $LOGDIR ; rename -f 's/_redirected//' $i ; done
     elif [ "$GROUP" = "text" ]
     then
         echo "TODO"
@@ -134,7 +136,6 @@ mapNamesToDatabus() {
 		"description-nmw") echo "description_nmw";;
 		"labels-nmw") echo "labels_nmw";;
 		"mappingbased-properties-reified-qualifiers") echo "mappingbased-properties-reified_qualifiers";;
-		"mappingbased-properties-reified") echo "mappingbased-properties-reified";;
 		"wikidata-duplicate-iri-split") echo "debug_duplicateirisplit";;
 		"wikidata-r2r-mapping-errors") echo "debug_r2rmappingerrors";;
 		"wikidata-type-like-statements") echo "debug_typelikestatements";;
@@ -178,18 +179,19 @@ mapAndCopy() {
 	targetFile="$artifact$contVars.$extension"
 	
 # TODO proper handling of "_redirected"
+# TODO see above, redirected are moved to logdir and overwrite the unredirected
 #concerns onlyy generic: 
 #< enwiki/20191001/enwiki-20191001-disambiguations_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-infobox-properties_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-page-links_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-persondata_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-topical-concepts_redirected.ttl.bz2
-	# targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
+# targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
 	
 	# copy
 	echo "< $path
-> $artifact/$version/$targetFile"
-	echo "----------------------"
+> $artifact/$version/$targetFile
+----------------------"
 	# TODO enable after testing
 	#cp -vn "$path" "$DATABUSMVNPOMDIR/$targetArVe/$targetFile"
 }

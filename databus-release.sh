@@ -51,9 +51,9 @@ PUBLISHER="https://vehnem.github.io/webid.ttl#this";
 # TODO marvin: shouldn't this be the web dir directly?
 PACKAGEDIR="/data/extraction/release/\${project.groupId}/\${project.artifactId}";
 DOWNLOADURL="http://dbpedia-$GROUP.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
-LABELPREFIX="(pre-release)";
+LABELPREFIX="(pre-release) ";
 # todo replace with markdown or html when supported by upload client
-COMMENTPREFIX="(MARVIN is the DBpedia bot, that runs the DBpedia Information Extraction Framework (DIEF) and releases the data as is, i.e. unparsed, unsorted, not redirected for debugging the software. After its releases, data is cleaned and persisted under the dbpedia account. Commit: $GITHUBLINK)";
+COMMENTPREFIX="(MARVIN is the DBpedia bot for monthly raw releases (unparsed, unsorted) for debugging the DIEF software. After its releases, data is cleaned and persisted under the dbpedia account. Commit: $GITHUBLINK) " ;
 
 mvn clean deploy -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
  
