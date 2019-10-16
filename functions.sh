@@ -34,6 +34,9 @@ extractDumps() {
     then
        >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.properties;
        >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.en.properties;
+    elif ["$GROUP" = "text" ]
+    then
+      >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.en.properties;
     else
 		# run for all 
 	    >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
@@ -66,7 +69,7 @@ postProcessing() {
 		for i in $(find $EXTRACTIONBASEDIR -name "*._redirects.ttl.bz2") ; do cp $i $LOGDIR ; rename -f 's/_redirected//' $i ; done
     elif [ "$GROUP" = "text" ]
     then
-        echo "TODO"
+        echo "check whether text has post-processing"
 
     elif [ "$GROUP" = "test" ]
     then 
