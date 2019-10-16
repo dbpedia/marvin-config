@@ -20,14 +20,24 @@ fi
 # Setup and clone pom files
 #################
 
-# fails if folder exists
+#/data/extraction/wikidumps/enwiki/20191001
+
 git clone "https://github.com/dbpedia/databus-maven-plugin.git" $DATABUSDIR &>/dev/null
 cd $DATABUSDIR
 git pull 
 
-# copy 
+# todo redirected not handled properly
 
-mapAndCopy
+# copy 
+# iterate all .ttl.bz2 files
+# uncomment for testing
+for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
+#for path in $(cat $ROOT/test/mappings.lst | grep ".*\.ttl\.bz2$" | sort );do
+#for path in $(cat $ROOT/test/generic.lst | grep ".*\.ttl\.bz2$" | sort );do
+#for path in $(cat $ROOT/test/wikidata.lst | grep ".*\.ttl\.bz2$" | sort );do
+   mapAndCopy $path
+done
+
 exit
 
 # deploy 

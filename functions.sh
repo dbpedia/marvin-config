@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO maybe remove after testing
-set -e
 
 HELP="description:
 marvin_extraction_run.sh and databus-release.sh take one argument, which is the extraction group
@@ -97,7 +95,7 @@ mapLangToContVar() {
         "bat_smg") echo "_lang=batsmg";;
         "zh_min_nan") echo "_lang=nan";;
         "zh_yue") echo "_lang=yue";;
-        "wikidata") echo "";;
+        "data") echo "";;
         "commons" ) echo "_commons";;
         *) echo "_lang=$lang";;
     esac
@@ -128,51 +126,74 @@ mapNamesToDatabus() {
         "revision-uris") echo "revisions_uris";;
         
         # mappings
-        "instance-types-transitive") echo "instance-types_transitive";;
 		"mappingbased-objects-disjoint-domain") echo "mappingbased-objects_disjointDomain";;
 		"mappingbased-objects-disjoint-range")  echo "mappingbased-objects_disjointRange";;
+
+		# wikidata
+		"alias-nmw") echo "alias_nmw";;
+		"description-nmw") echo "description_nmw";;
+		"labels-nmw") echo "labels_nmw";;
+		"mappingbased-properties-reified-qualifiers") echo "mappingbased-properties-reified_qualifiers";;
+		"mappingbased-properties-reified") echo "mappingbased-properties-reified";;
+		"wikidata-duplicate-iri-split") echo "debug_duplicateirisplit";;
+		"wikidata-r2r-mapping-errors") echo "debug_r2rmappingerrors";;
+		"wikidata-type-like-statements") echo "debug_typelikestatements";;
+		
+		# both mappings and wikidata
+		"instance-types") echo "instance-types_specific";;
+		"instance-types-transitive") echo "instance-types_transitive";;
 
 
         *) echo "$1";;
     esac
 }
 
-mapAndCopy() {
-	
-	# iterate all .ttl.bz2 files
-    for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2"); do
 
-		# split filename
-		# how to use ${string##/*}
-		# https://www.tldp.org/LDP/abs/html/string-manipulation.html#Substring%20Removal#Substring Removal
-        file="${path##*/}"
-        version="${file#*-}"
-        version="${version%%-*}"
-        version="${version:0:4}.${version:4:2}.${version:6:2}"
-        lang="${file%%-*}"
-        extraction="${file#*-*-}"
-        extraction="${extraction%%.*}"
-        extension="${file#*.}"
-        
-        # map names and languages
-        mapped="$(mapNamesToDatabus $extraction)"
-		contVars="$(mapLangToContVar $lang)"
-		if [[ "$mapped" == *"_"* ]]; then
-            contVars="${contVars}_${mapped#*_}"
-        fi
-		artifact="${mapped%%_*}"
-        targetFolder="$DATABUSDIR/dbpedia/$GROUP/$artifact/$version"
-        targetFile="$artifact$contVars.$extension"
-        
-        # remove "_redirected"
-        targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
-        
-        # copy
-		echo "< $path
-> $targetFolder/$targetFile"
-		# TODO enable after testing
-        #cp -vn "$path" "$DATABUSMVNPOMDIR/$targetArVe/$targetFile"
-    done
+
+mapAndCopy() {
+	path=$1
+	# split filename
+	# how to use ${string##/*}
+	# https://www.tldp.org/LDP/abs/html/string-manipulation.html#Substring%20Removal#Substring Removal
+	file="${path##*/}"
+	version="${file#*-}"
+	version="${version%%-*}"
+	version="${version:0:4}.${version:4:2}.${version:6:2}"
+	lang="${file%%-*}"
+	extraction="${file#*-*-}"
+	extraction="${extraction%%.*}"
+	extension="${file#*.}"
+	
+	# wikidata exception
+	extraction=$(echo -n $extraction | sed 's|interlanguage-links-|interlanguage-links_lang=|' )
+	
+	# map names and languages
+	mapped="$(mapNamesToDatabus $extraction)"
+	contVars="$(mapLangToContVar $lang)"
+	if [[ "$mapped" == *"_"* ]]; then
+		contVars="${contVars}_${mapped#*_}"
+	fi
+	artifact="${mapped%%_*}"
+	targetFolder="$DATABUSDIR/dbpedia/$GROUP/$artifact/$version"
+	targetFile="$artifact$contVars.$extension"
+	
+	# TODO proper handling of "_redirected"
+#concerns:
+# generic
+#< enwiki/20191001/enwiki-20191001-disambiguations_redirected.ttl.bz2
+#< enwiki/20191001/enwiki-20191001-infobox-properties_redirected.ttl.bz2
+#< enwiki/20191001/enwiki-20191001-page-links_redirected.ttl.bz2
+#< enwiki/20191001/enwiki-20191001-persondata_redirected.ttl.bz2
+#< enwiki/20191001/enwiki-20191001-topical-concepts_redirected.ttl.bz2
+# mappings
+	targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
+	
+	# copy
+	echo "< $path
+> $artifact/$version/$targetFile"
+	echo "----------------------"
+	# TODO enable after testing
+	#cp -vn "$path" "$DATABUSMVNPOMDIR/$targetArVe/$targetFile"
 }
 
 
