@@ -26,8 +26,6 @@ git clone "https://github.com/dbpedia/databus-maven-plugin.git" $DATABUSDIR &>/d
 cd $DATABUSDIR
 git pull 
 
-# todo redirected not handled properly
-
 # copy 
 # iterate all .ttl.bz2 files
 # uncomment for testing
@@ -38,6 +36,7 @@ for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
    mapAndCopy $path
 done
 
+# todo below needs testing, currently print only
 exit
 
 # deploy 

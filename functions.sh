@@ -177,16 +177,14 @@ mapAndCopy() {
 	targetFolder="$DATABUSDIR/dbpedia/$GROUP/$artifact/$version"
 	targetFile="$artifact$contVars.$extension"
 	
-	# TODO proper handling of "_redirected"
-#concerns:
-# generic
+# TODO proper handling of "_redirected"
+#concerns onlyy generic: 
 #< enwiki/20191001/enwiki-20191001-disambiguations_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-infobox-properties_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-page-links_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-persondata_redirected.ttl.bz2
 #< enwiki/20191001/enwiki-20191001-topical-concepts_redirected.ttl.bz2
-# mappings
-	targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
+	# targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
 	
 	# copy
 	echo "< $path
