@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# TODO maybe remove after testing
+set -e
+
+HELP="description:
+marvin_extraction_run.sh and databus-release.sh take one argument, which is the extraction group
+selects download.\$GROUP.properties and extraction.\$GROUP.properties from extractionConfig dir and uses \$GROUP as a path.
+
+usage: 
+./marvin_extraction_run.sh {test|generic|mappings|wikidata|text}
+"
 
 ##############
 # setup paths
@@ -10,18 +20,14 @@ CONFIGDIR="$ROOT/extractionConfiguration"
 DIEFDIR="$ROOT/marvin-extraction/extraction-framework"
 LOGDIR="$ROOT/marvin-extraction/logs/$(date +%Y-%m-%d)"  && mkdir -p $LOGDIR
 EXTRACTIONBASEDIR="$ROOT/marvin-extraction/wikidumps" && mkdir -p $EXTRACTIONBASEDIR
-
-# TODO
-RELEASEDIR="$ROOT/marvin-extraction/release"
 DATABUSDIR="$ROOT/marvin-extraction/databus-maven-plugin"
 
-# mkdir -p $RELEASEDIR
 
 ##############
 # functions
 ##############
 
-# downlaod and extract data
+# extract data
 extractDumps() {
     cd $DIEFDIR/dump;
         
@@ -33,7 +39,6 @@ extractDumps() {
     else
 		# run for all 
 	    >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
-    
     fi    
    
 }
@@ -41,12 +46,6 @@ extractDumps() {
 
 # post-processing
 postProcessing() {
-	
-	# TODO move databus scripts in extra function
-    #       cd $CONFIGDIR;
-    #       source prepareMappingsArtifacts.sh; BASEDIR=$EXTRACTIONBASEDIR; DATABUSMVNPOMDIR=$DATAPUSMAVENPLUGINPOMDIR;
-    #      prepareM;
-
 
     cd $DIEFDIR/scripts;
     echo "post-processing of $GROUP"
@@ -65,7 +64,7 @@ postProcessing() {
     then
         >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
         >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
-    elif [ "$GROUP" = "abstract" ]
+    elif [ "$GROUP" = "text" ]
     then
         echo "TODO"
 
@@ -78,10 +77,104 @@ postProcessing() {
 }
 
 # compress log files
+# log files from same day get overwritten, only latest is kept
 archiveLogFiles() {
-	# todo copy to some archive
     for f in $(find $LOGDIR -type f ); do lbzip2 -f $f; done;
 }
+
+
+
+##########################
+# Databus Mapping
+##########################
+
+
+
+# switch case for some language exceptions 
+mapLangToContVar() {
+    lang=$(echo "$1" | sed 's|wiki||g')
+    case "$lang" in
+        "bat_smg") echo "_lang=batsmg";;
+        "zh_min_nan") echo "_lang=nan";;
+        "zh_yue") echo "_lang=yue";;
+        "wikidata") echo "";;
+        "commons" ) echo "_commons";;
+        *) echo "_lang=$lang";;
+    esac
+}
+
+
+mapNamesToDatabus() {
+
+    case "$1" in
+    
+		# generic
+        "article-templates-nested") echo "article-templates_nested";;
+
+        "citation-data") echo "citations_data";;
+        "citation-links") echo "citations_links";;
+
+        "commons-page-links") echo "commons-sameas-links";;
+
+        "page-ids") echo "page_ids";;
+        "page-length") echo "page_length";;
+        "page-links") echo "wikilinks";;
+
+        "article-categories") echo "categories_articles";;
+        "category-labels") echo "categories_labels";;
+        "skos-categories") echo "categories_skos";;
+
+        "revision-ids") echo "revisions_ids";;
+        "revision-uris") echo "revisions_uris";;
+        
+        # mappings
+        "instance-types-transitive") echo "instance-types_transitive";;
+		"mappingbased-objects-disjoint-domain") echo "mappingbased-objects_disjointDomain";;
+		"mappingbased-objects-disjoint-range")  echo "mappingbased-objects_disjointRange";;
+
+
+        *) echo "$1";;
+    esac
+}
+
+mapAndCopy() {
+	
+	# iterate all .ttl.bz2 files
+    for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2"); do
+
+		# split filename
+		# how to use ${string##/*}
+		# https://www.tldp.org/LDP/abs/html/string-manipulation.html#Substring%20Removal#Substring Removal
+        file="${path##*/}"
+        version="${file#*-}"
+        version="${version%%-*}"
+        version="${version:0:4}.${version:4:2}.${version:6:2}"
+        lang="${file%%-*}"
+        extraction="${file#*-*-}"
+        extraction="${extraction%%.*}"
+        extension="${file#*.}"
+        
+        # map names and languages
+        mapped="$(mapNamesToDatabus $extraction)"
+		contVars="$(mapLangToContVar $lang)"
+		if [[ "$mapped" == *"_"* ]]; then
+            contVars="${contVars}_${mapped#*_}"
+        fi
+		artifact="${mapped%%_*}"
+        targetFolder="$DATABUSDIR/dbpedia/$GROUP/$artifact/$version"
+        targetFile="$artifact$contVars.$extension"
+        
+        # remove "_redirected"
+        targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
+        
+        # copy
+		echo "< $path
+> $targetFolder/$targetFile"
+		# TODO enable after testing
+        #cp -vn "$path" "$DATABUSMVNPOMDIR/$targetArVe/$targetFile"
+    done
+}
+
 
 
 
