@@ -13,5 +13,5 @@ echo "base-dir=$EXTRACTIONBASEDIR" > $DIEFDIR/core/src/main/resources/universal.
 echo "log-dir=$LOGDIR/extraction/" >> $DIEFDIR/core/src/main/resources/universal.properties  
 cat $CONFIGDIR/universal.properties.template >> $DIEFDIR/core/src/main/resources/universal.properties 
 
-mvn clean install &> $LOGDIR/installDIEF.log
+mvn clean install # &> $LOGDIR/installDIEF.log
 
