@@ -6,6 +6,8 @@ source functions.sh
 cd marvin-extraction
 git clone "https://github.com/dbpedia/extraction-framework.git" $DIEFDIR &>/dev/null
 cd $DIEFDIR
+# reset the ontology and some files that are changes
+git stash
 git pull
 
 # concat universial props
