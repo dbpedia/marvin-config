@@ -26,19 +26,20 @@ fi
 # RUN (requires setup-dief.sh)
 #######################
 
-# DOWNLOAD ONTOLOGY and MAPPINGS
+echo "DOWNLOAD ONTOLOGY AND MAPPINGS"
 cd $DIEFDIR/core
-../run download-ontology &> $LOGDIR/downloadOntology.log
-../run download-mappings &> $LOGDIR/downloadMappings.log
+../run download-ontology &>  $LOGDIR/downloadOntology.log
+../run download-mappings &>  $LOGDIR/downloadMappings.log
 
-# DOWNLOAD WIKIDUMPS
+echo "DOWNLOAD WIKIDUMPS"
 cd $DIEFDIR/dump
-../run download $CONFIGDIR/download.$GROUP.properties &> $LOGDIR/downloadWikidumps.log 
+../run download $CONFIGDIR/download.$GROUP.properties &>  $LOGDIR/downloadWikidumps.log 
 
-# EXTRACT
-extractDumps &> $LOGDIR/extraction.log;
 
-# POST-PROCESSING
+echo "EXTRACT"
+extractDumps &>  $LOGDIR/extraction.log;
+
+echo "POST-PROCESSING"
 postProcessing 2> $LOGDIR/postProcessing.log;
 
 
