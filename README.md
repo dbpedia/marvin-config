@@ -32,11 +32,11 @@ rm -rf marvin-extraction/extraction-framework
 To run the other extractions, use either of
 ```
 # around 4-7 days
-./marvin_extraction_run.sh --group=generic
+./marvin_extraction_run.sh generic
 # around 4-7 days
-./marvin_extraction_run.sh --group=mappings
+./marvin_extraction_run.sh mappings
 # around 7-14 days
-./marvin_extraction_run.sh --group=wikidata
+./marvin_extraction_run.sh wikidata
 ```
 
 ## Cronjobs
