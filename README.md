@@ -26,7 +26,7 @@ rm -rf marvin-extraction/extraction-framework
 ./setup-dief.sh
 
 # test run Romanian extraction, very small
-./marvin_extraction_run.sh --group=test
+./marvin_extraction_run.sh test
 ```
 
 To run the other extractions, use either of
