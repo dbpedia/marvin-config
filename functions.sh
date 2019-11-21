@@ -20,7 +20,6 @@ LOGDIR="$ROOT/marvin-extraction/logs/$(date +%Y-%m-%d)"  && mkdir -p $LOGDIR
 EXTRACTIONBASEDIR="$ROOT/marvin-extraction/wikidumps" && mkdir -p $EXTRACTIONBASEDIR
 DATABUSDIR="$ROOT/marvin-extraction/databus-maven-plugin"
 
-
 ##############
 # functions
 ##############
@@ -28,7 +27,7 @@ DATABUSDIR="$ROOT/marvin-extraction/databus-maven-plugin"
 # extract data
 extractDumps() {
     cd $DIEFDIR/dump;
-        
+
     # exception for generic, 1. spark, 2. as English is big and has to be run separately
     if [ "$GROUP" = "generic" ]
     then
@@ -38,10 +37,10 @@ extractDumps() {
     then
       >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.en.properties;
     else
-		# run for all 
-	    >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
-    fi    
-   
+	# run for all
+	>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
+    fi
+
 }
 
 
@@ -91,9 +90,7 @@ archiveLogFiles() {
 # Databus Mapping
 ##########################
 
-
-
-# switch case for some language exceptions 
+# switch case for some language exceptions
 mapLangToContVar() {
     lang=$(echo "$1" | sed 's|wiki||g')
     case "$lang" in
@@ -110,67 +107,66 @@ mapLangToContVar() {
 mapNamesToDatabus() {
 
     case "$1" in
-    
-		# generic
-        "article-templates-nested") echo "article-templates_nested";;
 
+	# generic
+        "article-templates-nested") echo "article-templates_nested";;
         "citation-data") echo "citations_data";;
         "citation-links") echo "citations_links";;
-
         "commons-page-links") echo "commons-sameas-links";;
-
         "page-ids") echo "page_ids";;
         "page-length") echo "page_length";;
         "page-links") echo "wikilinks";;
-
         "article-categories") echo "categories_articles";;
         "category-labels") echo "categories_labels";;
         "skos-categories") echo "categories_skos";;
+        #"revision-ids") echo "revisions_ids";;
+        #"revision-uris") echo "revisions_uris";;
 
-        "revision-ids") echo "revisions_ids";;
-        "revision-uris") echo "revisions_uris";;
-        
-        # mappings
-		"mappingbased-objects-disjoint-domain") echo "mappingbased-objects_disjointDomain";;
-		"mappingbased-objects-disjoint-range")  echo "mappingbased-objects_disjointRange";;
+       # mappings
+	"mappingbased-objects-disjoint-domain") echo "mappingbased-objects_disjointDomain";;
+	"mappingbased-objects-disjoint-range")  echo "mappingbased-objects_disjointRange";;
 
-		# wikidata
-		"alias-nmw") echo "alias_nmw";;
-		"description-nmw") echo "description_nmw";;
-		"labels-nmw") echo "labels_nmw";;
-		"mappingbased-properties-reified-qualifiers") echo "mappingbased-properties-reified_qualifiers";;
-		"wikidata-duplicate-iri-split") echo "debug_duplicateirisplit";;
-		"wikidata-r2r-mapping-errors") echo "debug_r2rmappingerrors";;
-		"wikidata-type-like-statements") echo "debug_typelikestatements";;
-		
-		# both mappings and wikidata
-		"instance-types") echo "instance-types_specific";;
-		"instance-types-transitive") echo "instance-types_transitive";;
+	# wikidata
+	"alias-nmw") echo "alias_nmw";;
+	"description-nmw") echo "description_nmw";;
+	"labels-nmw") echo "labels_nmw";;
+	"mappingbased-properties-reified-qualifiers") echo "mappingbased-properties-reified_qualifiers";;
+	"mappingbased-objects-uncleaned-redirected") echo "mappingbased-objects";;
+	"revision-ids") echo "revision_ids";;
+	"revision-uris") echo "revision_uris";;
+	"wikidata-duplicate-iri-split") echo "debug_duplicateirisplit";;
+	"wikidata-r2r-mapping-errors") echo "debug_r2rmappingerrors";;
+	"wikidata-type-like-statements") echo "debug_typelikestatements";;
+	"transitive-redirects") echo "redirects_transitive";;
 
+	# both mappings and wikidata
+	"instance-types") echo "instance-types_specific";;
+	"instance-types-transitive") echo "instance-types_transitive";;
 
         *) echo "$1";;
     esac
 }
 
-
-
 mapAndCopy() {
 	path=$1
+
 	# split filename
 	# how to use ${string##/*}
 	# https://www.tldp.org/LDP/abs/html/string-manipulation.html#Substring%20Removal#Substring Removal
 	file="${path##*/}"
+
 	version="${file#*-}"
 	version="${version%%-*}"
 	version="${version:0:4}.${version:4:2}.${version:6:2}"
+
 	lang="${file%%-*}"
+
 	extraction="${file#*-*-}"
 	extraction="${extraction%%.*}"
-	extension="${file#*.}"
-	
-	# wikidata exception
-	extraction=$(echo -n $extraction | sed 's|interlanguage-links-|interlanguage-links_lang=|' )
-	
+	extraction=$(echo -n $extraction | sed 's|interlanguage-links-|interlanguage-links_lang=|') # generic exception
+
+	extensions="${file#*.}"
+
 	# map names and languages
 	mapped="$(mapNamesToDatabus $extraction)"
 	contVars="$(mapLangToContVar $lang)"
@@ -179,24 +175,28 @@ mapAndCopy() {
 	fi
 	artifact="${mapped%%_*}"
 	targetFolder="$DATABUSDIR/dbpedia/$GROUP/$artifact/$version"
-	targetFile="$artifact$contVars.$extension"
-	
-# TODO proper handling of "_redirected"
-# TODO see above, redirected are moved to logdir and overwrite the unredirected
-#concerns onlyy generic: 
-#< enwiki/20191001/enwiki-20191001-disambiguations_redirected.ttl.bz2
-#< enwiki/20191001/enwiki-20191001-infobox-properties_redirected.ttl.bz2
-#< enwiki/20191001/enwiki-20191001-page-links_redirected.ttl.bz2
-#< enwiki/20191001/enwiki-20191001-persondata_redirected.ttl.bz2
-#< enwiki/20191001/enwiki-20191001-topical-concepts_redirected.ttl.bz2
-# targetFile=$(echo -n "$targetFile" | sed 's/_redirected//g' )
-	
+	targetFile="$artifact$contVars.$extensions"
+
+	if [ -d "$DATABUSDIR/dbpedia/$GROUP/$artifact" ]; then
+		mkdir -p $targetFolder
+	else
+		echo "\"$artifact\" (artifact not found) $path" >&2;
+	fi
+
+	# TODO proper handling of "_redirected"
+	# TODO see above, redirected are moved to logdir and overwrite the unredirected
+	# concerns onlyy generic:
+	# < enwiki/20191001/enwiki-20191001-disambiguations_redirected.ttl.bz2
+	# < enwiki/20191001/enwiki-20191001-infobox-properties_redirected.ttl.bz2
+	# < enwiki/20191001/enwiki-20191001-page-links_redirected.ttl.bz2
+	# < enwiki/20191001/enwiki-20191001-persondata_redirected.ttl.bz2
+	# < enwiki/20191001/enwiki-20191001-topical-concepts_redirected.ttl.bz2
+
 	# copy
-	echo "< $path
-> $artifact/$version/$targetFile
-----------------------"
 	# TODO enable after testing
-	#cp -vn "$path" "$DATABUSMVNPOMDIR/$targetArVe/$targetFile"
+	cp -n "$path" "$targetFolder/$targetFile"
+	echo -e "< $path\n> $targetFolder/$targetFile\n----------------------"
+
 }
 
 
