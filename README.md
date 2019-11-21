@@ -26,17 +26,17 @@ rm -rf marvin-extraction/extraction-framework
 ./setup-dief.sh
 
 # test run Romanian extraction, very small
-./marvin_extraction_run.sh --group=test
+./marvin_extraction_run.sh test
 ```
 
 To run the other extractions, use either of
 ```
 # around 4-7 days
-./marvin_extraction_run.sh --group=generic
+./marvin_extraction_run.sh generic
 # around 4-7 days
-./marvin_extraction_run.sh --group=mappings
+./marvin_extraction_run.sh mappings
 # around 7-14 days
-./marvin_extraction_run.sh --group=wikidata
+./marvin_extraction_run.sh wikidata
 ```
 
 ## Cronjobs
@@ -44,7 +44,8 @@ To run the other extractions, use either of
 Below is a list of cronjobs we use on the different servers:
 
 ```
-TODO
+# extraction and release for wikidata
+0 0 7 * * bin/bash -c 'cd /data/marvin-config/marvin-extraction-run.sh wikidata && ./ && ./databus-release.sh'
 ```
 
 ## 
@@ -60,16 +61,29 @@ This contribution by TIB to DBpedia & its community is a great push towards ince
 
 # Workflow Description
 
-## 
-
-## Downloading the wikimedia dumps
-TODO
-
 ## Update and Run the extraction
-TODO
+
+To run a generic, mappings, or wikidata extraction the following script will do the rest.
+Its default behavior is to create all folder relative to its execution directory.
+If you want to adapt some paths you can edit them inside `fucntions.sh`.
+
+```bash
+./marvin-extraction-run.sh
+```
 
 ## Deploy MARVIN on Databus
-TODO
+
+
+The `databus-release.sh` script contains the workflow how the extracted files are renamed and copied into a databus-maven-plugin readable structure (.e.g artfact and content variants). 
+Further, which parameters are used to deploy the MARVIN relases on the databus.
+
+```bash
+./databus-release.sh
+```
+
+> **NOTE:** This scrtipt sill uses absolute paths and dependens on the private key of the publishers webid
+>
+> **TODO:** Refactor `./databus-release.sh`
 
 ## [Manual] Run Databus-Derive (clone and parse)
 On the respective server there is a user marvin-fetch, that has access to `/data/derive` containing the pom.xml of https://github.com/dbpedia/databus-maven-plugin/tree/master/dbpedia
