@@ -1,7 +1,8 @@
 # NOTE: this properties files is imported in every extraction process and contains general parameters which only have to be set once for every release
 
 # The DBpedia version to be extracted (in this format: YYYY-MM)
-dbpedia-version=2018-10
+# SH Note: leaving it blank takes latest. 
+dbpedia-version=
 
 # Replace with your Wikipedia dump download directory (should not change over the course of a release)
 # base-dir=/data/extraction/wikidumps/
@@ -91,3 +92,7 @@ summarize-exceptions=true
 # Options for the SparkExtraction
 spark-master=local[32]
 spark-local-dir=/data/extraction/spark.local.dir/
+
+###########################
+## Abstract and NIF extraction 
+
