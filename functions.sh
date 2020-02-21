@@ -35,9 +35,8 @@ extractDumps() {
        >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.en.properties;
     elif ["$GROUP" = "text" ]
     then
-	  # run en separately	
-      >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.en.properties;
-      #>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
+      #>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.en.properties;
+      >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
     else
 	# run for all
 	>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
