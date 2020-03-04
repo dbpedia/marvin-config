@@ -200,8 +200,8 @@ mapAndCopy() {
 
 }
 
+diefCommitLink() {
 
-
-
-
-
+	cd $DIEFDIR
+	echo "https://github.com/dbpedia/extraction-framework/commit/$(git rev-parse @)"
+}

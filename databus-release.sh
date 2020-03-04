@@ -38,8 +38,7 @@ cd $DATABUSDIR/dbpedia/$GROUP;
 mvn versions:set -DnewVersion=$(ls * | grep '^[0-9]\{4\}.[0-9]\{2\}.[0-9]\{2\}$' | sort -u  | tail -1);
 
 # get git commit link
-GITSHORTHASH=${git log | head -1 | cut -f2 -d ' ' | grep -o "^......."  }
-GITHUBLINK=${git log | head -1 | cut -f2 -d ' ' | sed 's|^|https://github.com/dbpedia/extraction-framework/commit/|'}
+GITHUBLINK="$(diefCommitLink)"
 
 PUBLISHER="https://vehnem.github.io/webid.ttl#this";
 # TODO marvin: shouldn't this be the web dir directly?
