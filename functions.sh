@@ -35,7 +35,8 @@ extractDumps() {
        >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.en.properties;
     elif ["$GROUP" = "text" ]
     then
-      >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.en.properties;
+      #>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.en.properties;
+      >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
     else
 	# run for all
 	>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
@@ -109,19 +110,19 @@ mapNamesToDatabus() {
     case "$1" in
 
 	# generic
-#        "article-templates-nested") echo "article-templates_nested";;
-#        "citation-data") echo "citations_data";;
-#        "citation-links") echo "citations_links";;
-#        "commons-page-links") echo "commons-sameas-links";;
-#        "page-ids") echo "page_ids";;
-#        "page-length") echo "page_length";;
-#        "page-links") echo "wikilinks";;
-#        "article-categories") echo "categories_articles";;
-#        "category-labels") echo "categories_labels";;
-#        "skos-categories") echo "categories_skos";;
-#        "revision-ids") echo "revision_ids";;
-#        "revision-uris") echo "revision_uris";;
-#
+        "article-templates-nested") echo "article-templates_nested";;
+        "citation-data") echo "citations_data";;
+        "citation-links") echo "citations_links";;
+        "commons-page-links") echo "commons-sameas-links";;
+        "page-ids") echo "page_ids";;
+        "page-length") echo "page_length";;
+        "page-links") echo "wikilinks";;
+        "article-categories") echo "categories_articles";;
+        "category-labels") echo "categories_labels";;
+        "skos-categories") echo "categories_skos";;
+        "revision-ids") echo "revisions_ids";;
+        "revision-uris") echo "revisions_uris";;
+
        # mappings
 	"mappingbased-objects-disjoint-domain") echo "mappingbased-objects_disjointDomain";;
 	"mappingbased-objects-disjoint-range")  echo "mappingbased-objects_disjointRange";;
@@ -132,8 +133,8 @@ mapNamesToDatabus() {
 	"labels-nmw") echo "labels_nmw";;
 	"mappingbased-properties-reified-qualifiers") echo "mappingbased-properties-reified_qualifiers";;
 	"mappingbased-objects-uncleaned-redirected") echo "mappingbased-objects";;
-	"revision-ids") echo "revision_ids";;
-	"revision-uris") echo "revision_uris";;
+	"revision-ids") echo "revisions_ids";;
+	"revision-uris") echo "revisions_uris";;
 	"wikidata-duplicate-iri-split") echo "debug_duplicateirisplit";;
 	"wikidata-r2r-mapping-errors") echo "debug_r2rmappingerrors";;
 	"wikidata-type-like-statements") echo "debug_typelikestatements";;
@@ -199,8 +200,8 @@ mapAndCopy() {
 
 }
 
+diefCommitLink() {
 
-
-
-
-
+	cd $DIEFDIR
+	echo "https://github.com/dbpedia/extraction-framework/commit/$(git rev-parse @)"
+}
