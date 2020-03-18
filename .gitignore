@@ -1,4 +1,4 @@
-databus-maven-plugin/
+databus-poms/dbpedia/*/*/*/
 extraction-framework/
 wikidumps/
 logs/
