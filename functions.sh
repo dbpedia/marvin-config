@@ -109,19 +109,19 @@ mapNamesToDatabus() {
     case "$1" in
 
 	# generic
-        "article-templates-nested") echo "article-templates_nested";;
-        "citation-data") echo "citations_data";;
-        "citation-links") echo "citations_links";;
-        "commons-page-links") echo "commons-sameas-links";;
-        "page-ids") echo "page_ids";;
-        "page-length") echo "page_length";;
-        "page-links") echo "wikilinks";;
-        "article-categories") echo "categories_articles";;
-        "category-labels") echo "categories_labels";;
-        "skos-categories") echo "categories_skos";;
-        #"revision-ids") echo "revisions_ids";;
-        #"revision-uris") echo "revisions_uris";;
-
+#        "article-templates-nested") echo "article-templates_nested";;
+#        "citation-data") echo "citations_data";;
+#        "citation-links") echo "citations_links";;
+#        "commons-page-links") echo "commons-sameas-links";;
+#        "page-ids") echo "page_ids";;
+#        "page-length") echo "page_length";;
+#        "page-links") echo "wikilinks";;
+#        "article-categories") echo "categories_articles";;
+#        "category-labels") echo "categories_labels";;
+#        "skos-categories") echo "categories_skos";;
+#        "revision-ids") echo "revision_ids";;
+#        "revision-uris") echo "revision_uris";;
+#
        # mappings
 	"mappingbased-objects-disjoint-domain") echo "mappingbased-objects_disjointDomain";;
 	"mappingbased-objects-disjoint-range")  echo "mappingbased-objects_disjointRange";;
