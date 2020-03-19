@@ -15,6 +15,19 @@ then
     exit 1
 fi
 
+##################
+# Server DownloadURL
+##################
+DOMAIN=$GROUP
+
+if [ "$GROUP" = "generic" ] || [ "$GROUP" = "mappings" ] 
+then
+    DOMAIN="mappings"
+elif [ "$GROUP" = "text" ] 
+then
+     DOMAIN="generic"
+fi
+
 
 ##################
 # Setup and clone pom files
@@ -33,7 +46,6 @@ for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
    mapAndLink $path
 done
 
-exit
 
 # deploy
 cd $DATABUSDIR/dbpedia/$GROUP;
@@ -41,14 +53,21 @@ mvn versions:set -DnewVersion=$(ls * | grep '^[0-9]\{4\}.[0-9]\{2\}.[0-9]\{2\}$'
 
 # get git commit link
 GITHUBLINK="$(diefCommitLink)"
-
 PUBLISHER="https://vehnem.github.io/webid.ttl#this";
-# TODO marvin: shouldn't this be the web dir directly?
-PACKAGEDIR="/data/extraction/release/\${project.groupId}/\${project.artifactId}";
-DOWNLOADURL="http://dbpedia-$GROUP.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
+PACKAGEDIR="/var/www/dbpedia-mappings.tib.eu/databus-repo/marvin/\${project.groupId}/\${project.artifactId}";
+DOWNLOADURL="http://dbpedia-$DOMAIN.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
 LABELPREFIX="(pre-release) ";
-# todo replace with markdown or html when supported by upload client
 COMMENTPREFIX="(MARVIN is the DBpedia bot for monthly raw releases (unparsed, unsorted) for debugging the DIEF software. After its releases, data is cleaned and persisted under the dbpedia account. Commit: $GITHUBLINK) " ;
+
+echo "
+$GITHUBLINK
+$PUBLISHER
+$PACKAGEDIR
+$DOWNLOADURL
+$LABELPREFIX
+$COMMENTPREFIX
+"
+exit
 
 mvn clean deploy -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
 

@@ -183,12 +183,12 @@ mapAndLink() {
 	if [ -d "$DATABUSDIR/dbpedia/$GROUP/$artifact" ]; then
 		mkdir -p $targetFolder
 	else
-		echo "\"$artifact\" (artifact not found) $path" >&2;
+		echo "[DEBUG]\"$artifact\" (artifact not found, might not be in group $GROUP) $path" >&2;
 	fi
 
 	# TODO proper handling of "_redirected"
 	# TODO see above, redirected are moved to logdir and overwrite the unredirected
-	# concerns onlyy generic:
+	# concerns only generic:
 	# < enwiki/20191001/enwiki-20191001-disambiguations_redirected.ttl.bz2
 	# < enwiki/20191001/enwiki-20191001-infobox-properties_redirected.ttl.bz2
 	# < enwiki/20191001/enwiki-20191001-page-links_redirected.ttl.bz2
