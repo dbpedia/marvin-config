@@ -54,21 +54,25 @@ mvn versions:set -DnewVersion=$(ls * | grep '^[0-9]\{4\}.[0-9]\{2\}.[0-9]\{2\}$'
 # get git commit link
 GITHUBLINK="$(diefCommitLink)"
 PUBLISHER="https://vehnem.github.io/webid.ttl#this";
-PACKAGEDIR="/var/www/dbpedia-mappings.tib.eu/databus-repo/marvin/\${project.groupId}/\${project.artifactId}";
-DOWNLOADURL="http://dbpedia-$DOMAIN.tib.eu/release/\${project.groupId}/\${project.artifactId}/\${project.version}/";
+PACKAGEDIR="/var/www/dbpedia-$DOMAIN.tib.eu/databus-repo/marvin/\${project.groupId}/\${project.artifactId}";
+DOWNLOADURL="http://dbpedia-$DOMAIN.tib.eu/databus-repo/marvin/\${project.groupId}/\${project.artifactId}/\${project.version}/";
 LABELPREFIX="(pre-release) ";
-COMMENTPREFIX="(MARVIN is the DBpedia bot for monthly raw releases (unparsed, unsorted) for debugging the DIEF software. After its releases, data is cleaned and persisted under the dbpedia account. Commit: $GITHUBLINK) " ;
+COMMENTPREFIX="(MARVIN is the DBpedia bot for monthly raw releases (unparsed, unsorted) for debugging the DIEF software, commit: $GITHUBLINK . After its releases, data is cleaned and persisted under the DBpedia account. ) " ;
 
-echo "
-$GITHUBLINK
-$PUBLISHER
-$PACKAGEDIR
-$DOWNLOADURL
-$LABELPREFIX
-$COMMENTPREFIX
+echo "VARS:
+GITHUBLINK: $GITHUBLINK
+PUBLISHER: $PUBLISHER
+PACKAGEDIR: $PACKAGEDIR
+DOWNLOADURL: $DOWNLOADURL
+LABELPREFIX: $LABELPREFIX
+COMMENTPREFIX:$COMMENTPREFIX
 "
-exit
 
-mvn clean deploy -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
-
+# TODO workaround for the read time out exception 
+for i in `ls` ; 
+do 
+	cd $i ;
+	mvn clean deploy -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
+	cd ..
+done
 

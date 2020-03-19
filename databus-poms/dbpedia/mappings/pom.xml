@@ -64,7 +64,7 @@ For more technical information on how these datasets were generated, please visi
     <databus.packageDirectory>/media/bigone/25TB/www/downloads.dbpedia.org/repo/lts/${project.groupId}/${project.artifactId}</databus.packageDirectory>
     <databus.tryVersionAsIssuedDate>true</databus.tryVersionAsIssuedDate>
     <databus.publisher>https://webid.dbpedia.org/webid.ttl#this</databus.publisher>
-    <databus.feedbackChannel>https://forum.dbpedia.org/c/databus-dbpedia/mappings</databus.feedbackChannel>
+    <databus.feedbackChannel>https://forum.dbpedia.org/c/data/databus/14</databus.feedbackChannel>
       <!-- used for derive plugin -->
     <databus.deriveversion>2019.09.01</databus.deriveversion>
   </properties>
