@@ -69,7 +69,7 @@ COMMENTPREFIX:$COMMENTPREFIX
 "
 
 # TODO workaround for the read time out exception 
-for i in `ls` ; 
+for i in `ls -d */` ; 
 do 
 	cd $i ;
 	mvn clean deploy -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
