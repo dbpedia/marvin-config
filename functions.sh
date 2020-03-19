@@ -18,7 +18,7 @@ CONFIGDIR="$ROOT/extractionConfiguration"
 DIEFDIR="$ROOT/marvin-extraction/extraction-framework"
 LOGDIR="$ROOT/marvin-extraction/logs/$(date +%Y-%m-%d)"  && mkdir -p $LOGDIR
 EXTRACTIONBASEDIR="$ROOT/marvin-extraction/wikidumps" && mkdir -p $EXTRACTIONBASEDIR
-DATABUSDIR="$ROOT/marvin-extraction/databus-maven-plugin"
+DATABUSDIR="$ROOT/databus-poms"
 
 ##############
 # functions
@@ -148,7 +148,9 @@ mapNamesToDatabus() {
     esac
 }
 
-mapAndCopy() {
+# creates links in databus dir
+mapAndLink() {
+	# each individual file
 	path=$1
 
 	# split filename
@@ -195,7 +197,8 @@ mapAndCopy() {
 
 	# copy
 	# TODO enable after testing
-	cp -n "$path" "$targetFolder/$targetFile"
+	#cp -n "$path" "$targetFolder/$targetFile"
+	ln -s "$path" "$targetFolder/$targetFile"
 	echo -e "< $path\n> $targetFolder/$targetFile\n----------------------"
 
 }

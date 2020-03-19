@@ -22,16 +22,18 @@ fi
 
 #/data/extraction/wikidumps/enwiki/20191001
 
-git clone "https://github.com/dbpedia/databus-maven-plugin.git" $DATABUSDIR &>/dev/null
-cd $DATABUSDIR
-git pull
+# git clone "https://github.com/dbpedia/databus-maven-plugin.git" $DATABUSDIR &>/dev/null
+# cd $DATABUSDIR
+# git pull
 
-# copy
+# creates links in databus dir
 # iterate all .ttl.bz2 files
 # uncomment for testing
 for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
-   mapAndCopy $path
+   mapAndLink $path
 done
+
+exit
 
 # deploy
 cd $DATABUSDIR/dbpedia/$GROUP;
