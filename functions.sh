@@ -18,7 +18,7 @@ CONFIGDIR="$ROOT/extractionConfiguration"
 DIEFDIR="$ROOT/marvin-extraction/extraction-framework"
 LOGDIR="$ROOT/marvin-extraction/logs/$(date +%Y-%m-%d)"  && mkdir -p $LOGDIR
 EXTRACTIONBASEDIR="$ROOT/marvin-extraction/wikidumps" && mkdir -p $EXTRACTIONBASEDIR
-DATABUSDIR="$ROOT/marvin-extraction/databus-maven-plugin"
+DATABUSDIR="$ROOT/databus-poms"
 
 ##############
 # functions
@@ -148,7 +148,9 @@ mapNamesToDatabus() {
     esac
 }
 
-mapAndCopy() {
+# creates links in databus dir
+mapAndLink() {
+	# each individual file
 	path=$1
 
 	# split filename
@@ -181,12 +183,12 @@ mapAndCopy() {
 	if [ -d "$DATABUSDIR/dbpedia/$GROUP/$artifact" ]; then
 		mkdir -p $targetFolder
 	else
-		echo "\"$artifact\" (artifact not found) $path" >&2;
+		echo "[DEBUG]\"$artifact\" (artifact not found, might not be in group $GROUP) $path" >&2;
 	fi
 
 	# TODO proper handling of "_redirected"
 	# TODO see above, redirected are moved to logdir and overwrite the unredirected
-	# concerns onlyy generic:
+	# concerns only generic:
 	# < enwiki/20191001/enwiki-20191001-disambiguations_redirected.ttl.bz2
 	# < enwiki/20191001/enwiki-20191001-infobox-properties_redirected.ttl.bz2
 	# < enwiki/20191001/enwiki-20191001-page-links_redirected.ttl.bz2
@@ -195,13 +197,14 @@ mapAndCopy() {
 
 	# copy
 	# TODO enable after testing
-	cp -n "$path" "$targetFolder/$targetFile"
+	#cp -n "$path" "$targetFolder/$targetFile"
+	ln -s "$path" "$targetFolder/$targetFile"
 	echo -e "< $path\n> $targetFolder/$targetFile\n----------------------"
 
 }
 
+diefCommitLink() {
 
-
-
-
-
+	cd $DIEFDIR
+	echo "https://github.com/dbpedia/extraction-framework/commit/$(git rev-parse @)"
+}
