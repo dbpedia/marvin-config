@@ -44,6 +44,8 @@ using the DBpedia Extraction-Framework available at https://github.com/dbpedia/e
 For more technical information on how these datasets were generated, please visit http://dev.dbpedia.org
 
 ## Changelog
+* 2020.02.01
+  * the datasets have been parsed with Jena. Sorting failed. 
 * 2019.10.16
   * fixed encoding issue
   * fixed https://github.com/dbpedia/extraction-framework/issues/595 where a nullpointer caused some instance extractions to crash

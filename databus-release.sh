@@ -43,7 +43,7 @@ fi
 # iterate all .ttl.bz2 files
 # uncomment for testing
 for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
-   mapAndLink $path
+   mapAndCopy $path
 done
 
 

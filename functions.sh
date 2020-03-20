@@ -149,7 +149,7 @@ mapNamesToDatabus() {
 }
 
 # creates links in databus dir
-mapAndLink() {
+mapAndCopy() {
 	# each individual file
 	path=$1
 
@@ -197,8 +197,8 @@ mapAndLink() {
 
 	# copy
 	# TODO enable after testing
-	#cp -n "$path" "$targetFolder/$targetFile"
-	ln -s "$path" "$targetFolder/$targetFile"
+	cp -n "$path" "$targetFolder/$targetFile"
+	# ln -s "$path" "$targetFolder/$targetFile"
 	echo -e "< $path\n> $targetFolder/$targetFile\n----------------------"
 
 }
