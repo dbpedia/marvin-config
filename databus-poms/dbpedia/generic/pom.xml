@@ -41,12 +41,8 @@
         <databus.documentationLocation>https://github.com/dbpedia/databus-maven-plugin/blob/master/dbpedia/${project.groupId}/${project.artifactId}</databus.documentationLocation>
         <databus.feedbackChannel>https://forum.dbpedia.org/c/data/databus/14</databus.feedbackChannel>
         <databus.tryVersionAsIssuedDate>true</databus.tryVersionAsIssuedDate>
-        <databus.packageDirectory>
-            /media/bigone/25TB/www/downloads.dbpedia.org/repo/lts/${project.groupId}/${project.artifactId}
-        </databus.packageDirectory>
-        <databus.downloadUrlPath>
-            https://downloads.dbpedia.org/repo/lts/${project.groupId}/${project.artifactId}/${project.version}/
-        </databus.downloadUrlPath>
+        <databus.packageDirectory>${project.build.directory}/databus/repo/dbpedia/${project.groupId}/${project.artifactId}</databus.packageDirectory>
+        <databus.downloadUrlPath>https://downloads.dbpedia.org/repo/dbpedia/${project.groupId}/${project.artifactId}/${project.version}/</databus.downloadUr$
         <databus.publisher>https://webid.dbpedia.org/webid.ttl#this</databus.publisher>
         <databus.license>http://purl.oclc.org/NET/rdflicense/cc-by3.0</databus.license>
         <databus.documentation><![CDATA[
@@ -85,7 +81,7 @@ characters
 * link to Wikimedia dump version is missing
         ]]></databus.documentation>
         <!-- used for derive plugin -->
-        <databus.deriveversion>2019.10.01</databus.deriveversion>
+        <databus.deriveversion>2020.02.01</databus.deriveversion>
     </properties>
 
     <!-- currently still needed to find the super-pom, once the super-pom is in maven central,

@@ -47,6 +47,7 @@ for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
    mapAndCopy $path
 done
 
+
 # deploy
 cd $DATABUSDIR/dbpedia/$GROUP;
 VERSION=$(ls * | grep '^[0-9]\{4\}.[0-9]\{2\}.[0-9]\{2\}$' | sort -u  | tail -1)
@@ -74,7 +75,7 @@ COMMENTPREFIX:$COMMENTPREFIX
 for i in `ls -d */` ; 
 do 
 	cd $i ;
-	mvn clean deploy -Ddatabus.databus.pkcs12serverId="databus.marvin" -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
+	mvn clean deploy -Ddatabus.pkcs12serverId="databus.marvin" -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
 	cd ..
 done
 
