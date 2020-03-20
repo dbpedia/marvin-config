@@ -39,6 +39,7 @@ fi
 # cd $DATABUSDIR
 # git pull
 
+
 # creates links in databus dir
 # iterate all .ttl.bz2 files
 # uncomment for testing
@@ -46,10 +47,11 @@ for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
    mapAndCopy $path
 done
 
-
 # deploy
 cd $DATABUSDIR/dbpedia/$GROUP;
-mvn versions:set -DnewVersion=$(ls * | grep '^[0-9]\{4\}.[0-9]\{2\}.[0-9]\{2\}$' | sort -u  | tail -1);
+VERSION=$(ls * | grep '^[0-9]\{4\}.[0-9]\{2\}.[0-9]\{2\}$' | sort -u  | tail -1)
+echo $VERSION
+mvn versions:set -DnewVersion=$VERSION;
 
 # get git commit link
 GITHUBLINK="$(diefCommitLink)"
@@ -72,7 +74,7 @@ COMMENTPREFIX:$COMMENTPREFIX
 for i in `ls -d */` ; 
 do 
 	cd $i ;
-	mvn clean deploy -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
+	mvn clean deploy -Ddatabus.databus.pkcs12serverId="databus.marvin" -Ddatabus.publisher="$PUBLISHER" -Ddatabus.packageDirectory="$PACKAGEDIR" -Ddatabus.downloadUrlPath="$DOWNLOADURL" -Ddatabus.labelPrefix="$LABELPREFIX" -Ddatabus.commentPrefix="$COMMENTPREFIX";
 	cd ..
 done
 

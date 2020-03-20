@@ -196,7 +196,7 @@ mapAndCopy() {
 	# < enwiki/20191001/enwiki-20191001-topical-concepts_redirected.ttl.bz2
 
 	# copy
-	# TODO enable after testing
+	# TODO comment  after testing
 	cp -n "$path" "$targetFolder/$targetFile"
 	# ln -s "$path" "$targetFolder/$targetFile"
 	echo -e "< $path\n> $targetFolder/$targetFile\n----------------------"
