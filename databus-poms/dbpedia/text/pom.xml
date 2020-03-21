@@ -106,13 +106,27 @@ characters
         <configuration>
 	  <skipParsing>false</skipParsing>
 	  <skipCloning>false</skipCloning>
+<!-- 
+PREFIX dataid: <http://dataid.dbpedia.org/ns/core#>
+SELECT distinct (?derive) WHERE {
+
+    ?dataset dataid:group <https://databus.dbpedia.org/marvin/text> .
+    ?dataset dataid:artifact ?artifact .
+    ?dataset dataid:version ?version .
+    ?dataset dct:hasVersion "2020.02.01"^^xsd:string
+	BIND (CONCAT("<version>",?artifact,"/${databus.deriveversion}</version>") as ?derive)
+}
+order by asc(?derive)
+-->
+
           <versions>
-            <version>https://databus.dbpedia.org/marvin/mappings/geo-coordinates-mappingbased/${databus.deriveversion}</version>
-            <version>https://databus.dbpedia.org/marvin/mappings/instance-types/${databus.deriveversion}</version>
-            <version>https://databus.dbpedia.org/marvin/mappings/mappingbased-literals/${databus.deriveversion}</version>
-            <version>https://databus.dbpedia.org/marvin/mappings/mappingbased-objects-uncleaned/${databus.deriveversion}</version>
-            <version>https://databus.dbpedia.org/marvin/mappings/mappingbased-objects/${databus.deriveversion}</version>
-            <version>https://databus.dbpedia.org/marvin/mappings/specific-mappingbased-properties/${databus.deriveversion}</version>
+<version>https://databus.dbpedia.org/marvin/text/equations/${databus.deriveversion}</version>
+<version>https://databus.dbpedia.org/marvin/text/long-abstracts/${databus.deriveversion}</version>
+<version>https://databus.dbpedia.org/marvin/text/nif-context/${databus.deriveversion}</version>
+<version>https://databus.dbpedia.org/marvin/text/nif-page-structure/${databus.deriveversion}</version>
+<version>https://databus.dbpedia.org/marvin/text/nif-text-links/${databus.deriveversion}</version>
+<version>https://databus.dbpedia.org/marvin/text/raw-tables/${databus.deriveversion}</version>
+<version>https://databus.dbpedia.org/marvin/text/short-abstracts/${databus.deriveversion}</version>
           </versions>
         </configuration>
       </plugin>
