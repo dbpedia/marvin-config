@@ -24,17 +24,18 @@
     </modules>
 
     <properties>
+        <databus.codeReference>https://github.com/dbpedia/extraction-framework/blob/master/core/src/main/scala/org/dbpedia/extraction/nif/HtmlNifExtractor.scala</databus.codeReference>
+        <databus.issueTracker>https://github.com/dbpedia/extraction-framework/issues</databus.issueTracker>
+        <databus.feedbackChannel>https://forum.dbpedia.org/c/data/databus/14</databus.feedbackChannel>
+        <databus.documentationLocation>https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config/-/tree/master/databus-poms/dbpedia/${project.groupId}/${project.artifactId}</databus.documentationLocation>
+        <databus.downloadUrlPath>https://downloads.dbpedia.org/repo/dbpedia/${project.groupId}/${project.artifactId}/${project.version}/</databus.downloadUrlPath>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <databus.packageDirectory>${project.build.directory}/databus/repo/dbpedia/${project.groupId}/${project.artifactId}</databus.packageDirectory>
         <databus.tryVersionAsIssuedDate>true</databus.tryVersionAsIssuedDate>
-        <databus.packageDirectory>
-            /media/bigone/25TB/www/downloads.dbpedia.org/repo/lts/${project.groupId}/${project.artifactId}
-        </databus.packageDirectory>
-        <databus.downloadUrlPath>
-            https://downloads.dbpedia.org/repo/lts/${project.groupId}/${project.artifactId}/${project.version}/
-        </databus.downloadUrlPath>
         <databus.publisher>https://webid.dbpedia.org/webid.ttl#this</databus.publisher>
-        <!-- moved to settings.xml
-         databus.pkcs12File>${user.home}/.m2/certificate_generic.pfx</databus.pkcs12File-->
         <databus.license>http://purl.oclc.org/NET/rdflicense/cc-by-sa3.0</databus.license>
+        <!-- used for derive plugin -->
+        <databus.deriveversion>2020.02.01</databus.deriveversion>
         <databus.documentation><![CDATA[
 ## Attribution fulfilled by
 * (when deriving another dataset and releasing to the Databus) adding the Databus link to the provenance https://databus.dbpedia.org/dbpedia/${project.groupId}/${project.artifactId}/${project.artifactId}/${project.version}
@@ -58,6 +59,8 @@ For more technical information on how these datasets were generated, please visi
 * there seems to be invalid characters in the dataid file, however, the loading and rdf parsing work fine
 
 # Changelog
+## 2020.02.01 
+* fix provided by [Jonas Waeber](https://github.com/dbpedia/extraction-framework/pull/602) 
 ## 2016.10.01
 * old dataset from 2016
 * quite old, but work on new releases is on it's way
@@ -86,5 +89,70 @@ characters
             </snapshots>
         </repository>
     </repositories>
+<build>
+    <plugins>
+      <plugin>
+        <groupId>org.dbpedia.databus</groupId>
+        <artifactId>databus-derive-maven-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>DeriveFromMarvin</id>
+            <goals>
+              <goal>clone</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+	  <skipParsing>false</skipParsing>
+	  <skipCloning>false</skipCloning>
+          <versions>
+            <version>https://databus.dbpedia.org/marvin/mappings/geo-coordinates-mappingbased/${databus.deriveversion}</version>
+            <version>https://databus.dbpedia.org/marvin/mappings/instance-types/${databus.deriveversion}</version>
+            <version>https://databus.dbpedia.org/marvin/mappings/mappingbased-literals/${databus.deriveversion}</version>
+            <version>https://databus.dbpedia.org/marvin/mappings/mappingbased-objects-uncleaned/${databus.deriveversion}</version>
+            <version>https://databus.dbpedia.org/marvin/mappings/mappingbased-objects/${databus.deriveversion}</version>
+            <version>https://databus.dbpedia.org/marvin/mappings/specific-mappingbased-properties/${databus.deriveversion}</version>
+          </versions>
+        </configuration>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav-jackrabbit</artifactId>
+        <version>3.0.0</version>
+      </extension>
+    </extensions>
+  </build>
 
+  <profiles>
+    <profile>
+      <id>webdav</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>wagon-maven-plugin</artifactId>
+            <version>2.0.0</version>
+            <executions>
+              <execution>
+                <id>upload-databus</id>
+                <phase>install</phase>
+                <goals>
+                  <goal>upload</goal>
+                </goals>
+                <configuration>
+                  <fromDir>${project.build.directory}/databus/repo/dbpedia/${project.groupId}/${project.artifactId}</fromDir>
+                  <url>dav:https://downloads.dbpedia.org/repo/</url>
+                  <toDir>dbpedia/${project.groupId}/${project.artifactId}</toDir>
+                  <serverId>downloads-dbpedia-org</serverId>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
