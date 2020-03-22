@@ -15,6 +15,7 @@
     <version>2020.02.01</version>
     <modules>
         <!--module>anchor-text</module-->
+        <module>anchor-text</module>
         <module>article-templates</module>
         <module>categories</module>
         <module>citations</module>
@@ -201,7 +202,7 @@ order by asc(?derive)
                                     <goal>upload</goal>
                                 </goals>
                                 <configuration>
-                                    <fromDir>${project.build.directory}/databus/repo/${project.groupId}/${project.artifactId}</fromDir>
+                                    <fromDir>${project.build.directory}/databus/repo/dbpedia/${project.groupId}/${project.artifactId}</fromDir>
                                     <url>dav:https://downloads.dbpedia.org/repo/</url>
                                     <toDir>dbpedia/${project.groupId}/${project.artifactId}</toDir>
                                     <serverId>downloads-dbpedia-org</serverId>
