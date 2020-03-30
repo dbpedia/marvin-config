@@ -39,6 +39,12 @@ To run the other extractions, use either of
 ./marvin_extraction_run.sh wikidata
 ```
 
+To specify a different dump-date
+```
+# Set it in extractionConfiguration/{download|extraction}.*.properties
+dump-date=20200301
+```
+If specified dump-date is newer as current local dumps, then adding it to `extractionConfiguration/download.*.properties` is enough
 ## Cronjobs
 
 Below is a list of cronjobs we use on the different servers:
