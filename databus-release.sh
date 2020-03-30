@@ -43,7 +43,7 @@ fi
 # creates links in databus dir
 # iterate all .ttl.bz2 files
 # uncomment for testing
-latestDumpDate=$(find "$EXTRACTIONBASEDIR" -mindepth 2 -maxdepth 2 -type d | sort -n | tail -1 | xargs basename)
+latestDumpDate=$(find "$EXTRACTIONBASEDIR" -mindepth 2 -maxdepth 2 -type d -regextype grep -regex ".*[0-9]\{8\}$" | sort -n | tail -1 | xargs basename)
 # uncomment next line for all dumps
 # latestDumpDate=".*"
 for path in $(find "$EXTRACTIONBASEDIR" -regex ".*/$latestDumpDate/.*\.ttl.bz2" | sort); do
