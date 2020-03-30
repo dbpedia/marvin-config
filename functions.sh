@@ -15,10 +15,11 @@ usage:
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 CONFIGDIR="$ROOT/extractionConfiguration"
-DIEFDIR="$ROOT/marvin-extraction/extraction-framework"
-LOGDIR="$ROOT/marvin-extraction/logs/$(date +%Y-%m-%d)"  && mkdir -p $LOGDIR
-EXTRACTIONBASEDIR="$ROOT/marvin-extraction/wikidumps" && mkdir -p $EXTRACTIONBASEDIR
+LOGDIR="$ROOT/logs/$(date +%Y-%m-%d)"  && mkdir -p $LOGDIR
 DATABUSDIR="$ROOT/databus-poms"
+MARVINEXTRACTIONDIR="$ROOT/marvin-extraction/"
+DIEFDIR="$MARVINEXTRACTIONDIR/extraction-framework"
+EXTRACTIONBASEDIR="$MARVINEXTRACTIONDIR/wikidumps" && mkdir -p $EXTRACTIONBASEDIR
 
 ##############
 # functions
