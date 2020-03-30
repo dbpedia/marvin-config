@@ -43,8 +43,11 @@ fi
 # creates links in databus dir
 # iterate all .ttl.bz2 files
 # uncomment for testing
-for path in $(find "$EXTRACTIONBASEDIR" -name "*.ttl.bz2" | sort); do
-   mapAndCopy $path
+latestDumpDate=$(find "$EXTRACTIONBASEDIR" -mindepth 2 -maxdepth 2 -type d | sort -n | tail -1 | xargs basename)
+# uncomment next line for all dumps
+# latestDumpDate=".*"
+for path in $(find "$EXTRACTIONBASEDIR" -regex ".*/$latestDumpDate/.*\.ttl.bz2" | sort); do
+   echo $path
 done
 
 
