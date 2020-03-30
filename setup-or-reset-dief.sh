@@ -4,6 +4,7 @@
 source functions.sh
 
 # delete and clone
+rm -rf $DIEFDIR
 rm -r $MARVINEXTRACTIONDIR/*
 cd marvin-extraction
 git clone "https://github.com/dbpedia/extraction-framework.git" $DIEFDIR &>/dev/null
