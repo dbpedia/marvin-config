@@ -6,7 +6,7 @@ marvin_extraction_run.sh and databus-release.sh take one argument, which is the 
 selects download.\$GROUP.properties and extraction.\$GROUP.properties from extractionConfig dir and uses \$GROUP as a path.
 
 usage: 
-./marvin_extraction_run.sh {test|generic|mappings|wikidata|text}
+./marvin_extraction_run.sh {test|generic|mappings|wikidata|text|sparktestgeneric}
 "
 
 ##############
@@ -36,11 +36,10 @@ extractDumps() {
        >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.en.properties;
     elif ["$GROUP" = "text" ]
     then
-      #>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.en.properties;
       >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
     else
 	# run for all
-	>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
+	  >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
     fi
 
 }
@@ -74,10 +73,14 @@ postProcessing() {
 
     elif [ "$GROUP" = "test" ]
     then 
-        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
-        >&2 ../run TypeConsistencyCheckManual mappingbased-objects instance-types ro;
-    fi
+		echo "no postprocessing"
+        #>&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+        #>&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
+        #>&2 ../run TypeConsistencyCheckManual mappingbased-objects instance-types ro;
+     elif [ "$GROUP" = "sparktestgeneric" ]
+	 then
+		echo "no postprocessing"
+     fi
 }
 
 # compress log files

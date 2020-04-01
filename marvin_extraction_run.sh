@@ -15,7 +15,7 @@ source functions.sh
 #################
 GROUP=$1
 
-if [ "$GROUP" != "generic" ] && [ "$GROUP" != "mappings" ] && [ "$GROUP" != "test" ] && [ "$GROUP" != "wikidata" ]  && [ "$GROUP" != "text" ]  || [ -z "$GROUP" ]
+if [ "$GROUP" != "generic" ] && [ "$GROUP" != "mappings" ] && [ "$GROUP" != "test" ] && [ "$GROUP" != "wikidata" ] && [ "$GROUP" != "sparktestgeneric" ] && [ "$GROUP" != "text" ]  || [ -z "$GROUP" ]
 then
     echo "$HELP"
     exit 1
