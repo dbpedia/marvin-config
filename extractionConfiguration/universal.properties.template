@@ -14,6 +14,13 @@ dbpedia-version=
 # AUTOMATICALLY SET BY setup-dief.sh
 # log-dir=$LOGDIR/extraction/
 
+# Options for the SparkExtraction
+spark-master=local[32]
+# AUTOMATICALLY SET BY setup-dief.sh
+# spark-local-dir=/data/marvin-config/marvin-extraction/spark.local.dir/
+
+
+
 # to forward extraction summaries and warnings via the slack API, use this option
 -slack-webhook=https://hooks.slack.com/services/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
 -slack-username=username
@@ -89,9 +96,6 @@ previous-base-dir=http://downloads.dbpedia.org/2016-10/core-i18n/
 expected-changes=-1.0,9.0
 summarize-exceptions=true
 
-# Options for the SparkExtraction
-spark-master=local[32]
-spark-local-dir=/data/extraction/spark.local.dir/
 
 ###########################
 ## Abstract and NIF extraction 
