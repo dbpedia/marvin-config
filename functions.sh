@@ -6,7 +6,7 @@ marvin_extraction_run.sh and databus-release.sh take one argument, which is the 
 selects download.\$GROUP.properties and extraction.\$GROUP.properties from extractionConfig dir and uses \$GROUP as a path.
 
 usage: 
-./marvin_extraction_run.sh {test|generic|mappings|wikidata|text|sparktestgeneric}
+./marvin_extraction_run.sh {test|generic|generic.en|mappings|wikidata|text|sparktestgeneric}
 "
 
 ##############
@@ -28,20 +28,7 @@ EXTRACTIONBASEDIR="$MARVINEXTRACTIONDIR/wikidumps" && mkdir -p $EXTRACTIONBASEDI
 # extract data
 extractDumps() {
     cd $DIEFDIR/dump;
-
-    # exception for generic, 1. spark, 2. as English is big and has to be run separately
-    if [ "$GROUP" = "generic" ]
-    then
-       >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.properties;
-       >&2 ../run sparkextraction $CONFIGDIR/extraction.generic.en.properties;
-    elif ["$GROUP" = "text" ]
-    then
-      >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
-    else
-	# run for all
-	  >&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
-    fi
-
+	>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties;
 }
 
 
@@ -61,7 +48,7 @@ postProcessing() {
         >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects transitive-redirects .ttl.bz2 wikidata
         >&2 ../run MapObjectUris $EXTRACTIONBASEDIR transitive-redirects .ttl.bz2 mappingbased-objects-uncleaned,raw -redirected .ttl.bz2 wikidata
         >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
-    elif [ "$GROUP" = "generic" ] 
+    elif [ "$GROUP" = "generic" ] || [ "$GROUP" = "generic.en" ]
     then
         >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
         >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;

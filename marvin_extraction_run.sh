@@ -15,7 +15,7 @@ source functions.sh
 #################
 GROUP=$1
 
-if [ "$GROUP" != "generic" ] && [ "$GROUP" != "mappings" ] && [ "$GROUP" != "test" ] && [ "$GROUP" != "wikidata" ] && [ "$GROUP" != "sparktestgeneric" ] && [ "$GROUP" != "text" ]  || [ -z "$GROUP" ]
+if [ "$GROUP" != "generic" ] && [ "$GROUP" != "generic.en" ] && [ "$GROUP" != "mappings" ] && [ "$GROUP" != "test" ] && [ "$GROUP" != "wikidata" ] && [ "$GROUP" != "sparktestgeneric" ] && [ "$GROUP" != "text" ]  || [ -z "$GROUP" ]
 then
     echo "$HELP"
     exit 1
@@ -39,7 +39,9 @@ cd $DIEFDIR/dump
 
 
 echo "EXTRACT"
-extractDumps &>  $LOGDIR/extraction.log;
+cd $DIEFDIR/dump;
+>&2 ../run extraction $CONFIGDIR/extraction.$GROUP.properties &>  $LOGDIR/extraction.$GROUP.log;
+
 
 echo "POST-PROCESSING"
 postProcessing 2> $LOGDIR/postProcessing.log;
