@@ -47,7 +47,7 @@ latestDumpDate=$(find "$EXTRACTIONBASEDIR" -mindepth 2 -maxdepth 2 -type d -rege
 # uncomment next line for all dumps
 # latestDumpDate=".*"
 for path in $(find "$EXTRACTIONBASEDIR" -regex ".*/$latestDumpDate/.*\.ttl.bz2" | sort); do
-   echo $path
+   mapAndCopy $path
 done
 
 
