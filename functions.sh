@@ -36,8 +36,6 @@ extractDumps() {
 postProcessing() {
 
     cd $DIEFDIR/scripts;
-    echo "post-processing of $GROUP";
-    
     # resolve transitive links for all, affects the 'redirects' dataset
     # TODO ResolveTransitiveLinks can take a wikidata interlanguage link parameter, that helps to sort the redirects
     >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;

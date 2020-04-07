@@ -67,6 +67,10 @@ using the DBpedia Extraction-Framework available at https://github.com/dbpedia/e
 For more technical information on how these datasets were generated, please visit http://dev.dbpedia.org
 
 ## Changelog
+**2020.03.01**
+* full size, including dbr/dbr/dbr triples
+**2020.02.01**
+* a bug was discovered that had reomevd all dbr/dbr/dbr properties, this has been fixed for this release, but only alf of the data was extracted 
 **2019.09.01** 
 * fixed URI encoding and produce more valid triples
 **2019.08.01 -- skipped**
