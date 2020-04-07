@@ -32,42 +32,42 @@ extractDumps() {
 }
 
 
-# post-processing
+# post-processing, see http://dev.dbpedia.org/Post-Processing
 postProcessing() {
 
     cd $DIEFDIR/scripts;
-    echo "post-processing of $GROUP"
+    echo "post-processing of $GROUP";
     
-    if [ "$GROUP" = "mappings" ]
+    # resolve transitive links for all, affects the 'redirects' dataset
+    # TODO ResolveTransitiveLinks can take a wikidata interlanguage link parameter, that helps to sort the redirects
+    >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
+
+	# Datasets for MapObjectURIs
+    if [ "$GROUP" = "mappings" ] || [ "$GROUP" = "test" ] 
     then
-        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
-        >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
+		DATASETS="mappingbased-objects-uncleaned"
     elif [ "$GROUP" = "wikidata" ]
     then
-        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects transitive-redirects .ttl.bz2 wikidata
-        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR transitive-redirects .ttl.bz2 mappingbased-objects-uncleaned,raw -redirected .ttl.bz2 wikidata
-        >&2 ../run TypeConsistencyCheck type.consistency.check.properties;
-    elif [ "$GROUP" = "generic" ] || [ "$GROUP" = "generic.en" ]
+		DATASETS="mappingbased-objects-uncleaned,raw"
+    elif [ "$GROUP" = "generic" ] || [ "$GROUP" = "generic.en" ] || [ "$GROUP" = "sparktestgeneric" ]
     then
-        >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        >&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 disambiguations,infobox-properties,page-links,persondata,topical-concepts _redirected .ttl.bz2 @downloaded;
-		# todo untested line
-		for i in $(find $EXTRACTIONBASEDIR -name "*._redirects.ttl.bz2") ; do cp $i $LOGDIR ; rename -f 's/_redirected//' $i ; done
-    elif [ "$GROUP" = "text" ]
-    then
-        echo "check whether text has post-processing"
+		DATASETS="disambiguations,infobox-properties,page-links,persondata,topical-concepts"
+	fi
+	#run mapobjectURIs 
+	>&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 $DATASETS _redirected .ttl.bz2 @downloaded;
 
-    elif [ "$GROUP" = "test" ]
-    then 
-		echo "no postprocessing"
-        #>&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
-        #>&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 mappingbased-objects-uncleaned _redirected .ttl.bz2 @downloaded;
-        #>&2 ../run TypeConsistencyCheckManual mappingbased-objects instance-types ro;
-     elif [ "$GROUP" = "sparktestgeneric" ]
-	 then
-		echo "no postprocessing"
-     fi
+	# Datasets with Typeconsistencycheck
+	if [ "$GROUP" = "mappings" ] || [ "$GROUP" = "test" ] || [ "$GROUP" = "wikidata" ] || [ "$GROUP" = "generic" ] || [ "$GROUP" = "generic.en" ] || [ "$GROUP" = "sparktestgeneric" ]
+	then
+		>&2 ../run TypeConsistencyCheck type.consistency.check.properties;
+	fi
+     
+     # Handling of redirects, i.e. copy to log and rename old
+	 mkdir $LOGDIR/redirected
+	 for i in $(find $EXTRACTIONBASEDIR -name "*_redirected.ttl.bz2") ; do 
+		cp $i $LOGDIR/redirected  ;
+		rename -f 's/_redirected//' $i  ;
+	 done
 }
 
 # compress log files
