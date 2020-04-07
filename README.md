@@ -54,7 +54,6 @@ Below is a list of cronjobs we use on the different servers:
 0 0 7 * * bin/bash -c 'cd /data/marvin-config/marvin-extraction-run.sh wikidata && ./ && ./databus-release.sh'
 ```
 
-## 
 
 ## Acknowledgements
 We thank Sören Auer and the Technische Informationsbibliothek (TIB) for providing three servers to run:
@@ -76,6 +75,9 @@ If you want to adapt some paths you can edit them inside `fucntions.sh`.
 ```bash
 ./marvin-extraction-run.sh
 ```
+### Post-Processing
+Some extractions require postprocessing. The exact setup can be found in [functions.sh](https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config/-/blob/master/functions.sh#L41)
+More info about [post-processing](http://dev.dbpedia.org/Post-Processing).
 
 ## Deploy MARVIN on Databus
 
