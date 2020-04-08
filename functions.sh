@@ -61,10 +61,12 @@ postProcessing() {
 	fi
      
      # Handling of redirects, i.e. copy to log and rename old
-	 mkdir $LOGDIR/redirected
-	 for i in $(find $EXTRACTIONBASEDIR -name "*_redirected.ttl.bz2") ; do 
-		cp $i $LOGDIR/redirected  ;
-		rename -f 's/_redirected//' $i  ;
+	 mkdir -p $LOGDIR/unredirected/
+	 for redirectedFile in $(find $EXTRACTIONBASEDIR -name "*_redirected.ttl.bz2") ; do 
+        unredirectedFile=$(echo $redirectedFile | sed 's|_redirected\.ttl\.bz2$|\.ttl\.bz2|g');
+        [ -f $unredirectedFile ] && cp -vn "$unredirectedFile" "$LOGDIR/unredirected/";
+        # cp -vn $redirectedFile $LOGDIR/redirected;
+        rename -f 's/_redirected//' $redirectedFile;
 	 done
 }
 
