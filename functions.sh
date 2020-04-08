@@ -36,8 +36,9 @@ extractDumps() {
 postProcessing() {
 
     cd $DIEFDIR/scripts;
-    # resolve transitive links for all, affects the 'redirects' dataset
+    # ResolveTransitiveLinks for all, affects the 'redirects' dataset
     # TODO ResolveTransitiveLinks can take a wikidata interlanguage link parameter, that helps to sort the redirects
+    echo "-- ResolveTransitiveLinks"
     >&2 ../run ResolveTransitiveLinks $EXTRACTIONBASEDIR redirects redirects_transitive .ttl.bz2 @downloaded;
 
 	# Datasets for MapObjectURIs
@@ -51,22 +52,23 @@ postProcessing() {
     then
 		DATASETS="disambiguations,infobox-properties,page-links,persondata,topical-concepts"
 	fi
-	#run mapobjectURIs 
+	echo "-- MapObjectURIs" 
 	>&2 ../run MapObjectUris $EXTRACTIONBASEDIR redirects_transitive .ttl.bz2 $DATASETS _redirected .ttl.bz2 @downloaded;
 
-	# Datasets with Typeconsistencycheck
+	# Datasets with TypeConsistencyCheck
 	if [ "$GROUP" = "mappings" ] || [ "$GROUP" = "test" ] || [ "$GROUP" = "wikidata" ] || [ "$GROUP" = "generic" ] || [ "$GROUP" = "generic.en" ] || [ "$GROUP" = "sparktestgeneric" ]
 	then
+		echo "-- TypeConsistencyCheck"
 		>&2 ../run TypeConsistencyCheck type.consistency.check.properties;
 	fi
      
      # Handling of redirects, i.e. copy to log and rename old
+     echo "-- copying redirects"
 	 mkdir -p $LOGDIR/unredirected/
 	 for redirectedFile in $(find $EXTRACTIONBASEDIR -name "*_redirected.ttl.bz2") ; do 
         unredirectedFile=$(echo $redirectedFile | sed 's|_redirected\.ttl\.bz2$|\.ttl\.bz2|g');
         [ -f $unredirectedFile ] && cp -vn "$unredirectedFile" "$LOGDIR/unredirected/";
-        # cp -vn $redirectedFile $LOGDIR/redirected;
-        rename -f 's/_redirected//' $redirectedFile;
+        >&2 rename -f -v 's/_redirected//' $redirectedFile;
 	 done
 }
 
@@ -188,9 +190,9 @@ mapAndCopy() {
 
 	# copy
 	# TODO comment  after testing
-	cp -n "$path" "$targetFolder/$targetFile"
+	cp -vn "$path" "$targetFolder/$targetFile"
 	# ln -s "$path" "$targetFolder/$targetFile"
-	echo -e "< $path\n> $targetFolder/$targetFile\n----------------------"
+	# echo -e "< $path\n> $targetFolder/$targetFile\n----------------------"
 
 }
 
