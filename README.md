@@ -23,7 +23,7 @@ cd marvin-config
 # (~10 minutes) install dief in marvin-extraction/extraction-framework
 # if you installed it already you can run `git pull && mvn clean install` to update
 rm -rf marvin-extraction/extraction-framework
-./setup-dief.sh
+./setup-or-reset-dief.sh
 
 # test run Romanian extraction, very small
 ./marvin_extraction_run.sh test
