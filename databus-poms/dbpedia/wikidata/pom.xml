@@ -11,7 +11,7 @@
     <groupId>wikidata</groupId>
     <artifactId>group-metadata</artifactId>
     <packaging>pom</packaging>
-    <version>2019.10.01</version>
+    <version>2020.03.01</version>
 
     <modules>
         <module>alias</module>
@@ -30,7 +30,7 @@
         <!--module>raw</module-->
         <module>redirects</module>
         <module>references</module>
-        <module>revision</module>
+        <!--module>revision</module-->
         <module>sameas-all-wikis</module>
         <module>sameas-external</module>
         <!--module>sameas-wikidata</module-->
@@ -84,7 +84,7 @@ characters
 * deleted due to bzip2 non-recoverable bad blocks
         ]]></databus.documentation>
         <!-- used for derive plugin -->
-        <databus.marvinversion>2019.10.01</databus.marvinversion>
+        <databus.marvinversion>2020.03.01</databus.marvinversion>
     </properties>
 
     <!-- currently still needed to find the super-pom, once the super-pom is in maven central,
@@ -154,7 +154,7 @@ order by asc(?versionstring)
                     <version>https://databus.dbpedia.org/marvin/wikidata/properties/${databus.marvinversion}</version>
                     <version>https://databus.dbpedia.org/marvin/wikidata/redirects/${databus.marvinversion}</version>
                     <version>https://databus.dbpedia.org/marvin/wikidata/references/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/revision/${databus.marvinversion}</version>
+                    <!--version>https://databus.dbpedia.org/marvin/wikidata/revision/${databus.marvinversion}</version-->
                     <version>https://databus.dbpedia.org/marvin/wikidata/sameas-all-wikis/${databus.marvinversion}</version>
                     <version>https://databus.dbpedia.org/marvin/wikidata/sameas-external/${databus.marvinversion}</version>
                 </versions>
