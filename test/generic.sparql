@@ -1,0 +1,35 @@
+PREFIX dataid: <http://dataid.dbpedia.org/ns/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX dcat:   <http://www.w3.org/ns/dcat#>
+
+SELECT ?expected_files ?actual_files ?delta ?versionString ?versionIRI { 
+  {SELECT ?expected_files  (COUNT(DISTINCT ?distribution) as ?actual_files) ((?actual_files-?expected_files)AS ?delta) ?versionIRI ?versionString {
+      VALUES (?artifact ?expected_files) {
+( <https://databus.dbpedia.org/dbpedia/generic/anchor-text> 1 )
+( <https://databus.dbpedia.org/dbpedia/generic/article-templates> 278 )
+( <https://databus.dbpedia.org/dbpedia/generic/categories> 417 )
+( <https://databus.dbpedia.org/dbpedia/generic/citations> 2 )
+( <https://databus.dbpedia.org/dbpedia/generic/commons-sameas-links> 7 )
+( <https://databus.dbpedia.org/dbpedia/generic/disambiguations> 15 )
+( <https://databus.dbpedia.org/dbpedia/generic/external-links> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/geo-coordinates> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/homepages> 13 )
+( <https://databus.dbpedia.org/dbpedia/generic/infobox-properties> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/infobox-property-definitions> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/interlanguage-links> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/labels> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/page> 278 )
+( <https://databus.dbpedia.org/dbpedia/generic/persondata> 4 )
+( <https://databus.dbpedia.org/dbpedia/generic/redirects> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/revisions> 278 )
+( <https://databus.dbpedia.org/dbpedia/generic/topical-concepts>11 )
+( <https://databus.dbpedia.org/dbpedia/generic/wikilinks> 139 )
+( <https://databus.dbpedia.org/dbpedia/generic/wikipedia-links> 139 )
+    }
+    ?dataset dataid:artifact ?artifact .
+    ?dataset dataid:version ?versionIRI .
+    ?dataset dct:hasVersion ?versionString .
+    ?dataset dcat:distribution ?distribution .
+  }}
+  FILTER(?delta != 0)
+} ORDER BY DESC(?versionString)
