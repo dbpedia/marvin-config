@@ -17,7 +17,7 @@ SELECT  ?artifact ?codelink WHERE {
     FILTER (?group in (<https://databus.dbpedia.org/dbpedia/wikidata>, <https://databus.dbpedia.org/dbpedia/mappings>, <https://databus.dbpedia.org/dbpedia/text>,  <https://databus.dbpedia.org/dbpedia/generic>)) .
     #FILTER NOT EXISTS {?dataset dataid-debug:codeReference ?codelink .} 
     OPTIONAL {?dataset dataid-debug:codeReference ?codelink .}
-    ?dataset  dct:hasVersion  "2020.04.01"^^xsd:string . 
+    ?dataset  dct:hasVersion  "2020.03.01"^^xsd:string . 
 	
 }
 ```
