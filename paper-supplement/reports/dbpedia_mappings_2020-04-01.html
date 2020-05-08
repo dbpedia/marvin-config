@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+</head>
+<body>
+<h3>/data/home/mhofer/cVal/downloads.dbpedia.org/repo/dbpedia/mappings/*/2020.04.01/*.ttl.bz2</h3>
+<table border="0">
+  <tr>
+    <td class="font-weight-bold text-right">Timestamp:</td>
+    <td class="pl-4">2020-05-04T11:37:21</td>
+  </tr>
+</table>
+<h4>Generic Test Cases</h4>
+<table border="0">
+  <tr>
+    <td class="font-weight-bold text-right">Total constructs:</td>
+    <td class="pl-4">3227512728</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Covered constructs:</td>
+  <td class="pl-4">3227512508</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Coverage:</td>
+  <td class="pl-4">100.0% ( covered / total )</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Constructs with >=1 errors:</td>
+  <td class="pl-4">52227</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Error rate I:</td>
+  <td class="pl-4">0.001619% ( erroneous constructs / total )</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Total errors:</td>
+  <td class="pl-4">52227</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Error rate II:</td>
+  <td class="pl-4">0.001619% ( total errors / total constructs )</td>
+  </tr>
+</table>
+<table
+ data-toggle="table"
+ data-search="true">
+<thead>
+<tr>
+ <th data-sortable="true" data-field="errorrate">Error Rate</th>
+ <th data-sortable="true" data-field="prevalence">Prevalence</th>
+ <th data-sortable="true" data-field="errors">Errors</th>
+ <th data-sortable="true" data-field="approach">Test Approach</th>
+ <th data-sortable="true" data-field="trigger">Triggered From</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+ <td>0.001730%</td>
+ <td>3019942481</td>
+ <td>52227</td>
+ <td>IRI Validation with Apache Jena IRI parser (prevalence:= all IRIs)</td>
+ <td>GENERIC iri trigger { id: #GENERIC_IRI_TRIGGER }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>90086818</td>
+ <td>0</td>
+ <td>Literal validation with Apache Jena literal parser </td>
+ <td>GENERIC plain literal trigger { id: #GENERIC_PLAIN_LITERAL_TRIGGER }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>84856481</td>
+ <td>0</td>
+ <td>Literal validation with Apache Jena literal parser </td>
+ <td>GENERIC rdf:langString trigger { id: #GENERIC_LANG_LITERAL_TRIGGER }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>84856481</td>
+ <td>0</td>
+ <td>Literal language tag conformity to BCP47 (prevalence:= literals with lang tags)</td>
+ <td>GENERIC rdf:langString trigger { id: #GENERIC_LANG_LITERAL_TRIGGER }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>32626728</td>
+ <td>0</td>
+ <td>Literal validation with Apache Jena literal parser </td>
+ <td>GENERIC typed literal trigger { id: #GENERIC_TYPED_LITERAL_TRIGGER }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>32626728</td>
+ <td>0</td>
+ <td>rdf:langString is an implicit type and must never be serialized. (prevalence := all typed literals)</td>
+ <td>GENERIC typed literal trigger { id: #GENERIC_TYPED_LITERAL_TRIGGER }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>6193364</td>
+ <td>0</td>
+ <td>matching ^(\+|-)?([0-9]+(\.[0-9]*)?|\.[0-9]+)([Ee](\+|-)?[0-9]+)?|(\+|-)?INF|NaN$</td>
+ <td>Datatype xsd:float { id: 47f114229c13b831cfb39e2aa0c3d02e }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>4564982</td>
+ <td>0</td>
+ <td>matching ^[+]?[0-9]+$</td>
+ <td>Datatype xsd:nonNegativeInteger { id: 3b60a95f0371beb066045f9c101380af }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>4389416</td>
+ <td>0</td>
+ <td>matching ^-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?$</td>
+ <td>Datatype xsd:date { id: 18cd33804ff710237ce8bdd2ba09e947 }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>2161841</td>
+ <td>0</td>
+ <td>matching ^[\-+]?[0-9]+$</td>
+ <td>Datatype xsd:integer { id: 8135542ee268d0eb743f5ea8fed0860c }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>matching ^(\+|-)?([0-9]+(\.[0-9]*)?|\.[0-9]+)$</td>
+ <td>Datatype xsd:decimal { id: 90496fc8201b8992404e125df7d14eb6 }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>matching ^-?([1-9][0-9]{3,}|0[0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?$</td>
+ <td>Datatype xsd:dateTime { id: b9058512dcd95fc3ad5c07b03b0c46f1 }</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h4>Custom Test Cases</h4>
+<table border="0">
+  <tr>
+    <td class="font-weight-bold text-right">Total IRI count:</td>
+    <td class="pl-4">3019942481</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold text-right">Covered IRIs:</td>
+    <td class="pl-4">2604462522</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Coverage:</td>
+  <td class="pl-4">86.25% ( covered / total )</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Constructs with >=1 errors:</td>
+  <td class="pl-4">7505332</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Error rate I:</td>
+  <td class="pl-4">0.2882% ( erroneous constructs / total )</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Total errors:</td>
+  <td class="pl-4">7505661</td>
+  </tr>
+  <tr>
+  <td class="font-weight-bold text-right">Error rate II:</td>
+  <td class="pl-4">0.2882% ( total errors / total constructs )</td>
+  </tr>
+</table>
+<table
+ data-toggle="table"
+ data-search="true">
+<thead>
+<tr>
+ <th data-sortable="true" data-field="errorrate">Error Rate</th>
+ <th data-sortable="true" data-field="prevalence">Prevalence</th>
+ <th data-sortable="true" data-field="errors">Errors</th>
+ <th data-sortable="true" data-field="approach">Test Approach</th>
+ <th data-sortable="true" data-field="trigger">Triggered From</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+ <td>1.322%</td>
+ <td>567570166</td>
+ <td>7500707</td>
+ <td>one of vocab https://raw.githubusercontent.com/dbpedia/ontology-tracker/master/databus/dbpedia/ontology/dbo-snapshots/dbo-snapshots.nt</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0.7143%</td>
+ <td>29962</td>
+ <td>214</td>
+ <td>does not contain %29</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.7076%</td>
+ <td>29962</td>
+ <td>212</td>
+ <td>does not contain %28</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.5941%</td>
+ <td>29962</td>
+ <td>178</td>
+ <td>does not contain %27</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.4740%</td>
+ <td>29962</td>
+ <td>142</td>
+ <td>does not contain %2C</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.2671%</td>
+ <td>29962</td>
+ <td>80</td>
+ <td>does not contain %26</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.07343%</td>
+ <td>29962</td>
+ <td>22</td>
+ <td>does not contain %2B</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.02003%</td>
+ <td>29962</td>
+ <td>6</td>
+ <td>does not contain %3D</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.01336%</td>
+ <td>29962</td>
+ <td>4</td>
+ <td>does not contain %21</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0.003787%</td>
+ <td>104532477</td>
+ <td>3958</td>
+ <td>matches pattern ^http://www.wikidata.org/entity/Q[0-9]+$</td>
+ <td>Wikidata IRIs { id: http://dev.vocab.org/trigger/wikidata }</td>
+</tr>
+<tr>
+ <td>0.000003251%</td>
+ <td>553733866</td>
+ <td>18</td>
+ <td>does not contain %27</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.000002529%</td>
+ <td>553733866</td>
+ <td>14</td>
+ <td>does not contain %28</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.000002529%</td>
+ <td>553733866</td>
+ <td>14</td>
+ <td>does not contain %29</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.000002168%</td>
+ <td>553733866</td>
+ <td>12</td>
+ <td>does not contain %3D</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.000001987%</td>
+ <td>553733866</td>
+ <td>11</td>
+ <td>does not contain %2C</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.000001330%</td>
+ <td>1354209107</td>
+ <td>18</td>
+ <td>does not contain %27</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.000001034%</td>
+ <td>1354209107</td>
+ <td>14</td>
+ <td>does not contain %28</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.000001034%</td>
+ <td>1354209107</td>
+ <td>14</td>
+ <td>does not contain %29</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.0000008862%</td>
+ <td>1354209107</td>
+ <td>12</td>
+ <td>does not contain %3D</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0.0000008123%</td>
+ <td>1354209107</td>
+ <td>11</td>
+ <td>does not contain %2C</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain %3B</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain [</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain %24</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain ?</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain %2A</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain #</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain ]</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain %21</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain %26</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain %2B</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain `</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain |</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain ^</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain \</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain  </td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain }</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain {</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain ></td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain <</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>1354209107</td>
+ <td>0</td>
+ <td>does not contain "</td>
+ <td>DBpedia IRIs from Wikipedia used in Mappings Extraction { id: http://dev.vocab.org/trigger/mappings_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain `</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain |</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain ^</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain \</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain  </td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain }</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain {</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain ></td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain <</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>567570166</td>
+ <td>0</td>
+ <td>does not contain "</td>
+ <td>DBpedia Ontology IRIs { id: http://dev.vocab.org/trigger/dbpedia_ontology }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain %3B</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain [</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain %24</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain ?</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain %2A</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain #</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain ]</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain %21</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain %26</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain %2B</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain `</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain |</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain ^</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain \</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain  </td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain }</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain {</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain ></td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain <</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>553733866</td>
+ <td>0</td>
+ <td>does not contain "</td>
+ <td>DBpedia IRIs from Wikipedia used in Generic Extraction { id: http://dev.vocab.org/trigger/generic_wikipedia_dbpedia_extraction }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>505899072</td>
+ <td>0</td>
+ <td>one of vocab http://www.w3.org/1999/02/22-rdf-syntax-ns#</td>
+ <td>rdf trigger { id: http://dev.vocab.org/trigger/w3_rdf }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>60063417</td>
+ <td>0</td>
+ <td>one of vocab http://xmlns.com/foaf/0.1/</td>
+ <td>foaf trigger { id: http://dev.vocab.org/trigger/foaf }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>8638339</td>
+ <td>0</td>
+ <td>one of vocab http://www.w3.org/2003/01/geo/wgs84_pos#</td>
+ <td>whs84 trigger { id: http://dev.vocab.org/trigger/wgs84 }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>2916128</td>
+ <td>0</td>
+ <td>one of vocab http://www.georss.org/georss/geo_2007.owl</td>
+ <td>georss trigger { id: http://dev.vocab.org/trigger/georss }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>561425</td>
+ <td>0</td>
+ <td>one of vocab http://www.w3.org/2000/01/rdf-schema#</td>
+ <td>rdfs trigger { id: http://dev.vocab.org/trigger/w3_rdfs }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>42429</td>
+ <td>0</td>
+ <td>one of vocab http://www.w3.org/2004/02/skos/core#</td>
+ <td>skos trigger { id: http://dev.vocab.org/trigger/skos }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain ></td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain |</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain ^</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain "</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain {</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain `</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain }</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain <</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain \</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain  </td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain %3B</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain [</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain %24</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain ?</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain %2A</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain #</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain ]</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain `</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain |</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain ^</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain \</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain  </td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain }</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain {</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain ></td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain <</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>29962</td>
+ <td>0</td>
+ <td>does not contain "</td>
+ <td>wikipedia { id: http://dev.vocab.org/trigger/wikipedia }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>one of vocab http://www.w3.org/2005/11/its/rdf#</td>
+ <td>itsrdf trigger { id: http://dev.vocab.org/trigger/itsrdf }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>Missing validator: requires one ore more validators (always true)</td>
+ <td>nif vocab trigger { id: http://dev.vocab.org/trigger/nif }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>Missing validator: requires one ore more validators (always true)</td>
+ <td>DBpedia Generic IRIs { id: de530c53d659ee7cb6423c3948953d95 }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>Missing validator: requires one ore more validators (always true)</td>
+ <td>DBpedia NIF IRIs { id: http://dev.vocab.org/trigger/dbpedia_nif }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>Missing validator: requires one ore more validators (always true)</td>
+ <td>DBpedia Property IRIs { id: http://dev.vocab.org/trigger/dbpedia_property }</td>
+</tr>
+<tr>
+ <td>0%</td>
+ <td>0</td>
+ <td>0</td>
+ <td>Missing validator: requires one ore more validators (always true)</td>
+ <td>DBpedia IRIs from Wikidata extraction { id: http://dev.vocab.org/trigger/wikidata_dbpedia_extraction }</td>
+</tr>
+</tbody>
+</table>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<style> .float-right { float: left !important; } </style>
+<body>
