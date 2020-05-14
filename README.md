@@ -47,13 +47,15 @@ dump-date=20200301
 If specified dump-date is newer as current local dumps, then adding it to `extractionConfiguration/download.*.properties` is enough
 ## Cronjobs
 
-Below is a list of cronjobs we use on the different servers:
+Monthly cronjobs of the databus group releases, that include the MARVIN and DBpedia (re-)release:
 
 ```
-# extraction and release for wikidata
-0 0 7 * * bin/bash -c 'cd /data/marvin-config/marvin-extraction-run.sh wikidata && ./ && ./databus-release.sh'
-```
+# Full Wikidata
+0 0 7 * * /bin/bash -c '/data/marvin-config/release-monthly-cron.sh wikidata' >/dev/null 2>&1
 
+# Full Generic & Mappings
+0 0 7 * * /bin/bash -c '/data/marvin-config/release-monthly-cron.sh generic && /data/marvin-config/release-monthly-cron.sh mappings' >/dev/null 2>&1
+```
 
 ## Acknowledgements
 We thank Sören Auer and the Technische Informationsbibliothek (TIB) for providing three servers to run:
