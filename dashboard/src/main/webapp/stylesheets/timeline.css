@@ -13,8 +13,10 @@ body {
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
-  float:left;
+  float: left;
   width: 25%;
+  overflow-y: scroll;
+  height: 800px ;
 }
 
 /* The actual timeline (the vertical ruler) */
