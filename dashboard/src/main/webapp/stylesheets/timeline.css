@@ -13,6 +13,8 @@ body {
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
+  float:left;
+  width: 25%;
 }
 
 /* The actual timeline (the vertical ruler) */
