@@ -9,15 +9,21 @@ import org.slf4j.LoggerFactory
 import scala.collection.mutable.ArrayBuffer
 
 
+// Swagger support
+import org.scalatra.swagger._
+
 // JSON-related libraries
 import org.json4s.{DefaultFormats, Formats}
 
 // JSON handling support from Scalatra
 import org.scalatra.json._
 
-class DataApiServlet extends ScalatraServlet with JacksonJsonSupport {
+class DataApiServlet(implicit val swagger: Swagger)
+  extends ScalatraServlet with JacksonJsonSupport with SwaggerSupport {
 
-  val log = LoggerFactory.getLogger(classOf[DataApiServlet])
+  protected val applicationDescription = "applicationDescription"
+
+  private val log = LoggerFactory.getLogger(classOf[DataApiServlet])
 
   before() {
     contentType = formats("json")
@@ -25,10 +31,19 @@ class DataApiServlet extends ScalatraServlet with JacksonJsonSupport {
 
   protected implicit val jsonFormats: Formats = DefaultFormats
 
+  private val getVersions =
+    apiOperation[VersionResponse]("versionsByGroup")
+      .summary("Show all versions")
+      .parameter(
+        pathParam[String]("group")
+          .description("Group to search for")
+      )
+      .result
+
   /**
    *
    */
-  get("/release/versions/:group") {
+  get("/release/versions/:group", operation(getVersions)) {
 
     val group = params("group")
 
@@ -36,7 +51,10 @@ class DataApiServlet extends ScalatraServlet with JacksonJsonSupport {
     val dbpediaVersions = new ArrayBuffer[String]()
 
     QueryExecutionFactory
-      .sparqlService("http://databus.dbpedia.org/repo/sparql", Queries.versionQuery(group))
+      .sparqlService(
+        "http://databus.dbpedia.org/repo/sparql",
+        Queries.versionQuery(group)
+      )
       .execSelect()
       .forEachRemaining(row => {
         val version = row.get("?version").asLiteral().getLexicalForm
@@ -61,7 +79,7 @@ class DataApiServlet extends ScalatraServlet with JacksonJsonSupport {
   /**
    * target files completeness for given release
    */
-//  get("/check-release/:account/:group/:artifact/:version") {
+  //  get("/check-release/:account/:group/:artifact/:version") {
   get("/check-release/:group") {
 
     val group = params("group")
@@ -75,7 +93,7 @@ class DataApiServlet extends ScalatraServlet with JacksonJsonSupport {
       }
     }
 
-    log.info("\n"+query)
+    log.info("\n" + query)
 
     val response = new ArrayBuffer[CompletenessResponse]()
 
@@ -83,12 +101,12 @@ class DataApiServlet extends ScalatraServlet with JacksonJsonSupport {
       .sparqlService("http://databus.dbpedia.org/repo/sparql", query)
       .execSelect()
       .forEachRemaining(row => {
-        val artifact  = row.get("artifact").asResource().getURI
-        val version  = row.get("versionString").asLiteral().getLexicalForm
-        val actualFiles  = row.get("actual_files").asLiteral().getLexicalForm
+        val artifact = row.get("artifact").asResource().getURI
+        val version = row.get("versionString").asLiteral().getLexicalForm
+        val actualFiles = row.get("actual_files").asLiteral().getLexicalForm
         val expectedFiles = row.get("expected_files").asLiteral().getLexicalForm
 
-        response.append(CompletenessResponse(artifact,version,actualFiles,expectedFiles))
+        response.append(CompletenessResponse(artifact, version, actualFiles, expectedFiles))
       })
 
     response.toList
