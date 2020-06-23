@@ -1,7 +1,8 @@
-databus-poms/dbpedia/*/*/*/
-extraction-framework/
-wikidumps/
-logs/
-release/
-marvin-extraction/
-pom.xml.versionsBackup
+/databus-poms/dbpedia/*/*/*/
+/extraction-framework/
+/wikidumps/
+/logs/
+/release/
+/marvin-extraction/
+/pom.xml.versionsBackup
+
