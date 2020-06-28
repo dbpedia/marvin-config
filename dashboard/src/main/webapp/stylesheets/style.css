@@ -1,0 +1,87 @@
+
+/*
+colors:
+  dbpedia.org nav: #2B4253
+  databus.dbpedia.org bg: #4b6584
+  
+*/
+
+.nav-top {
+    background-color: #2B4253;
+}
+
+
+.sidebar {
+    height: 100vh;
+    background-color: white;
+    box-shadow: 5px 7px 25px #999;
+}
+
+.myHR {
+    border-top: 1px groove lightgrey;
+}
+
+.card {
+    box-shadow: 5px 7px 25px #bbb;
+}
+
+.dbp-logo {
+    margin-top: -15px;
+    margin-bottom: -35px;
+    width: 80%;
+    height: auto;
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        position: static;
+        height: auto;
+    }
+
+    .nav-top {
+        position: static;
+    }
+}
+
+/* nav release version */
+
+
+
+.pagination-info {
+    display: none;
+}
+
+.pagination-detail {
+    display: none;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+.version-table .float-right { 
+    float: none !important; 
+}
+
+.version-table .search {
+    width: 100%;
+}
+
+.version-table .table {
+    font-size: 20px;
+    text-align: center;
+    font-weight: lighter;
+}
+
+/* <div class="container-fluid">
+<div class="row">
+    <!-- sidebar -->
+    <div class="col-lg-3 sidebar">
+        <a href="#" class="navbar-band text-white d-block mx-auto text-center">Dashboard</a> 
+    </div>
+    <!-- end of sidebar -->
+    <div class="col-lg-9">
+        
+    </div>
+</div>
+</div> */
