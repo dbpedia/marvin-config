@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html>
+<head>
+    <link href="/stylesheets/timeline.css" rel="stylesheet"/>
+    <link href="/stylesheets/meter.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+
+<div style="width: 100%;">
+
+
+    <div class="timeline" >
+        <div class="">
+            <div class="content">
+                May 1st, 2020
+                <a href="/*/generic/2020.05.01">Generic</a>
+                <div class="meter">
+                    <span style="width:50%;"><span class="progress"></span></span>
+                </div>
+
+                <a href="/*/mappings/2020.05.01">Mappings</a>
+                <div class="meter">
+                    <span style="width:50%;"><span class="progress"></span></span>
+                </div>
+                <a href="/*/wikidata/2020.05.01">Wikidata</a>
+                <div class="meter">
+                    <span style="width:50%;"><span class="progress"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="content">
+                <h2>2016</h2>
+                <p>Lorem ipsum..</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <pre>
+            * remove  box-sizing: border-box; from timeline
+            * clean up logs
+            * think about a cool metric
+        </pre>
+        <h1>MARVIN Release Bot Dashboard</h1>
+        <h2>Disclaimer</h2>
+        <ul>
+            <li>MARVIN releases are run monthly. This does not entail, that they succeed each month. This dashboard
+                gives details.
+            </li>
+            <li>The configuration of MARVIN is available in this <a
+                    href="https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config">public, read-only git
+                repo</a></li>
+            <li>The cronjobs run on different servers on the 10th of each month, downloading the Wikimedia dumps from
+                the first of each month.
+            </li>
+        </ul>
+        <div class="statistics">
+            <h2>MARVIN Total Stats</h2>
+                TODO
+            <h2><div id="groupVersion">$GROUP/$VERSION</div></h2>
+            <h3>Medawiki Dump Download Completeness</h3>
+            Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
+
+            <h3>Downloadable Log Files</h3>
+            n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
+
+            <h3>Completeness Check on Databus</h3>
+        </div>
+    </div>
+</div>
+<div style="clear:both"></div>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

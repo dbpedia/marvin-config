@@ -1,78 +1,356 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-
 <html>
+
 <head>
-    <link href="/stylesheets/timeline.css" rel="stylesheet"/>
-    <link href="/stylesheets/meter.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+	<link rel="stylesheet" href="stylesheets/style.css">
 </head>
 
 <body>
 
+	<!-- nav -->
+	<nav class="navbar navbar-expand-md navbar-light">
+		<button class="navbar-toggler ml-auto mb-2 bg-light" type="button" data-toggle="collapse" data-target="#myNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- sidebar -->
+					<div class="col-lg-2 sidebar fixed-top py-2">
+						<a href="#" class="navbar-band d-block mx-auto text-center py-3 mb-4 bottom-border">
+							<img class="dbp-logo" src="images/DBpediaLogo.svg">
+						</a>
+						<h3 class="text-dark text-center">MARVIN Release BOT</h3>
+						<!-- version-list -->
+						<div class="version-table">
+							<table data-toggle="table" data-search="true" data-pagination="true" data-url="data.json"
+								data-page-size="10" class="table">
+								<thead>
+									<th data-field="version" class="text-dark">Versions</th>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+					<!-- end of version-list -->
+					<!-- end of sidebar-->
+					<!-- top-nav -->
+					<div class="col-lg-10 ml-auto nav-top fixed-top py-2">
+						<div class="row">
+							<div class="col-md-8">
+								<h2 class="text-light pl-5 pt-1">DASHBOARD</h2>
+							</div>
+							<div class="col-md-3">
+								<!-- rest of top-nav -->
+							</div>
+							<div class="col-md-1">
+							</div>
+						</div>
+					</div>
+					<!-- end of top-nav -->
+				</div>
+			</div>
+		</div>
+	</nav>
 
-<div style="width: 100%;">
+	<!-- content -->
+	<div id="content">
 
+		<!-- disclaimer -->
+		<section id="disclaimer">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 pt-5 mt-3">
+							<!-- grid -->
+							<div class="col-sm-7 p-3">
+								<h2 class="text-danger">Disclaimer</h2>
+								<p class="text-dark">
+									MARVIN releases are run monthly. This does not entail, that they succeed each month.
+									This dashboard gives details.
+									The configuration of MARVIN is public available at <a
+										href="https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config">gitlab</a>.
+									The cronjobs run on different servers on the 10th of each month, downloading the Wikimedia dumps from
+									the
+									first of each month.
+								</p>
+							</div>
+							<!-- <div class="col-sm-5 p-3" id="placeholder"></div> -->
+							<!-- end of grid -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of disclaimer -->
+		<!-- total-stats -->
+		<section id="total">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 mt-3">
+							<div class="col-sm-12 p-3">
+								<h1>Aggregated Release Stats</h1>
+							</div>
+							<!-- grid -->
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Total</h4>
+										<p>
+											TODO: file size<br>
+											TODO: triples per month
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Facts per second</h4>
+										<p>
+											TODO
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Languages</h4>
+										<p>
+											TODO
+										</p>
+									</div>
+								</div>
+							</div>
+							<!-- end of grid-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of total-stats -->
 
-    <div class="timeline" >
-        <div class="">
-            <div class="content">
-                May 1st, 2020
-                <a href="/*/generic/2020.05.01">Generic</a>
-                <div class="meter">
-                    <span style="width:50%;"><span class="progress"></span></span>
-                </div>
+		<!-- version -->
+		<section id="version">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5">
+							<div class="col-sm-12 myHR mt-5"></div>
+							<div class="col-sm-12 p-3 mt-4">
+								<h1 class="text-dark">Release $DATE (latest)</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of version -->
 
-                <a href="/*/mappings/2020.05.01">Mappings</a>
-                <div class="meter">
-                    <span style="width:50%;"><span class="progress"></span></span>
-                </div>
-                <a href="/*/wikidata/2020.05.01">Wikidata</a>
-                <div class="meter">
-                    <span style="width:50%;"><span class="progress"></span></span>
-                </div>
-            </div>
-        </div>
-        <div class="">
-            <div class="content">
-                <h2>2016</h2>
-                <p>Lorem ipsum..</p>
-            </div>
-        </div>
-    </div>
+		<!-- overall-progess -->
+		<section id="overall">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5">
+							<!-- grid content -->
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Overall Extraction Progress</h4>
+										<h6>Mappings</h6>
+										<div class="progress">
+											<div class="progress-bar progress-bar-striped font-weight-bold bg-success" style="width: 100%;">
+												100%
+											</div>
+										</div>
+										<h6>Generic</h6>
+										<div class="progress">
+											<div class="progress-bar progress-bar-striped font-weight-bold bg-info" style="width: 67%;">67%
+											</div>
+										</div>
+										<h6>Wikidata</h6>
+										<div class="progress">
+											<div class="progress-bar progress-bar-striped font-weight-bold bg-warning" style="width: 33%;">33%
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of overal stats -->
 
-    <div>
-        <pre>
-            * remove  box-sizing: border-box; from timeline
-            * clean up logs
-            * think about a cool metric
-        </pre>
-        <h1>MARVIN Release Bot Dashboard</h1>
-        <h2>Disclaimer</h2>
-        <ul>
-            <li>MARVIN releases are run monthly. This does not entail, that they succeed each month. This dashboard
-                gives details.
-            </li>
-            <li>The configuration of MARVIN is available in this <a
-                    href="https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config">public, read-only git
-                repo</a></li>
-            <li>The cronjobs run on different servers on the 10th of each month, downloading the Wikimedia dumps from
-                the first of each month.
-            </li>
-        </ul>
-        <div class="statistics">
-            <h2>MARVIN Total Stats</h2>
-                TODO
-            <h2><div id="groupVersion">$GROUP/$VERSION</div></h2>
-            <h3>Medawiki Dump Download Completeness</h3>
-            Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
+		<!-- mappins -->
+		<section id="mappings">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 mt-3">
+							<div class="col-sm-12 p-3">
+								<h2>Mappings Extraction</h2>
+							</div>
+							<!-- grid -->
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Medawiki Dump Download Completeness</h4>
+										<p>
+											Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Downloadable Log Files</h4>
+										<p>
+											n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Completeness Check on Databus</h4>
+										<p>
+											Integration Query results
+										</p>
+									</div>
+								</div>
+							</div>
+							<!-- end of grid-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of mappings -->
 
-            <h3>Downloadable Log Files</h3>
-            n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
+		<!-- generic -->
+		<section id="generic">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 mt-3">
+							<div class="col-sm-12 p-3">
+								<h2>Generic Extraction</h2>
+							</div>
+							<!-- grid -->
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Medawiki Dump Download Completeness</h4>
+										<p>
+											Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Downloadable Log Files</h4>
+										<p>
+											n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Completeness Check on Databus</h4>
+										<p>
+											Integration Query results
+										</p>
+									</div>
+								</div>
+							</div>
+							<!-- end of grid-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of generic -->
 
-            <h3>Completeness Check on Databus</h3>
-        </div>
-    </div>
-</div>
-<div style="clear:both"></div>
-<script src="/js/dashboard.js"></script>
+		<!-- wikidata -->
+		<section id="wikidata">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 mt-3 mb-5">
+							<div class="col-sm-12 p-3">
+								<h2>Wikidata Extraction</h2>
+							</div>
+							<!-- grid -->
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Medawiki Dump Download Completeness</h4>
+										<p>
+											Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Downloadable Log Files</h4>
+										<p>
+											n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Completeness Check on Databus</h4>
+										<p>
+											Integration Query results
+										</p>
+									</div>
+								</div>
+							</div>
+							<!-- end of grid-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of wikidata -->
+	</div>
+	<!-- end of content -->
+
+	<script>
+		/* anchor scroll offset */
+		window.addEventListener("hashchange", function () {
+			this.console.log("#")
+			window.scrollTo(window.scrollX, window.scrollY - 80);
+		});
+	</script>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script> -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
 </body>
-</html>
