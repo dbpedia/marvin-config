@@ -42,11 +42,13 @@
 						<div class="row">
 							<div class="col-md-8">
 								<h2 class="text-light pl-5 pt-1">DASHBOARD</h2>
+                            </div>
+                            <div class="col-md-2">
+                                <!-- <div class="disclaimer bg-danger">
+                                    <h2 class="text-light text-center pt">Disclaimer</h2>
+                                </div> -->
 							</div>
-							<div class="col-md-3">
-								<!-- rest of top-nav -->
-							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 							</div>
 						</div>
 					</div>
@@ -54,8 +56,14 @@
 				</div>
 			</div>
 		</div>
-	</nav>
+    </nav>
+    
+    <!-- disclaimer-modal-->
+    <div class="modal">
 
+    </div>
+    <!-- end of disclaimer-modal -->
+    
 	<!-- content -->
 	<div id="content">
 
@@ -78,22 +86,30 @@
 									first of each month.
 								</p>
 							</div>
-							<!-- <div class="col-sm-5 p-3" id="placeholder"></div> -->
+							<div class="col-sm-5 p-3" id="placeholder">
+                                <h2 class="text-info">TODO</h2>
+                                <ul>
+                                    <li>rerelease</li>
+                                    <li>link to databus</li>
+                                    <li>other download chart</li>
+                                </ul>
+                            </div>
 							<!-- end of grid -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- end of disclaimer -->
+        <!-- end of disclaimer -->
+        
 		<!-- total-stats -->
 		<section id="total">
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
-						<div class="row px-5 mt-3">
-							<div class="col-sm-12 p-3">
-								<h1>Aggregated Release Stats</h1>
+						<div class="row px-5">
+							<div class="col-sm-12 pb-3">
+								<h1 class="text-dark">Aggregated Release Stats</h1>
 							</div>
 							<!-- grid -->
 							<div class="col-sm-4 p-3">
@@ -143,7 +159,7 @@
 						<div class="row px-5">
 							<div class="col-sm-12 myHR mt-5"></div>
 							<div class="col-sm-12 p-3 mt-4">
-								<h1 class="text-dark">Release $DATE (latest)</h1>
+								<h1 class="text-dark" id="version-text">Release $DATE (latest)</h1>
 							</div>
 						</div>
 					</div>
@@ -171,17 +187,26 @@
 										</div>
 										<h6>Generic</h6>
 										<div class="progress">
-											<div class="progress-bar progress-bar-striped font-weight-bold bg-info" style="width: 67%;">67%
+                                            <div class="progress-bar progress-bar-striped font-weight-bold bg-info" style="width: 67%;">
+                                                67%
 											</div>
 										</div>
 										<h6>Wikidata</h6>
 										<div class="progress">
-											<div class="progress-bar progress-bar-striped font-weight-bold bg-warning" style="width: 33%;">33%
+                                            <div class="progress-bar progress-bar-striped font-weight-bold bg-warning" style="width: 33%;">
+                                                33%
 											</div>
-										</div>
+                                        </div>
+                                        <h6>Text</h6>
+										<div class="progress">
+                                            <div class="progress-bar progress-bar-striped font-weight-bold bg-danger" style="width: 10%;">
+                                                Step 0/7
+											</div>
+                                        </div>
 									</div>
 								</div>
-							</div>
+                            </div>
+                            <!-- end of grid -->
 						</div>
 					</div>
 				</div>
@@ -202,10 +227,18 @@
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Medawiki Dump Download Completeness</h4>
-										<p>
-											Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
-										</p>
+                                        <h4>Medawiki Dump Download Completeness</h4>
+                                        <div class="row">
+                                            <div id="mappings-downloads" class="col-sm-8" style="height: 250px;">
+                                                Download Chart
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h6 class="text-danger">Missing files </h6>
+                                                <p>
+                                                    <strong>TODO</strong> List of missing languages
+                                                </p>
+                                            </div>
+                                        </div>
 									</div>
 								</div>
 							</div>
@@ -213,9 +246,15 @@
 								<div class="card">
 									<div class="card-body">
 										<h4>Downloadable Log Files</h4>
-										<p>
-											n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
-										</p>
+
+                                        <table id="mappings-logs" data-pagination="true"
+                                            data-page-size="4" class="table">
+                                            <thead>
+                                                <th data-field="state">State</th>
+                                                <th data-field="filename">Log File</th>
+                                                <th data-field="description">Description</th>
+                                            </thead>
+                                        </table>
 									</div>
 								</div>
 							</div>
@@ -223,9 +262,9 @@
 								<div class="card">
 									<div class="card-body">
 										<h4>Completeness Check on Databus</h4>
-										<p>
+										<div id="">
 											Integration Query results
-										</p>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -333,15 +372,8 @@
 		</section>
 		<!-- end of wikidata -->
 	</div>
-	<!-- end of content -->
-
-	<script>
-		/* anchor scroll offset */
-		window.addEventListener("hashchange", function () {
-			this.console.log("#")
-			window.scrollTo(window.scrollX, window.scrollY - 80);
-		});
-	</script>
+    <!-- end of content -->
+    
 	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script> -->
@@ -352,5 +384,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>

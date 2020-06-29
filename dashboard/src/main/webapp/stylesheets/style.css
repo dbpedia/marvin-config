@@ -1,10 +1,11 @@
 
 /*
 colors:
-  dbpedia.org nav: #2B4253
-  databus.dbpedia.org bg: #4b6584
-  
+  dbpedia.org navbar: #2B4253
+  databus.dbpedia.org background: #4b6584
 */
+
+
 
 .nav-top {
     background-color: #2B4253;
@@ -43,9 +44,18 @@ colors:
     }
 }
 
+/* Disclaimer button */
+.disclaimer {
+    margin-top: 0.3vh;
+    font-weight: bold;
+    color: white;
+    border-radius: 20px;
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+
 /* nav release version */
-
-
 
 .pagination-info {
     display: none;
@@ -73,15 +83,9 @@ colors:
     font-weight: lighter;
 }
 
-/* <div class="container-fluid">
-<div class="row">
-    <!-- sidebar -->
-    <div class="col-lg-3 sidebar">
-        <a href="#" class="navbar-band text-white d-block mx-auto text-center">Dashboard</a> 
-    </div>
-    <!-- end of sidebar -->
-    <div class="col-lg-9">
-        
-    </div>
-</div>
-</div> */
+/* chats */
+
+#mappings-downloads {
+    width: 100%;
+    height: 100%;
+}
