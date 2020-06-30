@@ -1,6 +1,6 @@
 [
     {
-        "version": "<a class=\"text-danger\" href=\"/2020.06.01\">2020.06.01</a> M|G|W"
+        "version": "<a class=\"text-danger\" href=\"?version=2020.06.01#version\">2020.06.01</a> M|G|W"
     },
     {
         "version": "<a class=\"text-warning\" href=\"/2020.05.01\">2020.05.01</a>"

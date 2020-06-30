@@ -22,7 +22,15 @@ libraryDependencies ++= Seq(
 )
 
 // https://mvnrepository.com/artifact/org.apache.jena/jena-arq
-libraryDependencies += "org.apache.jena" % "jena-arq" % "3.15.0"
+libraryDependencies += "org.apache.jena" % "jena-arq" % "3.13.0"
+
+
+//val AkkaVersion = "2.5.31"
+//
+//libraryDependencies ++= Seq(
+//  "com.lightbend.akka" %% "akka-stream-alpakka-ftp" % "2.0.1",
+//  "com.typesafe.akka" %% "akka-stream" % AkkaVersion
+//)
 
 enablePlugins(SbtTwirl)
 enablePlugins(ScalatraPlugin)

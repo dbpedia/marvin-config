@@ -1,6 +1,7 @@
 package org.dbpedia.release
 
 import org.apache.jena.query.{QueryException, QueryExecutionFactory}
+import org.dbpedia.release.handler.{CompletenessHandler, ReleaseLogHandler}
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra._
 import org.scalatra.json.JacksonJsonSupport
@@ -31,6 +32,35 @@ class DataApiServlet(implicit val swagger: Swagger)
 
   protected implicit val jsonFormats: Formats = DefaultFormats
 
+  get("/release/versions") {
+
+
+  }
+
+  get("/release/logs/:group/:version") {
+    val group = params("group")
+    val version = params("version").replace(".","-")
+
+    ReleaseLogHandler.getLogFiles(group,version) match {
+      case Some(array) => array.toList
+      case _ => List
+    }
+  }
+
+  get("/release/downloads/:group/:version") {
+    val group = params("group")
+    val version = params("version")
+
+
+  }
+
+  get("/release/completeness/:group/:version") {
+    val group = params("group")
+    val version = params("version")
+
+    CompletenessHandler.getStatus(group,version)
+  }
+
   private val getVersions =
     apiOperation[VersionResponse]("versionsByGroup")
       .summary("Show all versions")
@@ -54,8 +84,7 @@ class DataApiServlet(implicit val swagger: Swagger)
       .sparqlService(
         "http://databus.dbpedia.org/repo/sparql",
         Queries.versionQuery(group)
-      )
-      .execSelect()
+      ).execSelect()
       .forEachRemaining(row => {
         val version = row.get("?version").asLiteral().getLexicalForm
         val account = row.get("account").asResource().getURI
