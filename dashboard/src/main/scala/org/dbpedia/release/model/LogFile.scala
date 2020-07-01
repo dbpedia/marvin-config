@@ -18,7 +18,7 @@ object LogFile {
       case _ => None
     }
 
-    val state = if (fileName.endsWith(".log.bz2")) "DONE" else "RUN"
+    val state = if (fileName.endsWith(".log.bz2") || fileName.endsWith("/")) "DONE"  else "RUN"
 
     logNameOption.map(logName => new LogFile(new URL(baseUrl, fileName).toString, logName, state))
   }

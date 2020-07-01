@@ -2,7 +2,7 @@ package org.dbpedia.release.handler
 
 import org.apache.jena.query.QueryExecutionFactory
 import org.dbpedia.release.config.Config
-import org.dbpedia.release.model.VersionStatus
+import org.dbpedia.release.model.ArtifactStatus
 
 import scala.collection.mutable.ListBuffer
 
@@ -17,24 +17,26 @@ object CompletenessHandler {
     }
   }
 
-  def getStatus(group: String, version: String): Option[Array[VersionStatus]] = {
-
-    getQuery(group, version).map(query => {
-      val arrayBuffer = new ListBuffer[VersionStatus]
-
-      QueryExecutionFactory
-        .sparqlService("https://databus.dbpedia.org/repo/sparql", query)
-        .execSelect()
-        .forEachRemaining(resRow => {
-          val expectedFiles = resRow.get("?expected_files").asLiteral().getLexicalForm.toInt
-          val actualFiles = resRow.get("?actual_files").asLiteral().getLexicalForm.toInt
-          val artifact = resRow.get("?artifact").asResource().getURI.split("/").last
-          arrayBuffer.append(VersionStatus(group, artifact.toString, version, expectedFiles, actualFiles))
-        })
-      arrayBuffer.toArray
-    })
+  def getStatus(group: String, version: String): Option[List[ArtifactStatus]] = {
+    try {
+      getQuery(group, version).map(query => {
+        val buffer = new ListBuffer[ArtifactStatus]
+        val exec = QueryExecutionFactory
+          .sparqlService("https://databus.dbpedia.org/repo/sparql", query)
+        exec.execSelect()
+          .forEachRemaining(resRow => {
+            val expectedFiles = resRow.get("?expected_files").asLiteral().getLexicalForm.toInt
+            val actualFiles = resRow.get("?actual_files").asLiteral().getLexicalForm.toInt
+            val artifact = resRow.get("?artifact").asResource().getURI.split("/").last
+            buffer.append(ArtifactStatus(group, artifact.toString, version, expectedFiles, actualFiles))
+          })
+        exec.close()
+        buffer.toList
+      })
+    } catch {
+      case _: Exception => None
+    }
   }
-
 
   def main(args: Array[String]): Unit = {
 

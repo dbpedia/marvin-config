@@ -1,13 +1,19 @@
 package org.dbpedia.release
 
+import java.text.SimpleDateFormat
+import java.util.Calendar
+
 import org.apache.jena.query.{QueryException, QueryExecutionFactory}
+import org.dbpedia.release.config.Config
+import org.dbpedia.release.config.Config.versions
 import org.dbpedia.release.handler.{CompletenessHandler, ReleaseLogHandler}
+import org.dbpedia.release.model.VersionStatus
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra._
 import org.scalatra.json.JacksonJsonSupport
 import org.slf4j.LoggerFactory
 
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 
 // Swagger support
@@ -34,16 +40,34 @@ class DataApiServlet(implicit val swagger: Swagger)
 
   get("/release/versions") {
 
+    val versions = new ListBuffer[VersionStatus]()
+    val qexec = QueryExecutionFactory
+      .sparqlService(
+        "http://databus.dbpedia.org/repo/sparql",
+        Config.versions.query
+      )
+    qexec.execSelect()
+      .forEachRemaining(row => {
+        versions.append(VersionStatus(row.get("version").asLiteral().getLexicalForm,2))
+      })
+    qexec.close()
 
+    val latestOnBus = versions.map(_.version).max
+    val latestPossible = new SimpleDateFormat("y.MM").format(Calendar.getInstance().getTime) + ".01"
+
+    if (latestOnBus < latestPossible)
+      VersionStatus(latestPossible,0) :: versions.toList
+    else
+      versions.toList
   }
 
   get("/release/logs/:group/:version") {
     val group = params("group")
-    val version = params("version").replace(".","-")
+    val version = params("version").replace(".", "-")
 
-    ReleaseLogHandler.getLogFiles(group,version) match {
+    ReleaseLogHandler.getLogFiles(group, version) match {
       case Some(array) => array.toList
-      case _ => List
+      case _ => List()
     }
   }
 
@@ -58,7 +82,10 @@ class DataApiServlet(implicit val swagger: Swagger)
     val group = params("group")
     val version = params("version")
 
-    CompletenessHandler.getStatus(group,version)
+    CompletenessHandler.getStatus(group, version) match {
+      case Some(success) => success
+      case _ => List()
+    }
   }
 
   private val getVersions =

@@ -5,7 +5,21 @@ colors:
   databus.dbpedia.org background: #4b6584
 */
 
+.txt-ok {
+    color: #17a2b8;
+}
 
+.txt-warn {
+    color: #ffc107;
+}
+
+.txt-err {
+    color: #dc3545;
+}
+
+.txt-fine {
+    color: #28a745;
+}
 
 .nav-top {
     background-color: #2B4253;
