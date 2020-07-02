@@ -65,26 +65,26 @@ object Config {
            |SELECT ?expected_files ?actual_files ?delta ?artifact {
            |  {SELECT ?expected_files  (COUNT(DISTINCT ?distribution) as ?actual_files) ((?actual_files-?expected_files)AS ?delta) ?artifact {
            |      VALUES (?artifact ?expected_files) {
-           |( <https://databus.dbpedia.org/dbpedia/generic/anchor-text> 1 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/article-templates> 278 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/categories> 417 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/citations> 2 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/commons-sameas-links> 7 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/disambiguations> 15 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/external-links> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/geo-coordinates> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/homepages> 13 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/infobox-properties> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/infobox-property-definitions> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/interlanguage-links> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/labels> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/page> 278 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/persondata> 4 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/redirects> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/revisions> 278 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/topical-concepts>11 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/wikilinks> 139 )
-           |( <https://databus.dbpedia.org/dbpedia/generic/wikipedia-links> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/anchor-text> 1 )
+           |( <https://databus.dbpedia.org/marvin/generic/article-templates> 278 )
+           |( <https://databus.dbpedia.org/marvin/generic/categories> 417 )
+           |( <https://databus.dbpedia.org/marvin/generic/citations> 2 )
+           |( <https://databus.dbpedia.org/marvin/generic/commons-sameas-links> 7 )
+           |( <https://databus.dbpedia.org/marvin/generic/disambiguations> 15 )
+           |( <https://databus.dbpedia.org/marvin/generic/external-links> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/geo-coordinates> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/homepages> 13 )
+           |( <https://databus.dbpedia.org/marvin/generic/infobox-properties> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/infobox-property-definitions> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/interlanguage-links> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/labels> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/page> 278 )
+           |( <https://databus.dbpedia.org/marvin/generic/persondata> 4 )
+           |( <https://databus.dbpedia.org/marvin/generic/redirects> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/revisions> 278 )
+           |( <https://databus.dbpedia.org/marvin/generic/topical-concepts>11 )
+           |( <https://databus.dbpedia.org/marvin/generic/wikilinks> 139 )
+           |( <https://databus.dbpedia.org/marvin/generic/wikipedia-links> 139 )
            |    }
            |    ?dataset dataid:artifact ?artifact .
            |    ?dataset dct:hasVersion ?versionString .
@@ -136,7 +136,7 @@ object Config {
   object extractionLogs {
     object baseUrl {
       val mappings = new URL("http://dbpedia-mappings.tib.eu/logs/")
-      val generic = new URL("http://dbpedia-generic.tib.eu/logs/")
+      val generic = new URL("http://dbpedia-mappings.tib.eu/logs/")
       val wikidata = new URL("http://dbpedia-wikidata.tib.eu/logs/")
     }
 

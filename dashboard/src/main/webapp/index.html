@@ -91,9 +91,10 @@
 							<div class="col-sm-5 p-3" id="placeholder">
                                 <h2 class="text-info">TODO</h2>
                                 <ul>
-                                    <li>rerelease</li>
-                                    <li>link to databus</li>
-                                    <li>other download chart</li>
+									<li>logs: data</li>
+                                    <li>wikidumps: chart data</li>
+                                    <li>links to databus</li>
+                                    <li>re-release check</li>
                                 </ul>
                             </div>
 							<!-- end of grid -->
@@ -141,6 +142,17 @@
 										<h4>Languages</h4>
 										<p>
 											TODO
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Triples Chart</h4>
+										<p>
+											TODO: file size<br>
+											TODO: triples per month
 										</p>
 									</div>
 								</div>
@@ -231,7 +243,7 @@
 									<div class="card-body">
                                         <h4>Wikimedia Dumps</h4>
                                         <div class="row">
-                                            <div id="mappings-downloads" class="col-sm-8" style="height: 250px;">
+                                            <div id="mappings-downloads-chart" class="col-sm-8" style="height: 250px;">
                                                 Dump Status...
                                             </div>
                                             <div class="col-sm-4">
@@ -248,7 +260,7 @@
 								<div class="card">
 									<div class="card-body">
 										<h4>Log Files</h4>
-                                        <table id="mappings-logs" data-pagination="true"
+                                        <table id="mappings-logs-table" data-pagination="true"
                                             data-page-size="4" class="table">
                                             <thead>
                                                 <th data-field="state">State</th>
@@ -307,20 +319,33 @@
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Medawiki Dump Download Completeness</h4>
-										<p>
-											Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
-										</p>
+                                        <h4>Wikimedia Dumps</h4>
+                                        <div class="row">
+                                            <div id="generic-downloads-chart" class="col-sm-8" style="height: 250px;">
+                                                Dump Status...
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h6 class="text-danger">Missing files </h6>
+                                                <p>
+                                                    <strong>TODO</strong> List of missing languages
+                                                </p>
+                                            </div>
+                                        </div>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Downloadable Log Files</h4>
-										<p>
-											n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
-										</p>
+										<h4>Log Files</h4>
+                                        <table id="generic-logs-table" data-pagination="true"
+                                            data-page-size="4" class="table">
+                                            <thead>
+                                                <th data-field="state">State</th>
+                                                <th data-field="filename">Log File</th>
+                                                <th data-field="description">Description</th>
+                                            </thead>
+                                        </table>
 									</div>
 								</div>
 							</div>
@@ -372,20 +397,33 @@
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Medawiki Dump Download Completeness</h4>
-										<p>
-											Checks whether the input of MARVIN was downloaded correctly from dumps.wikimedia.org
-										</p>
+                                        <h4>Wikimedia Dumps</h4>
+                                        <div class="row">
+                                            <div id="wikidata-downloads-chart" class="col-sm-8" style="height: 250px;">
+                                                Dump Status...
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h6 class="text-danger">Missing files </h6>
+                                                <p>
+                                                    <strong>TODO</strong> List of missing languages
+                                                </p>
+                                            </div>
+                                        </div>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Downloadable Log Files</h4>
-										<p>
-											n/a - not loaded, unzipped - in progress, zipped - done (but success unclear)
-										</p>
+										<h4>Log Files</h4>
+                                        <table id="wikidata-logs-table" data-pagination="true"
+                                            data-page-size="4" class="table">
+                                            <thead>
+                                                <th data-field="state">State</th>
+                                                <th data-field="filename">Log File</th>
+                                                <th data-field="description">Description</th>
+                                            </thead>
+                                        </table>
 									</div>
 								</div>
 							</div>
