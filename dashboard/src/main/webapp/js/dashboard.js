@@ -83,9 +83,10 @@ function getLogs(group) {
 
   var logTable = $(`#${group}-logs-table`)
 
-  $.getJSON(api + `release/logs/wikidata/2020.05.01`, function (data) {
+  $.getJSON(api + `release/logs/${group}/${version}`, function (data) {
 
     var processLogs = []
+    var doneSteps = 0
 
     data.forEach(element => {
 
@@ -99,6 +100,7 @@ function getLogs(group) {
         state = '<strong class="text-success">RUN</strong>'
       } else {
         stateVal = 2
+        doneSteps += 1
         state = '<strong class="text-info">DONE</strong>'
       }
 
@@ -108,10 +110,26 @@ function getLogs(group) {
       processLogs.push({ 'state': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
     })
 
+    setProgress(group, doneSteps, 6)
     logTable.bootstrapTable({ 'data': processLogs })
   });
 }
 
+function setProgress(group, actual, max) {
+
+  let progBar = $(`#${group}-progress`)
+  let percent = actual * 100 / max
+  progBar.html(`(${actual}/${max}) Steps`)
+  progBar.css('width', percent + '%')
+  if (percent >= 100.0) {
+    progBar.addClass('bg-success')
+  } else if (actual == 0.0) {
+    progBar.css('width', '100%')
+    progBar.addClass('bg-secondary')
+  } else {
+    progBar .addClass('bg-warning')
+  }
+}
 
 $(function () {
   getLogs('mappings')
@@ -171,15 +189,15 @@ function checkCompleteness(group, expectedArtifacts) {
 }
 
 function setProgressBar(bar, actual, max) {
-  bar.html(`$(${actual}/${expected})`)
+  bar.html(`(${actual}/${max})`)
   var percentage = actual * 100 / max
   bar.css('width', percentage + '%')
   if (percentage >= 100.0)
     bar.addClass('bg-info')
-  else if (actual == 0.0)
+  else if (actual == 0.0) {
     bar.css('width', '100%')
     bar.addClass('bg-danger')
-  else
+  } else
     bar.addClass('bg-warning')
 }
 

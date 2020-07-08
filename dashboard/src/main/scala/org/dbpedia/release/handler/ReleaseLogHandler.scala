@@ -29,7 +29,6 @@ object ReleaseLogHandler {
           new URL(baseUrl, version).openStream()
         )).lines().flatMap({
           case HrefPattern(fileName) =>
-            println(fileName)
             LogFile.apply(new URL(baseUrl, version + "/"), fileName) match {
               case Some(logFile) => Stream.of(logFile)
               case _ => Stream.of()

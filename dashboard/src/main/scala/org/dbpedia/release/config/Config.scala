@@ -1,12 +1,6 @@
 package org.dbpedia.release.config
 
 import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.Calendar
-
-import org.apache.jena.query.QueryExecutionFactory
-
-import scala.collection.mutable.ListBuffer
 
 /**
  * Dashboard config
@@ -135,8 +129,8 @@ object Config {
 
   object extractionLogs {
     object baseUrl {
-      val mappings = new URL("http://dbpedia-mappings.tib.eu/logs/")
-      val generic = new URL("http://dbpedia-mappings.tib.eu/logs/")
+      val mappings = new URL("http://dbpedia-mappings.tib.eu/logs/mappings/")
+      val generic = new URL("http://dbpedia-mappings.tib.eu/logs/generic/")
       val wikidata = new URL("http://dbpedia-wikidata.tib.eu/logs/")
     }
 
