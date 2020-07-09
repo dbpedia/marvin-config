@@ -38,7 +38,8 @@ object ReleaseLogHandler {
           lf.logName -> lf
         }).toMap
 
-        Config.extractionLogs.names.map(logName => remote.getOrElse(logName, LogFile("", logName, "WAIT")))
+        Config.extractionLogs.names.map(logName => remote.getOrElse(logName, new LogFile("", logName, 0,
+          Config.extractionLogs.descriptionsBylogName.getOrElse(logName,"TODO"))))
       })
     } catch {
       case _: Exception => None

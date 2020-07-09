@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+	<link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<body>
+    <div id="linechart_material"></div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+
+
+
+        google.charts.load('current', {'packages':['line']});
+        google.charts.setOnLoadCallback(function () {
+  
+            $.getJSON("https://databus.dbpedia.org/repo/sparql?default-graph-uri=&query=PREFIX+dc%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0D%0APREFIX+dcat%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23%3E%0D%0APREFIX+dct%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0D%0APREFIX+dataid%3A+%3Chttp%3A%2F%2Fdataid.dbpedia.org%2Fns%2Fcore%23%3E%0D%0ASELECT+DISTINCT+%3Fgroup+%28SUM%28%3Fbyte%29+as+%3Fbytes%29+%3Fversion+WHERE+%7B%0D%0A++VALUES+%3Fgroup+%0D%0A++%7B%0D%0A++++%3Chttps%3A%2F%2Fdatabus.dbpedia.org%2Fmarvin%2Fmappings%3E%0D%0A++++%3Chttps%3A%2F%2Fdatabus.dbpedia.org%2Fmarvin%2Fgeneric%3E%0D%0A++++%3Chttps%3A%2F%2Fdatabus.dbpedia.org%2Fmarvin%2Fwikidata%3E++++++++%09%0D%0A++++%3Chttps%3A%2F%2Fdatabus.dbpedia.org%2Fdbpedia%2Fmappings%3E%0D%0A++++%3Chttps%3A%2F%2Fdatabus.dbpedia.org%2Fdbpedia%2Fgeneric%3E%0D%0A++++%3Chttps%3A%2F%2Fdatabus.dbpedia.org%2Fdbpedia%2Fwikidata%3E%0D%0A++%7D%0D%0A++%3Fdataset+dataid%3Agroup+%3Fgroup+.%0D%0A%23++%3Fdataset+dct%3AhasVersion+%222020.06.01%22%5E%5Exsd%3Astring+.%0D%0A++%3Fdataset+dct%3AhasVersion+%3Fversion+.%0D%0A++%3Fdataset+dcat%3Adistribution+%3Fdistribution+.%0D%0A++%3Fdistribution+dcat%3AbyteSize+%3Fbyte+.%0D%0A%7D+ORDER+BY+%3Fgroup+%3Fversion&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on", function (qrs) {
+
+                let buffer = []
+
+                qrs.results.bindings.forEach(element => {
+                    let groupIRI = element.group.value.split('/')
+                    let group = groupIRI.pop()
+                    let publisher = groupIRI.pop()
+                    let version = element.version.value
+                    let [yy,mm,dd] = version.split('.',3)
+                    let size = parseFloat(element.bytes.value)/(1000*1000*1000)
+
+                    if( publisher == 'marvin' && parseInt(yy) > 2019) {
+                        buffer[version] = buffer[version] || [0,0,0]
+                        if ( group == 'mappings' ) {
+                            buffer[version][0] = size
+                            // console.log(`${publisher} ${group} ${version} ${size}`)
+                        } else if ( group == 'generic' ) {
+                            buffer[version][1] = size
+                            // console.log(`${publisher} ${group} ${version} ${size}`)
+                        } else { 
+                            buffer[version][2] = size 
+                            // console.log(`${publisher} ${group} ${version} ${size}`)
+                        }
+                    }
+                    console.log(`${buffer[version]}`)
+
+                });
+
+                dataArray = []
+
+                for ( key in buffer ) {
+                    let [yy,mm,dd] = key.split('.',3)
+                    let date = new Date(yy,mm-1,dd)
+                    dataArray.push([date,buffer[key][0],buffer[key][1],buffer[key][2]])
+                }
+ 
+                console.log(dataArray.sort( (a,b) => a[0]-b[0]))
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'Day');
+                data.addColumn('number', 'Mappings');
+                data.addColumn('number', 'Generic');
+                data.addColumn('number', 'Wikidata');
+        
+                data.addRows(dataArray)
+    
+                var options = {
+                chart: {
+                    title: 'Produced data during a release',
+                    subtitle: 'in gigabytes of data'
+                },
+                width: 900,
+                height: 500
+                };
+    
+                var chart = new google.charts.Line(document.getElementById('linechart_material'));
+        
+                chart.draw(data, google.charts.Line.convertOptions(options));
+
+            });
+        });
+  </script>
+
+</body>

@@ -127,6 +127,38 @@ object Config {
     }
   }
 
+  object extractionInput {
+
+    // TODO handle batsmg nan yue
+    def wikisByGroup(group: String): List[String] = group match {
+      case "mappings" =>List(
+        "ar","az","be","bg","bn","ca","commons","cs","cy","de","el","en","eo","es","eu","fr","ga","gl","hi","hr","hu",
+        "hy","id","it","ja","ko","lv","mk","nl","pl","pt","ro","ru","sk","sl","sr","sv","tr","uk","vi"
+      )
+      case "generic" =>List(
+        "af", "als", "am", "an", "ar", "arz", "ast", "az", "azb", "ba", "bar", "bat_smg", "be", "bg", "bn", "bpy", "br",
+        "bs", "bug", "ca", "cdo", "ce", "ceb", "ckb", "commons", "cs", "cv", "cy", "da", "de", "el", "eml", "en", "eo",
+        "es", "et", "eu", "fa", "fi", "fo", "fr", "fy", "ga", "gd", "gl", "gu", "he", "hi", "hr", "hsb", "ht", "hu",
+        "hy", "ia", "id", "ilo", "io", "is", "it", "ja", "jv", "ka", "kk", "kn", "ko", "ku", "ky", "la", "lb", "li",
+        "lmo", "lt", "lv", "mai", "mg", "mhr", "min", "mk", "ml", "mn", "mr", "mrj", "ms", "my", "mzn", "nap", "nds",
+        "ne", "new", "nl", "nn", "no", "oc", "or", "os", "pa", "pl", "pms", "pnb", "pt", "qu", "ro", "ru", "sa", "sah",
+        "scn", "sco", "sd", "sh", "si", "simple", "sk", "sl", "sq", "sr", "su", "sv", "sw", "ta", "te", "tg", "th",
+        "tl", "tr", "tt", "uk", "ur", "uz", "vec", "vi", "vo", "wa", "war", "wuu", "xmf", "yi", "yo", "zh",
+        "zh_min_nan", "zh_yue",
+      )
+      case "wikidata" => List(
+        "wikidata"
+      )
+      case _ => List()
+    }
+
+    object downloadCheckUrl {
+      val mappings = new URL("http://dbpedia-mappings.tib.eu/logs/download-checks/")
+      val generic = new URL("http://dbpedia-mappings.tib.eu/logs/download-checks/")
+      val wikidata = new URL("http://dbpedia-wikidata.tib.eu/logs/download-checks/")
+    }
+  }
+
   object extractionLogs {
     object baseUrl {
       val mappings = new URL("http://dbpedia-mappings.tib.eu/logs/mappings/")
@@ -142,6 +174,15 @@ object Config {
       val postProcess = "postProcess.log"
       val unredirected = "unRedirected/"
     }
+
+    val descriptionsBylogName = Map(
+      name.downloadMappings -> "Download of latest mappings from <a href=\"http://mappings.dbpedia.org\">mappings.dbpedia.org</a>",
+      name.downloadOntology -> "Download of latest DBpedia ontology",
+      name.downloadWikidumps -> "Download of latest Wiki-Dumps from <a href=\"http://dumps.wikimedia.org\">dumps.wikimedia.org</a>",
+      name.extraction -> "DIEF extraction process",
+      name.postProcess -> "Post-processing of redirects and more",
+      name.unredirected -> "Files with unresolved redirects (pre post-processing)"
+    )
 
     val names: Array[String] =
       Array(

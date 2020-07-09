@@ -21,6 +21,7 @@ function latestDate() {
 const urlParams = new URLSearchParams(window.location.search)
 var version = urlParams.get('version')
 version = version ? version : latestDate()
+var wikiversion = version.replace(/\./g,'')
 document.getElementById("version-text").innerHTML = version + " - Release"
 
 $.getJSON(api + "release/versions", function (data) {
@@ -46,10 +47,7 @@ $.getJSON(api + "release/versions", function (data) {
 
 function drawDumpChart(group, fin, wait, miss) {
   google.charts.load('current', { 'packages': ['corechart'] });
-  google.charts.setOnLoadCallback(drawChart);
-
-  function drawChart() {
-
+  google.charts.setOnLoadCallback( function() {
     var data = google.visualization.arrayToDataTable([
       ['State', 'Number'],
       ['Finished', fin],
@@ -65,13 +63,37 @@ function drawDumpChart(group, fin, wait, miss) {
 
     var chart = new google.visualization.PieChart(document.getElementById(`${group}-downloads-chart`));
     chart.draw(data, options);
-  }
+  });
+}
+
+function getInputState(group) {
+
+  $.getJSON(api + `release/downloads/${group}/${version}`, function (data) {
+
+    let done = data['done'] || []
+    let wait = data['waiting'] || []
+    let fail = data['failed'] || []
+
+
+    if( wait.length == 0 )
+      $(`#${group}-missing-input`).html('None')
+    else
+      $(`#${group}-missing-input`).html(wait.map( e => `<a href="http://dumps.wikimedia.org/${e}wiki/${wikiversion}">${e}wiki</a>`).join(', '))
+
+
+    if( fail.length == 0 )
+      $(`#${group}-failed-input`).html('None')
+    else
+      $(`#${group}-failed-input`).html(fail.map( e => `<a href="http://dumps.wikimedia.org/${e}wiki/${wikiversion}">${e}wiki</a>`).join(', '))
+
+    drawDumpChart(group, done.length, wait.length, fail.length)
+  })
 }
 
 $(function () {
-  drawDumpChart('mappings', 36, 2, 2)
-  drawDumpChart('generic', 138, 2, 2)
-  drawDumpChart('wikidata', 1, 0, 0)
+  getInputState('mappings')
+  getInputState('generic')
+  getInputState('wikidata')
 });
 
 /* log-files */
@@ -90,23 +112,19 @@ function getLogs(group) {
 
     data.forEach(element => {
 
-      var stateVal = 0
       var state = element.state
-      if (state == 'WAIT') {
-        stateVal = 0
+      if (state == 0) {
         state = '<strong class="text-warning">WARN</strong>'
-      } else if (state == 'RUN') {
-        tateVal = 1
+      } else if (state == 1) {
         state = '<strong class="text-success">RUN</strong>'
       } else {
-        stateVal = 2
         doneSteps += 1
         state = '<strong class="text-info">DONE</strong>'
       }
 
       var url = element.url
       var file = element.logName
-      var description = 'TODO'
+      var description = element.description
       processLogs.push({ 'state': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
     })
 

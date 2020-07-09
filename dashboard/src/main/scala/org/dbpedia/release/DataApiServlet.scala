@@ -6,7 +6,7 @@ import java.util.Calendar
 import org.apache.jena.query.{QueryException, QueryExecutionFactory}
 import org.dbpedia.release.config.Config
 import org.dbpedia.release.config.Config.versions
-import org.dbpedia.release.handler.{CompletenessHandler, ReleaseLogHandler}
+import org.dbpedia.release.handler.{CompletenessHandler, InputDumpHandler, ReleaseLogHandler}
 import org.dbpedia.release.model.VersionStatus
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra._
@@ -75,7 +75,10 @@ class DataApiServlet(implicit val swagger: Swagger)
     val group = params("group")
     val version = params("version")
 
-
+    InputDumpHandler.getDownloadChecks(group,version) match {
+      case Some(states) => states
+      case _ => "{}"
+    }
   }
 
   get("/release/completeness/:group/:version") {
