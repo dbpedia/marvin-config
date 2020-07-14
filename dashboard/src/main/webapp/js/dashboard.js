@@ -1,4 +1,4 @@
-const api = "http://localhost:8080/api/"
+const api = "/api/"
 
 /* anchor scroll offset */
 window.addEventListener("hashchange", function () {
@@ -109,6 +109,7 @@ function getLogs(group) {
 
     var processLogs = []
     var doneSteps = 0
+    var isRunning = false
 
     data.forEach(element => {
 
@@ -116,6 +117,8 @@ function getLogs(group) {
       if (state == 0) {
         state = '<strong class="text-warning">WARN</strong>'
       } else if (state == 1) {
+	doneSteps += 1
+	isRunning = true
         state = '<strong class="text-success">RUN</strong>'
       } else {
         doneSteps += 1
@@ -127,6 +130,8 @@ function getLogs(group) {
       var description = element.description
       processLogs.push({ 'state': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
     })
+
+    if ( isRunning ) doneSteps -= 1;
 
     setProgress(group, doneSteps, 6)
     logTable.bootstrapTable({ 'data': processLogs })
