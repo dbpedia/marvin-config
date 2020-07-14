@@ -119,15 +119,16 @@ function getLogs(group) {
     var processLogs = []
     var doneSteps = 0
     var isRunning = false
-    var step = ""
+    var step = 6
+    var stepHtml = ""
 
     data.forEach(element => {
-
+      step += -1
       var state = element.state
       if (state == 0) {
-        state = '<strong class="text-warning">WARN</strong>'
+        state = '<strong class="text-warning">WAIT</strong>'
       } else if (state == 1) {
-        step = stepByLog[element.logName] || step
+        stepHtml = stepByLog[element.logName] || stepHtml
 	    doneSteps += 1
 	    isRunning = true
         state = '<strong class="text-success">RUN</strong>'
@@ -139,14 +140,14 @@ function getLogs(group) {
       var url = element.url
       var file = element.logName
       var description = element.description
-      processLogs.push({ 'state': element.state, 'stateHtml': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
+      processLogs.push({ 'step': step, 'state': element.state, 'stateHtml': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
     })
 
     if ( isRunning ) doneSteps -= 1;
 
     setProgress(group, doneSteps, 6)
 
-    if (step != "" ) $(`#${group}-progress-step`).append(` at step: ${step}`)
+    if (step != "" ) $(`#${group}-progress-step`).append(` at step: ${stepHtml}`)
 
     processLogs.sort( function(a,b) {
       if (a.state == 1) return -1
