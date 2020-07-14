@@ -38,11 +38,23 @@ object ReleaseLogHandler {
           lf.logName -> lf
         }).toMap
 
-        Config.extractionLogs.names.map(logName => remote.getOrElse(logName, new LogFile("", logName, 0,
-          Config.extractionLogs.descriptionsBylogName.getOrElse(logName,"TODO"))))
+        var lastRunningFound = false
+        Config.extractionLogs.names.reverse.map({ logName =>
+          val currentLog = remote.getOrElse(logName, new LogFile("", logName, 0,
+            Config.extractionLogs.descriptionsBylogName.getOrElse(logName, "TODO")))
+
+          if (currentLog.state == 1 && lastRunningFound) {
+            currentLog.copy(state = 2)
+          } else if (currentLog.state == 1) {
+            lastRunningFound = true
+            currentLog
+          } else {
+            currentLog
+          }
+        })
       })
     } catch {
-      case _: Exception => None
+      case e: Exception => None
     }
   }
 

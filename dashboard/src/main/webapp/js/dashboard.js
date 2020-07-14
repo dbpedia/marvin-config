@@ -98,6 +98,15 @@ $(function () {
 
 /* log-files */
 
+var stepByLog = {
+   "downloadMappings.log" : "mappings downlaod",
+   "downloadOntology.log" : "ontology downlaod",
+   "downloadWikidumps.log" : "wikidump download",
+   "extraction.log" : "knowledge extraction",
+   "postProcess.log" : "post processing",
+   "unRedirected/" : "copy un-redirected files"
+}
+
 function getLogs(group) {
   // n/a - not loaded, 
   // unzipped - in progress, 
@@ -110,6 +119,7 @@ function getLogs(group) {
     var processLogs = []
     var doneSteps = 0
     var isRunning = false
+    var step = ""
 
     data.forEach(element => {
 
@@ -117,8 +127,9 @@ function getLogs(group) {
       if (state == 0) {
         state = '<strong class="text-warning">WARN</strong>'
       } else if (state == 1) {
-	doneSteps += 1
-	isRunning = true
+        step = stepByLog[element.logName] || step
+	    doneSteps += 1
+	    isRunning = true
         state = '<strong class="text-success">RUN</strong>'
       } else {
         doneSteps += 1
@@ -128,13 +139,22 @@ function getLogs(group) {
       var url = element.url
       var file = element.logName
       var description = element.description
-      processLogs.push({ 'state': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
+      processLogs.push({ 'state': element.state, 'stateHtml': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
     })
 
     if ( isRunning ) doneSteps -= 1;
 
     setProgress(group, doneSteps, 6)
-    logTable.bootstrapTable({ 'data': processLogs })
+
+    if (step != "" ) $(`#${group}-progress-step`).append(` at step: ${step}`)
+
+    processLogs.sort( function(a,b) {
+      if (a.state == 1) return -1
+      else if ( b.state == 1) return 1
+      else return b.state-a.state
+      })
+
+    logTable.bootstrapTable({ 'data': processLogs });
   });
 }
 

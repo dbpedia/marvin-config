@@ -198,19 +198,19 @@
 								<div class="card">
 									<div class="card-body">
 										<h4>Overall Extraction Progress</h4>
-										<h6>Mappings</h6>
+										<h6 id="mappings-progress-step">Mappings</h6>
 										<div class="progress">
 											<div id="mappings-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
 												Step 0/7
 											</div>
 										</div>
-										<h6>Generic</h6>
+										<h6 id="generic-progress-step">Generic</h6>
 										<div class="progress">
                                             <div id="generic-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
                                                 Step 0/7
 											</div>
 										</div>
-										<h6>Wikidata</h6>
+										<h6 id="wikidata-progress-step">Wikidata</h6>
 										<div class="progress">
                                             <div id="wikidata-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
 												Step 0/7	
@@ -268,11 +268,11 @@
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Log Files</h4>
+										<h4>Steps</h4>
                                         <table id="mappings-logs-table" data-pagination="true"
                                             data-page-size="4" class="table">
                                             <thead>
-                                                <th data-field="state">State</th>
+                                                <th data-field="stateHtml">State</th>
                                                 <th data-field="filename">Log File</th>
                                                 <th data-field="description">Description</th>
                                             </thead>
@@ -350,11 +350,11 @@
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Log Files</h4>
+										<h4>Steps</h4>
                                         <table id="generic-logs-table" data-pagination="true"
                                             data-page-size="4" class="table">
                                             <thead>
-                                                <th data-field="state">State</th>
+                                                <th data-field="stateHtml">State</th>
                                                 <th data-field="filename">Log File</th>
                                                 <th data-field="description">Description</th>
                                             </thead>
@@ -432,11 +432,11 @@
 							<div class="col-sm-6 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Log Files</h4>
+										<h4>Steps</h4>
                                         <table id="wikidata-logs-table" data-pagination="true"
                                             data-page-size="4" class="table">
                                             <thead>
-                                                <th data-field="state">State</th>
+                                                <th data-field="stateHtml">State</th>
                                                 <th data-field="filename">Log File</th>
                                                 <th data-field="description">Description</th>
                                             </thead>
