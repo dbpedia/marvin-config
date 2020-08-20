@@ -147,7 +147,9 @@ function getLogs(group) {
 
     setProgress(group, doneSteps, 6)
 
-    if (step != "" ) $(`#${group}-progress-step`).append(` at step: ${stepHtml}`)
+    if (stepHtml != "" && isRunning ) $(`#${group}-progress-step`).append(` at step: ${stepHtml}`)
+    else if ( (step-6) == 0 && latestDate() == version ) $(`#${group}-progress-step`).append(` not started yet`)
+
 
     processLogs.sort( function(a,b) {
       if (a.state == 1) return -1
