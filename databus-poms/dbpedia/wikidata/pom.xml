@@ -79,7 +79,7 @@ characters
 * deleted due to bzip2 non-recoverable bad blocks
         ]]></databus.documentation>
         <!-- used for derive plugin -->
-        <databus.marvinversion>2020.03.01</databus.marvinversion>
+        <databus.deriveversion>2020.03.01</databus.deriveversion>
     </properties>
 
     <!-- currently still needed to find the super-pom, once the super-pom is in maven central,
@@ -134,24 +134,24 @@ SELECT distinct ?versionstring WHERE {
 order by asc(?versionstring)
 -->
                     <versions>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/alias/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/debug/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/description/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/geo-coordinates/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/images/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/instance-types/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/labels/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/mappingbased-literals/${databus.marvinversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/alias/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/debug/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/description/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/geo-coordinates/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/images/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/instance-types/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/labels/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/mappingbased-literals/${databus.deriveversion}</version>
                     <!--version>https://databus.dbpedia.org/marvin/wikidata/mappingbased-objects/${databus.marvinversion}</version-->
-                    <version>https://databus.dbpedia.org/marvin/wikidata/mappingbased-objects-uncleaned/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/ontology-subclassof/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/page/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/properties/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/redirects/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/references/${databus.marvinversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/mappingbased-objects-uncleaned/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/ontology-subclassof/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/page/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/properties/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/redirects/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/references/${databus.deriveversion}</version>
                     <!--version>https://databus.dbpedia.org/marvin/wikidata/revision/${databus.marvinversion}</version-->
-                    <version>https://databus.dbpedia.org/marvin/wikidata/sameas-all-wikis/${databus.marvinversion}</version>
-                    <version>https://databus.dbpedia.org/marvin/wikidata/sameas-external/${databus.marvinversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/sameas-all-wikis/${databus.deriveversion}</version>
+                    <version>https://databus.dbpedia.org/marvin/wikidata/sameas-external/${databus.deriveversion}</version>
                 </versions>
                   <skipParsing>false</skipParsing>        
                   <skipCloning>false</skipCloning>
