@@ -1,4 +1,4 @@
-const api = "/api/"
+const api = "http://release-dashboard.dbpedia.org/api/"
 
 /* anchor scroll offset */
 window.addEventListener("hashchange", function () {
@@ -22,12 +22,14 @@ const urlParams = new URLSearchParams(window.location.search)
 var version = urlParams.get('version')
 version = version ? version : latestDate()
 var wikiversion = version.replace(/\./g,'')
-document.getElementById("version-text").innerHTML = version + " - Release"
+// TODO change span to direct class change
+document.getElementById("version-text").innerHTML = `<span class="text-info">${version} - Release</span>`
 
 $.getJSON(api + "release/versions", function (data) {
   var versions = []
   data.forEach(element => {
     txtColo = element.state == 0 ? "text-danger" : "text-info"
+    if(element.version == version && element.state == 0) document.getElementById("version-text").innerHTML = `<span class="text-danger">${version} - Release</span>`
     versions.push({
       'version':
         '<a class="' + txtColo + '" href="?version=' + element.version + '#version">' + element.version + '</a> ' +
@@ -151,11 +153,14 @@ function getLogs(group) {
     else if ( (step-6) == 0 && latestDate() == version ) $(`#${group}-progress-step`).append(` not started yet`)
 
 
-    processLogs.sort( function(a,b) {
-      if (a.state == 1) return -1
-      else if ( b.state == 1) return 1
-      else return b.state-a.state
-      })
+    processLogs.sort( function(a, b) {return a.step - b.step} )
+    
+    /** This sorts by state and step */
+    // processLogs.sort( function(a,b) {
+    //   if (a.state == 1) return -1
+    //   else if ( b.state == 1) return 1
+    //   else return b.state-a.state
+    //   })
 
     logTable.bootstrapTable({ 'data': processLogs });
   });
@@ -185,6 +190,17 @@ $(function () {
 
 http://localhost:8080/api/release/logs/wikidata/2020.05.01
 
+/* completness */
+
+//* group link *//
+
+/** Not needed atm */
+// document.getElementById("mappings-group-link").href=`https://databus.dbpedia.org/marvin/mappings/${version}`
+// document.getElementById("generic-group-link").href=`https://databus.dbpedia.org/marvin/generic/${version}`
+// document.getElementById("wikidata-group-link").href=`https://databus.dbpedia.org/marvin/wikidata/${version}`
+
+//* artifact check *//
+
 function checkCompleteness(group, expectedArtifacts) {
 
   var mappingsCompletenessTable = $(`#${group}-completeness-table`)
@@ -206,7 +222,7 @@ function checkCompleteness(group, expectedArtifacts) {
       var missing = act < exp ? exp - act : 0
 
       releaseCompleteness.push({
-        'artifact': element['artifact'],
+        'artifact': `<a href="https://databus.dbpedia.org/marvin/${group}/${element['artifact']}/${version}">${element['artifact']}</a>`,
         'state': state,
         'missing': missing,
       });
