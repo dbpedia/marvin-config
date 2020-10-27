@@ -70,17 +70,35 @@
 	<!-- content -->
 	<div id="content">
 
+		<!-- version -->
+		<section id="version">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 pt-5 mt-5">
+							<!-- <div class="col-sm-12 myHR mt-5"></div> -->
+							<div class="col-sm-12 p-3 mt-4">
+								<h1 class="text-dark" id="version-text">Release $DATE (latest)</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of version -->
+
+
 		<!-- disclaimer -->
 		<section id="disclaimer">
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
-						<div class="row px-5 pt-5 mt-3">
+						<div class="row px-5">
 							<!-- grid -->
 							<div class="col-sm-7 p-3">
-								<h2 class="text-danger">Disclaimer</h2>
+								<!-- <h2 class="text-danger">Disclaimer</h2> -->
 								<p class="text-dark">
-									The MARVIN Release Bot executes the DBpedia Information Extraction Framework (DIEF) in a regular interval to extract the following release groups:
+									<!-- The MARVIN Release Bot executes the DBpedia Information Extraction Framework (DIEF) in a regular interval to extract the following release groups:
 									<ul><li>10th of each month generic</li></ul>
 									 releases are run monthly. This does not entail, that they succeed each month.
 									This dashboard gives details.
@@ -88,7 +106,30 @@
 										href="https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config">gitlab</a>.
 									The cronjobs run on different servers on the 10th of each month, downloading the Wikimedia dumps from
 									the
-									first of each month.
+									first of each month. -->
+									<h4>TODO Rewrite</h4>
+									<ul>
+										<li> was wird gemacht (interval, produziert, wann, config wo)</li>
+										<li> github link DIEF</li>
+										<li> Abkürzung m g w</li>
+										<li> Server TIB</li>
+										<li> Dashboard erklären</li>
+										<li> Was ist zu sehen</li>
+										<li> Query reinbauen auf den bus</li>
+										<li> Letzter Satz eigentlicher Disclaimer</li>
+									</ul>
+									<h4>Steps (TODO foldable)</h4>
+									<ol>
+										<li>Download Mappings:</li>
+										<li>Download Ontology</li>
+										<li>Download Wikimedia Dumps:</li>
+										<li>Extract</li>
+										<li>Post-Process</li>
+										<li>Backup Unredirected</li>
+										<li>Marvin Release</li>
+										<li>Parse Marvin Release</li>
+										<li>DBpedia Release</li>
+									</ol>
 								</p>
 							</div>
 							<!-- <div class="col-sm-5 p-3" id="placeholder">
@@ -109,220 +150,65 @@
 			</div>
 		</section>
         <!-- end of disclaimer -->
-        
-		<!-- total-stats -->
-		<section id="total">
+
+		<!-- extraction about -->
+		<section id="about">
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
-						<div class="row px-5">
-							<div class="col-sm-12 pb-3">
-								<h1 class="text-dark">Aggregated Release Stats</h1>
-							</div>
+						<div class="row px-5 mt-3">
+							<!-- <div class="col-sm-12 p-3">
+								<h2>Mappings Extraction</h2>
+							</div> -->
 							<!-- grid -->
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Total</h4>
+                                        <h4>Mappings Extraction</h4>
 										<p>
-											<h1 class="text-muted">~ 55 GB/release</h1>
-											<h1 class="text-muted">~ 21B Triples/month</h1>
+											<ul>
+												<li>include overall process</li>
+												<li>include link to download and extraction config and maybe pom</li>
+												<li>include link to marvin and final release group/data</li>
+												<li>cronjob and/or start script</li>
+											</ul>
 										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4 p-3">
-								<div class="card">
-									<div class="card-body">
-										<h4>Facts per second</h4>
-										<p>
-											<h1 class="text-muted">5200 Triples/sec.</h1>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4 p-3">
-								<div class="card">
-									<div class="card-body">
-										<h4>Extracted Wikis</h4>
-										<p>
-											<h1 class="text-muted">140 wikis</h1>
-
-<!--
-											af,als,am,an,ar", "arz", "ast", "az", "azb", "ba", "bar", "batsmg", "be", "bg", "bn", "bpy", "br", "bs", "bug", "ca", "cdo", "ce", "ceb", "ckb", "cs", "commons", "cv", "cy", "da", "de", "el", "eml", "en", "eo", "es", "et", "eu", "fa", "fi", "fo", "fr", "fy", "ga", "gd", "gl", "gu", "he", "hi", "hr", "hsb", "ht", "hu", "hy", "ia", "id", "ilo", "io", "is", "it", "ja", "jv", "ka", "kk", "kn", "ko", "ku", "ky", "la", "lb", "li", "lmo", "lt", "lv", "mai", "mg", "mhr", "min", "mk", "ml", "mn", "mr", "mrj", "ms", "my", "mzn", "nan", "nap", "nds", "ne", "new", "nl", "nn", "no", "oc", "or", "os", "pa", "pl", "pms", "pnb", "pt", "qu", "ro", "ru", "sa", "sah", "scn", "sco", "sd", "sh", "si", "simple", "sk", "sl", "sq", "sr", "su", "sv", "sw", "ta", "te", "tg", "th", "tl", "tr", "tt", "uk", "ur", "uz", "vec", "vi", "vo", "wa", "war", "wuu", "xmf", "yi", "yo", "yue", "zh"
--->
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-										<h4>Triples Chart</h4>
-										<p>
-											TODO
-										</p>
-									</div>
-								</div>
-							</div>
-							<!-- end of grid-->
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- end of total-stats -->
-
-		<!-- version -->
-		<section id="version">
-			<div class="container-fluid">
-				<div class=row>
-					<div class="col-lg-10 ml-auto">
-						<div class="row px-5">
-							<div class="col-sm-12 myHR mt-5"></div>
-							<div class="col-sm-12 p-3 mt-4">
-								<h1 class="text-dark" id="version-text">Release $DATE (latest)</h1>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- end of version -->
-
-		<!-- overall-progess -->
-		<section id="overall">
-			<div class="container-fluid">
-				<div class=row>
-					<div class="col-lg-10 ml-auto">
-						<div class="row px-5">
-							<!-- grid content -->
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-										<h4>Overall Extraction Progress</h4>
-										<h6 id="mappings-progress-step">Mappings</h6>
+										<h6 id="mappings-progress-step">Progress:</h6>
 										<div class="progress">
 											<div id="mappings-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
 												Step 0/7
 											</div>
 										</div>
-										<h6 id="generic-progress-step">Generic</h6>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+                                        <h4>Generic Extraction</h4>
+										<p>
+										</p>
+										<h6 id="generic-progress-step">Progress:</h6>
 										<div class="progress">
                                             <div id="generic-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
                                                 Step 0/7
 											</div>
 										</div>
-										<h6 id="wikidata-progress-step">Wikidata</h6>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+                                        <h4>Wikidata Extraction</h4>
+										<p>
+										</p>
+										<h6 id="wikidata-progress-step">Progress:</h6>
 										<div class="progress">
                                             <div id="wikidata-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
 												Step 0/7	
 											</div>
                                         </div>
-                                        <!-- <h6>Text</h6>
-										<div class="progress">
-                                            <div class="progress-bar progress-bar-striped font-weight-bold bg-danger" style="width: 10%;">
-                                                Step 0/7
-											</div>
-                                        </div> -->
-									</div>
-								</div>
-                            </div>
-                            <!-- end of grid -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- end of overal stats -->
-
-		<!-- mappins -->
-		<section id="mappings">
-			<div class="container-fluid">
-				<div class=row>
-					<div class="col-lg-10 ml-auto">
-						<div class="row px-5 mt-3">
-							<div class="col-sm-12 p-3">
-								<h2>Mappings Extraction</h2>
-							</div>
-							<!-- grid -->
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-                                        <h4>About: Mappings Extraction</h4>
-										<p>
-											first box
-											* include overall process
-											* include link to download and extraction config and maybe pom
-											* include link to marvin and final release group/data
-											* cronjob and/or start script
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-                                        <h4>Step 2: Wikimedia Dumps</h4>
-                                        <div class="row">
-                                            <div id="mappings-downloads-chart" class="col-sm-8" style="height: 250px;">
-                                                Dump Status...
-                                            </div>
-                                            <div class="col-sm-4">
-												<h6 class="text-info">Waiting downloads</h6>
-                                                <p id="mappings-missing-input">
-                                                    Fetching waiting downloads...
-												</p>
-												<h6 class="text-danger">Failed downloads</h6>
-                                                <p id="mappings-failed-input">
-													Fetching failed downloads...
-                                                </p>
-                                            </div>
-                                        </div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-										<h4>Steps</h4>
-                                        <!-- <table id="mappings-logs-table" data-pagination="true"
-											data-page-size="4" class="table"> -->
-										<table id="mappings-logs-table" class="table">
-                                            <thead>
-												<th data-field="step">Step</th>
-                                                <th data-field="stateHtml">State</th>
-                                                <th data-field="filename">Log File</th>
-                                                <th data-field="description">Description</th>
-                                            </thead>
-                                        </table>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-										<h4><a id="mappings-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/mappings/">Step 7: MARVIN Release Completeness</a></h4>
-										TODO 1. add State 2. add links to completeness query 3. add link to config<br>Artifact
-										<div class="progress">
-											<div id="mappings-completeness-artifacts" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
-												0/0
-											</div>
-										</div>
-										Files
-										<div class="progress">
-											<div id="mappings-completeness-files" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
-												0/0
-											</div>
-										</div>
-                                        <table id="mappings-completeness-table" data-pagination="true"
-                                            data-page-size="4" class="table">
-                                            <thead>
-                                                <th data-field="state">State</th>
-                                                <th data-field="artifact">Artifact</th>
-                                                <th data-field="missing">Missing Files</th>
-											</thead>
-										</table>
 									</div>
 								</div>
 							</div>
@@ -332,32 +218,41 @@
 				</div>
 			</div>
 		</section>
-		<!-- end of mappings -->
+		<!-- end of extraction about -->
 
-		<!-- generic -->
-		<section id="generic">
+		<!-- downloads -->
+		<section id="downloads">
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
 						<div class="row px-5 mt-3">
-							<div class="col-sm-12 p-3">
-								<h2>Generic Extraction</h2>
-							</div>
 							<!-- grid -->
-							<div class="col-sm-6 p-3">
+							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-                                        <h4>About: Generic Extraction</h4>
-										<!--p>
-											TODO
-										</p-->
+										<h4>Step 2: Mappings Wikimedia Dumps</h4>
+										<div class="row">
+											<div id="mappings-downloads-chart" class="col-sm-8" style="height: 250px;">
+												Dump Status...
+											</div>
+											<div class="col-sm-4">
+												<h6 class="text-info">Waiting downloads</h6>
+												<p id="mappings-missing-input">
+													Fetching waiting downloads...
+												</p>
+												<h6 class="text-danger">Failed downloads</h6>
+												<p id="mappings-failed-input">
+													Fetching failed downloads...
+												</p>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 p-3">
+							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-                                        <h4>Step 2: Wikimedia Dumps</h4>
+                                        <h4>Step 2: Generic Wikimedia Dumps</h4>
                                         <div class="row">
                                             <div id="generic-downloads-chart" class="col-sm-8" style="height: 250px;">
                                                 Dump Status...
@@ -376,7 +271,61 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 p-3">
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Step 2: Wikidata Wikimedia Dumps</h4>
+										<div class="row">
+											<div id="wikidata-downloads-chart" class="col-sm-8" style="height: 250px;">
+												Dump Status...
+											</div>
+											<div class="col-sm-4">
+												<h6 class="text-info">Waiting downloads</h6>
+												<p id="wikidata-missing-input">
+													Fetching waiting downloads...
+												</p>
+												<h6 class="text-danger">Failed downloads</h6>
+												<p id="wikidata-failed-input">
+													Fetching failed downloads...
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- end of grid-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of downloads -->
+
+		<!-- logs -->
+		<section id="downloads">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 mt-3">
+							<!-- grid -->
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Steps</h4>
+										<!-- <table id="mappings-logs-table" data-pagination="true"
+											data-page-size="4" class="table"> -->
+										<table id="mappings-logs-table" class="table">
+											<thead>
+												<th data-field="step">Step</th>
+												<th data-field="stateHtml">State</th>
+												<th data-field="filename">Log File</th>
+												<th data-field="description">Description</th>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
 										<h4>Steps</h4>
@@ -393,7 +342,66 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 p-3">
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4>Steps</h4>
+										<!-- <table id="wikidata-logs-table" data-pagination="true"
+											data-page-size="4" class="table"> -->
+										<table id="wikidata-logs-table" class="table">
+											<thead>
+												<th data-field="step">Step</th>
+												<th data-field="stateHtml">State</th>
+												<th data-field="filename">Log File</th>
+												<th data-field="description">Description</th>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!-- end of grid -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of logs -->
+
+		<!-- completeness -->
+		<section id="downloads">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5 mt-3">
+							<!-- grid -->
+							<div class="col-sm-4 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4><a id="mappings-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/mappings/">Step 7: MARVIN Release Completeness</a></h4>
+										TODO 1. add State 2. add links to completeness query 3. add link to config<br>Artifact
+										<div class="progress">
+											<div id="mappings-completeness-artifacts" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
+												0/0
+											</div>
+										</div>
+										Files
+										<div class="progress">
+											<div id="mappings-completeness-files" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
+												0/0
+											</div>
+										</div>
+										<table id="mappings-completeness-table" data-pagination="true"
+											data-page-size="4" class="table">
+											<thead>
+												<th data-field="state">State</th>
+												<th data-field="artifact">Artifact</th>
+												<th data-field="missing">Missing Files</th>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
 										<h4><a id="generic-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/generic/">MARVIN Release Completeness</a></h4>
@@ -420,74 +428,7 @@
 									</div>
 								</div>
 							</div>
-							<!-- end of grid-->
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- end of generic -->
-
-		<!-- wikidata -->
-		<section id="wikidata">
-			<div class="container-fluid">
-				<div class=row>
-					<div class="col-lg-10 ml-auto">
-						<div class="row px-5 mt-3 mb-5">
-							<div class="col-sm-12 p-3">
-								<h2>Wikidata Extraction</h2>
-							</div>
-							<!-- grid -->
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-                                        <h4>About: Wikidata Extraction</h4>
-										<!--p>
-											TODO
-										</p-->
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-                                        <h4>Step 2: Wikimedia Dumps</h4>
-                                        <div class="row">
-                                            <div id="wikidata-downloads-chart" class="col-sm-8" style="height: 250px;">
-                                                Dump Status...
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <h6 class="text-info">Waiting downloads</h6>
-                                                <p id="wikidata-missing-input">
-                                                    Fetching waiting downloads...
-												</p>
-												<h6 class="text-danger">Failed downloads</h6>
-                                                <p id="wikidata-failed-input">
-													Fetching failed downloads...
-                                                </p>
-                                            </div>
-                                        </div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 p-3">
-								<div class="card">
-									<div class="card-body">
-										<h4>Steps</h4>
-                                        <!-- <table id="wikidata-logs-table" data-pagination="true"
-											data-page-size="4" class="table"> -->
-										<table id="wikidata-logs-table" class="table">
-                                            <thead>
-												<th data-field="step">Step</th>
-                                                <th data-field="stateHtml">State</th>
-                                                <th data-field="filename">Log File</th>
-                                                <th data-field="description">Description</th>
-                                            </thead>
-                                        </table>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 p-3">
+							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
 										<h4><a id="wikidata-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/wikidata/">MARVIN Release Completeness</a></h4>
@@ -503,24 +444,24 @@
 												0/0
 											</div>
 										</div>
-                                        <table id="wikidata-completeness-table" data-pagination="true"
-                                            data-page-size="4" class="table">
-                                            <thead>
-                                                <th data-field="state">State</th>
-                                                <th data-field="artifact">Artifact</th>
-                                                <th data-field="missing">Missing Files</th>
+										<table id="wikidata-completeness-table" data-pagination="true"
+											data-page-size="4" class="table">
+											<thead>
+												<th data-field="state">State</th>
+												<th data-field="artifact">Artifact</th>
+												<th data-field="missing">Missing Files</th>
 											</thead>
 										</table>
 									</div>
 								</div>
 							</div>
-							<!-- end of grid-->
+							<!-- end of grid -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<!-- end of wikidata -->
+		<!-- end of completeness -->
 	</div>
     <!-- end of content -->
     

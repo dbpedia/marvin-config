@@ -142,7 +142,7 @@ function getLogs(group) {
       var url = element.url
       var file = element.logName
       var description = element.description
-      processLogs.push({ 'step': step, 'state': element.state, 'stateHtml': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
+      processLogs.push({ 'step': step+1, 'state': element.state, 'stateHtml': state, 'description': description, 'filename': `<a href="${url}">${file}</a>` })
     })
 
     if ( isRunning ) doneSteps -= 1;
