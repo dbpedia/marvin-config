@@ -41,9 +41,22 @@ $.getJSON(api + "release/versions", function (data) {
   $('#version-table').bootstrapTable({ 'data': versions })
 });
 
-/* total */
+/* disclaimer */
 
-/* overall */
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
 
 /* dump-downloads */
 
@@ -149,7 +162,7 @@ function getLogs(group) {
 
     setProgress(group, doneSteps, 6)
 
-    if (stepHtml != "" && isRunning ) $(`#${group}-progress-step`).append(` at step: ${stepHtml}`)
+    if (stepHtml != "" && isRunning ) $(`#${group}-progress-step`).append(`@ ${stepHtml}`)
     else if ( (step-6) == 0 && latestDate() == version ) $(`#${group}-progress-step`).append(` not started yet`)
 
 
@@ -200,6 +213,105 @@ http://localhost:8080/api/release/logs/wikidata/2020.05.01
 // document.getElementById("wikidata-group-link").href=`https://databus.dbpedia.org/marvin/wikidata/${version}`
 
 //* artifact check *//
+
+var mappingsCompQuery = `
+PREFIX dataid: <http://dataid.dbpedia.org/ns/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX dcat:   <http://www.w3.org/ns/dcat#>
+SELECT ?expected_files ?actual_files ?delta ?artifact {
+  {SELECT ?expected_files  (COUNT(DISTINCT ?distribution) as ?actual_files) ((?actual_files-?expected_files)AS ?delta) ?artifact {
+      VALUES (?artifact ?expected_files) {
+        ( <https://databus.dbpedia.org/marvin/mappings/geo-coordinates-mappingbased> 29 )
+        ( <https://databus.dbpedia.org/marvin/mappings/instance-types> 80 )
+        ( <https://databus.dbpedia.org/marvin/mappings/mappingbased-literals> 40 )
+        ( <https://databus.dbpedia.org/marvin/mappings/mappingbased-objects> 120 )
+        ( <https://databus.dbpedia.org/marvin/mappings/mappingbased-objects-uncleaned> 40 )
+        ( <https://databus.dbpedia.org/marvin/mappings/specific-mappingbased-properties> 40 )
+      }
+      ?dataset dataid:artifact ?artifact .
+      ?dataset dct:hasVersion ?versionString .
+      ?dataset dcat:distribution ?distribution .
+      FILTER(str(?versionString) = '$version')
+    } GROUP BY ?artifact ?expected_files ?actual_files }
+}`.replace('$version',version)
+
+var genericCompQuery = `
+PREFIX dataid: <http://dataid.dbpedia.org/ns/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX dcat:   <http://www.w3.org/ns/dcat#>
+SELECT ?expected_files ?actual_files ?delta ?artifact {
+    {SELECT ?expected_files  (COUNT(DISTINCT ?distribution) as ?actual_files) ((?actual_files-?expected_files)AS ?delta) ?artifact {
+      VALUES (?artifact ?expected_files) {
+        ( <https://databus.dbpedia.org/marvin/generic/anchor-text> 1 )
+        ( <https://databus.dbpedia.org/marvin/generic/article-templates> 278 )
+        ( <https://databus.dbpedia.org/marvin/generic/categories> 417 )
+        ( <https://databus.dbpedia.org/marvin/generic/citations> 2 )
+        ( <https://databus.dbpedia.org/marvin/generic/commons-sameas-links> 7 )
+        ( <https://databus.dbpedia.org/marvin/generic/disambiguations> 15 )
+        ( <https://databus.dbpedia.org/marvin/generic/external-links> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/geo-coordinates> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/homepages> 13 )
+        ( <https://databus.dbpedia.org/marvin/generic/infobox-properties> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/infobox-property-definitions> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/interlanguage-links> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/labels> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/page> 278 )
+        ( <https://databus.dbpedia.org/marvin/generic/persondata> 4 )
+        ( <https://databus.dbpedia.org/marvin/generic/redirects> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/revisions> 278 )
+        ( <https://databus.dbpedia.org/marvin/generic/topical-concepts>11 )
+        ( <https://databus.dbpedia.org/marvin/generic/wikilinks> 139 )
+        ( <https://databus.dbpedia.org/marvin/generic/wikipedia-links> 139 )
+      }
+      ?dataset dataid:artifact ?artifact .
+      ?dataset dct:hasVersion ?versionString .
+      ?dataset dcat:distribution ?distribution .
+      FILTER(str(?versionString) = '$version')
+    } GROUP BY ?artifact ?expected_files ?actual_files }
+}`.replace('$version',version)
+
+var wikidataCompQuery = `
+PREFIX dataid: <http://dataid.dbpedia.org/ns/core#>
+PREFIX dct:    <http://purl.org/dc/terms/>
+PREFIX dcat:   <http://www.w3.org/ns/dcat#>
+SELECT ?expected_files ?actual_files ?delta ?artifact {
+  {SELECT ?expected_files  (COUNT(DISTINCT ?distribution) as ?actual_files) ((?actual_files-?expected_files)AS ?delta) ?artifact {
+      VALUES (?artifact ?expected_files) {
+        ( <https://databus.dbpedia.org/marvin/wikidata/alias> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/debug> 3 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/description> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/geo-coordinates> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/images> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/instance-types> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/labels> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/mappingbased-literals> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/mappingbased-objects-uncleaned> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/mappingbased-properties-reified> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/ontology-subclassof> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/page> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/properties> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/redirects> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/references> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/revision> 2 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/sameas-all-wikis> 1 )
+        ( <https://databus.dbpedia.org/marvin/wikidata/sameas-external> 1 )
+      }
+      ?dataset dataid:artifact ?artifact .
+      ?dataset dct:hasVersion ?versionString .
+      ?dataset dcat:distribution ?distribution .
+      FILTER(str(?versionString) = '$version')
+    } GROUP BY ?artifact ?expected_files ?actual_files }
+}`.replace('$version',version)
+
+function linkQuery(group, query) {
+  var encodedQuery = encodeURIComponent(query)
+  var link = `https://databus.dbpedia.org/yasgui/#query=${encodedQuery}`
+  $(`#${group}-comp-query`).attr("href", link);
+}
+linkQuery('mappings',mappingsCompQuery)
+linkQuery('generic',genericCompQuery)
+linkQuery('wikidata',wikidataCompQuery)
+
 
 function checkCompleteness(group, expectedArtifacts) {
 

@@ -43,8 +43,13 @@
 					<div class="col-lg-10 ml-auto nav-top fixed-top py-2">
 						<div class="row">
 							<div class="col-md-8">
-								<h2 class="text-light pl-5 pt-1">DASHBOARD</h2>
-								<h3 class="text-light pl-5 pt-1">MARVIN Release Bot Stats:</h3>
+								<h2 class="text-white pl-5 pt-1">DASHBOARD</h2>
+								<h4 class="text-white pl-5 pt-1" style="display:inline;">Statistics:</h4>
+								<h5 class="text-light" style="display:inline;">~ 55 GB/release | </h5> 
+								<h5 class="text-light" style="display:inline;">~ 21B Triples/month |</h5>
+								<h5 class="text-light" style="display:inline;">~ 5200 Triples/sec. |</h5>
+								<h5 class="text-light" style="display:inline;"> 140+ wikis extracted</h5>
+
                             </div>
                             <div class="col-md-2">
                                 <!-- <div class="disclaimer bg-danger">
@@ -75,9 +80,9 @@
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
-						<div class="row px-5 pt-5 mt-5">
+						<div class="row px-5 pt-3 mt-5">
 							<!-- <div class="col-sm-12 myHR mt-5"></div> -->
-							<div class="col-sm-12 p-3 mt-4">
+							<div class="col-sm-12 pt-3 px-3 mt-4">
 								<h1 class="text-dark" id="version-text">Release $DATE (latest)</h1>
 							</div>
 						</div>
@@ -95,41 +100,28 @@
 					<div class="col-lg-10 ml-auto">
 						<div class="row px-5">
 							<!-- grid -->
-							<div class="col-sm-7 p-3">
+							<div class="col-sm-12 px-3">
 								<!-- <h2 class="text-danger">Disclaimer</h2> -->
 								<p class="text-dark">
-									<!-- The MARVIN Release Bot executes the DBpedia Information Extraction Framework (DIEF) in a regular interval to extract the following release groups:
-									<ul><li>10th of each month generic</li></ul>
-									 releases are run monthly. This does not entail, that they succeed each month.
-									This dashboard gives details.
-									The configuration of MARVIN is public available at <a
-										href="https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config">gitlab</a>.
-									The cronjobs run on different servers on the 10th of each month, downloading the Wikimedia dumps from
-									the
-									first of each month. -->
-									<h4>TODO Rewrite</h4>
+									<!-- <h4>About</h4> -->
+									<p>
+									The MARVIN Release Bot executes the DBpedia Information Extraction Framework (<a href="https://github.com/dbpedia/extraction-framework">DIEF</a>) in a regular interval to extract the following release groups:
 									<ul>
-										<li> was wird gemacht (interval, produziert, wann, config wo)</li>
-										<li> github link DIEF</li>
-										<li> Abkürzung m g w</li>
-										<li> Server TIB</li>
-										<li> Dashboard erklären</li>
-										<li> Was ist zu sehen</li>
-										<li> Query reinbauen auf den bus</li>
-										<li> Letzter Satz eigentlicher Disclaimer</li>
+									<li>The mappings, generic, and wikidata release groups extraction starts on every 10th of each month.</li>
+									<li>The text release group is only published between 2-3 times a year due to its enormous size.</li>
 									</ul>
-									<h4>Steps (TODO foldable)</h4>
-									<ol>
-										<li>Download Mappings:</li>
-										<li>Download Ontology</li>
-										<li>Download Wikimedia Dumps:</li>
-										<li>Extract</li>
-										<li>Post-Process</li>
-										<li>Backup Unredirected</li>
-										<li>Marvin Release</li>
-										<li>Parse Marvin Release</li>
-										<li>DBpedia Release</li>
-									</ol>
+									This dashboard gives details about the current release progress, including several <a href="#steps">steps</a>.
+									</p>
+									<p>
+										<span class="text-muted">TODO databus query</span>
+									</p>
+									<!-- <h4>Configuration</h4> -->
+									<p>
+									The configuration of MARVIN is public available at <a href="https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config">gitlab</a>.								
+									Further information are described in <a href="https://svn.aksw.org/papers/2020/semantics_marvin/public.pdf">The New DBpedia Release Cycle: IncreasingAgility and Efficiency in Knowledge ExtractionWorkflows</a>.
+									</p>
+									<h4 class="text-danger">DISCLAIMER: The release depends on several external dependencies. Therefore we can not guarantee a full release every month.
+									</h4>
 								</p>
 							</div>
 							<!-- <div class="col-sm-5 p-3" id="placeholder">
@@ -149,14 +141,50 @@
 				</div>
 			</div>
 		</section>
-        <!-- end of disclaimer -->
+		<!-- end of disclaimer -->
+		
+		<!-- steps expl -->
+		<section id="steps">
+			<div class="container-fluid">
+				<div class=row>
+					<div class="col-lg-10 ml-auto">
+						<div class="row px-5">
+							<div class="col-sm-12 p-3">
+								<div class="card">
+									<div class="card-body">
+										<h4 style="display:inline;">Release Steps</h4> <input type="image" src="images/unfold.svg" style="height: 1em; width: auto;" class="collapsible"/>
+										<div class="content" style="display: none;">
+											<p>
+												<span class="text-danger">TODO</span>
+												<ol>
+													<li>Download Mappings:</li>
+													<li>Download Ontology</li>
+													<li>Download Wikimedia Dumps:</li>
+													<li>Extract</li>
+													<li>Post-Process</li>
+													<li>Backup Unredirected</li>
+													<li>Marvin Release</li>
+													<li>Parse Marvin Release</li>
+													<li>DBpedia Release</li>
+												</ol>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end of steps expl -->
 
 		<!-- extraction about -->
 		<section id="about">
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
-						<div class="row px-5 mt-3">
+						<div class="row px-5">
 							<!-- <div class="col-sm-12 p-3">
 								<h2>Mappings Extraction</h2>
 							</div> -->
@@ -164,51 +192,96 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-                                        <h4>Mappings Extraction</h4>
+										<h4>Mappings Extraction</h4>
 										<p>
-											<ul>
-												<li>include overall process</li>
-												<li>include link to download and extraction config and maybe pom</li>
-												<li>include link to marvin and final release group/data</li>
-												<li>cronjob and/or start script</li>
-											</ul>
+											View <a target="_blank" href="https://databus.dbpedia.org/marvin/mappings/">MARVIN</a> or <a target="_blank" href="https://databus.dbpedia.org/dbpedia/mappings/">DBpedia</a> release on Databus.
 										</p>
-										<h6 id="mappings-progress-step">Progress:</h6>
-										<div class="progress">
-											<div id="mappings-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
-												Step 0/7
+										<p>
+											<div id="mappings-progress-step"><strong>Progress</strong> </div>
+											<div class="progress">
+												<div id="mappings-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
+													Step 0/7	
+												</div>
 											</div>
-										</div>
+										</p>
+										<p>
+											<strong>Configuration:</strong>
+											<br>
+											View
+											<a target="_blank" href="#">Download</a>,
+											<a target="_blank" href="#">Extraction</a>
+											<a target="_blank" href="#">Release</a>
+											configuration.
+										</p>
+										<p>
+											<strong>Cronjob:</strong>
+											<br>
+											<span style="background-color:gainsboro;" class="pl-1">0 10 * * ./release-monthly-cron.sh mappings</span> 
+										</p>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-                                        <h4>Generic Extraction</h4>
+										<h4>Generic Extraction</h4>
 										<p>
+											View <a target="_blank" href="https://databus.dbpedia.org/marvin/generic/">MARVIN</a> or <a target="_blank" href="https://databus.dbpedia.org/dbpedia/generic/">DBpedia</a> release on Databus.
 										</p>
-										<h6 id="generic-progress-step">Progress:</h6>
-										<div class="progress">
-                                            <div id="generic-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
-                                                Step 0/7
+										<p>
+											<div id="generic-progress-step"><strong>Progress</strong> </div>
+											<div class="progress">
+												<div id="generic-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
+													Step 0/7	
+												</div>
 											</div>
-										</div>
+										</p>
+										<p>
+											<strong>Configuration:</strong>
+											<br>
+											View
+											<a target="_blank" href="#">Download</a>,
+											<a target="_blank" href="#">Extraction</a>
+											<a target="_blank" href="#">Release</a>
+											configuration.
+										</p>
+										<p>
+											<strong>Cronjob:</strong>
+											<br>
+											<span style="background-color:gainsboro;" class="pl-1">0 10 * * ./release-monthly-cron.sh generic</span> 
+										</p>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-                                        <h4>Wikidata Extraction</h4>
+										<h4>Wikidata Extraction</h4>
 										<p>
+											View <a target="_blank" href="https://databus.dbpedia.org/marvin/wikidata/">MARVIN</a> or <a target="_blank" href="https://databus.dbpedia.org/dbpedia/wikidata/">DBpedia</a> release on Databus.
 										</p>
-										<h6 id="wikidata-progress-step">Progress:</h6>
-										<div class="progress">
-                                            <div id="wikidata-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
-												Step 0/7	
+										<p>
+											<div id="wikidata-progress-step"><strong>Progress</strong> </div>
+											<div class="progress">
+												<div id="wikidata-progress" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
+													Step 0/7	
+												</div>
 											</div>
-                                        </div>
+										</p>
+										<p>
+											<strong>Configuration:</strong>
+											<br>
+											View
+											<a target="_blank" href="#">Download</a>,
+											<a target="_blank" href="#">Extraction</a>
+											<a target="_blank" href="#">Release</a>
+											configuration.
+										</p>
+										<p>
+											<strong>Cronjob:</strong>
+											<br>
+											<span style="background-color:gainsboro;" class="pl-1">0 10 * * ./release-monthly-cron.sh wikidata</span> 
+										</p>
 									</div>
 								</div>
 							</div>
@@ -230,7 +303,7 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Step 2: Mappings Wikimedia Dumps</h4>
+										<h4>2: Mappings Wikimedia Dumps</h4>
 										<div class="row">
 											<div id="mappings-downloads-chart" class="col-sm-8" style="height: 250px;">
 												Dump Status...
@@ -252,7 +325,7 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-                                        <h4>Step 2: Generic Wikimedia Dumps</h4>
+                                        <h4>2: Generic Wikimedia Dumps</h4>
                                         <div class="row">
                                             <div id="generic-downloads-chart" class="col-sm-8" style="height: 250px;">
                                                 Dump Status...
@@ -274,7 +347,7 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Step 2: Wikidata Wikimedia Dumps</h4>
+										<h4>2: Wikidata Wikimedia Dumps</h4>
 										<div class="row">
 											<div id="wikidata-downloads-chart" class="col-sm-8" style="height: 250px;">
 												Dump Status...
@@ -302,7 +375,7 @@
 		<!-- end of downloads -->
 
 		<!-- logs -->
-		<section id="downloads">
+		<section id="logs">
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
@@ -311,7 +384,7 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Steps</h4>
+										<h4>Logs: Mappings Release </h4>
 										<!-- <table id="mappings-logs-table" data-pagination="true"
 											data-page-size="4" class="table"> -->
 										<table id="mappings-logs-table" class="table">
@@ -319,7 +392,7 @@
 												<th data-field="step">Step</th>
 												<th data-field="stateHtml">State</th>
 												<th data-field="filename">Log File</th>
-												<th data-field="description">Description</th>
+												<!-- <th data-field="description">Description</th> -->
 											</thead>
 										</table>
 									</div>
@@ -328,7 +401,7 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Steps</h4>
+										<h4>Logs: Generic Release</h4>
                                         <!-- <table id="generic-logs-table" data-pagination="true"
 											data-page-size="4" class="table"> -->
 										<table id="generic-logs-table" class="table">
@@ -336,7 +409,7 @@
 												<th data-field="step">Step</th>
                                                 <th data-field="stateHtml">State</th>
                                                 <th data-field="filename">Log File</th>
-                                                <th data-field="description">Description</th>
+                                                <!-- <th data-field="description">Description</th> -->
                                             </thead>
                                         </table>
 									</div>
@@ -345,7 +418,7 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4>Steps</h4>
+										<h4>Logs: Wikidata Release</h4>
 										<!-- <table id="wikidata-logs-table" data-pagination="true"
 											data-page-size="4" class="table"> -->
 										<table id="wikidata-logs-table" class="table">
@@ -353,7 +426,7 @@
 												<th data-field="step">Step</th>
 												<th data-field="stateHtml">State</th>
 												<th data-field="filename">Log File</th>
-												<th data-field="description">Description</th>
+												<!-- <th data-field="description">Description</th> -->
 											</thead>
 										</table>
 									</div>
@@ -368,7 +441,7 @@
 		<!-- end of logs -->
 
 		<!-- completeness -->
-		<section id="downloads">
+		<section id="completeness">
 			<div class="container-fluid">
 				<div class=row>
 					<div class="col-lg-10 ml-auto">
@@ -377,8 +450,12 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4><a id="mappings-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/mappings/">Step 7: MARVIN Release Completeness</a></h4>
-										TODO 1. add State 2. add links to completeness query 3. add link to config<br>Artifact
+										<h4><a id="mappings-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/mappings/">7: MARVIN Release Completeness</a></h4>
+										<span class="text-muted">TODO add State </span> 
+										<p>
+											<a id="mappings-comp-query" target="_blank">query</a>
+										</p>
+										Artifact
 										<div class="progress">
 											<div id="mappings-completeness-artifacts" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
 												0/0
@@ -404,7 +481,11 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4><a id="generic-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/generic/">MARVIN Release Completeness</a></h4>
+										<h4><a id="generic-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/generic/">7: MARVIN Release Completeness</a></h4>										
+										<span class="text-muted">TODO add State </span> 
+										<p>
+											<a id="generic-comp-query" target="_blank">query</a>
+										</p>
 										Artifact
 										<div class="progress">
 											<div id="generic-completeness-artifacts" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
@@ -431,7 +512,11 @@
 							<div class="col-sm-4 p-3">
 								<div class="card">
 									<div class="card-body">
-										<h4><a id="wikidata-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/wikidata/">MARVIN Release Completeness</a></h4>
+										<h4><a id="wikidata-group-link" target="_blank" href="https://databus.dbpedia.org/marvin/wikidata/">7: MARVIN Release Completeness</a></h4>
+										<span class="text-muted">TODO add State </span> 
+										<p>
+											<a id="wikidata-comp-query" target="_blank">query</a>
+										</p>
 										Artifact
 										<div class="progress">
 											<div id="wikidata-completeness-artifacts" class="progress-bar progress-bar-striped font-weight-bold" style="width: 100%;">
