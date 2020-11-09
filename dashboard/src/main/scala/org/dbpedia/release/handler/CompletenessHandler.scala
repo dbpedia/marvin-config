@@ -8,18 +8,28 @@ import scala.collection.mutable.ListBuffer
 
 object CompletenessHandler {
 
-  private def getQuery(group: String, version: String): Option[String] = {
+  private def getQuery(publisherName: String, group: String, version: String): Option[String] = {
+    if(publisherName == "marvin")
     group match {
-      case "mappings" => Some(Config.completeness.query.mappings(version))
-      case "generic" => Some(Config.completeness.query.generic(version))
-      case "wikidata" => Some(Config.completeness.query.wikidata(version))
+      case "mappings" => Some(Config.completeness.query.marvin.mappings(version))
+      case "generic" => Some(Config.completeness.query.marvin.generic(version))
+      case "wikidata" => Some(Config.completeness.query.marvin.wikidata(version))
       case _ => None
     }
+    else if(publisherName == "dbpedia")
+      group match {
+        case "mappings" => Some(Config.completeness.query.dbpedia.mappings(version))
+        case "generic" => Some(Config.completeness.query.dbpedia.generic(version))
+        case "wikidata" => Some(Config.completeness.query.dbpedia.wikidata(version))
+        case _ => None
+      }
+    else
+      None
   }
 
-  def getStatus(group: String, version: String): Option[List[ArtifactStatus]] = {
+  def getStatus(publisherName: String, group: String, version: String): Option[List[ArtifactStatus]] = {
     try {
-      getQuery(group, version).map(query => {
+      getQuery(publisherName, group, version).map(query => {
         val buffer = new ListBuffer[ArtifactStatus]
         val exec = QueryExecutionFactory
           .sparqlService("https://databus.dbpedia.org/repo/sparql", query)
@@ -40,7 +50,7 @@ object CompletenessHandler {
 
   def main(args: Array[String]): Unit = {
 
-    getStatus("wikidata", "2020.03.01").foreach(_.foreach(x => println(x.artifact, x.actual, x.expected)))
+    getStatus("marvin", "wikidata", "2020.03.01").foreach(_.foreach(x => println(x.artifact, x.actual, x.expected)))
   }
 
 }

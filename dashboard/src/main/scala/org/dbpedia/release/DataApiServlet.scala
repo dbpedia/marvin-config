@@ -81,11 +81,12 @@ class DataApiServlet(implicit val swagger: Swagger)
     }
   }
 
-  get("/release/completeness/:group/:version") {
+  get("/release/completeness/:publisherName/:group/:version") {
     val group = params("group")
     val version = params("version")
+    val publisherName = params("publisherName")
 
-    CompletenessHandler.getStatus(group, version) match {
+    CompletenessHandler.getStatus(publisherName, group, version) match {
       case Some(success) => success
       case _ => List()
     }

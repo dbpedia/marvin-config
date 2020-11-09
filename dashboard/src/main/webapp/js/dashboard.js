@@ -1,4 +1,5 @@
-const api = "http://release-dashboard.dbpedia.org/api/"
+//const api = "http://release-dashboard.dbpedia.org/api/"
+const api = "http://localhost:8080/api/"
 
 /* anchor scroll offset */
 window.addEventListener("hashchange", function () {
@@ -303,21 +304,30 @@ SELECT ?expected_files ?actual_files ?delta ?artifact {
     } GROUP BY ?artifact ?expected_files ?actual_files }
 }`.replace('$version',version)
 
-function linkQuery(group, query) {
+function linkQuery(publisherName, group, query) {
   var encodedQuery = encodeURIComponent(query)
-  var link = `https://databus.dbpedia.org/yasgui/#query=${encodedQuery}`
-  $(`#${group}-comp-query`).attr("href", link);
+  if(publisherName == 'marvin') {
+    var link = `https://databus.dbpedia.org/yasgui/#query=${encodedQuery}`
+    $(`#${publisherName}-${group}-comp-query`).attr("href", link);
+  }
+  else {
+    var link = `https://databus.dbpedia.org/yasgui/#query=${encodedQuery}`
+    $(`#${publisherName}-${group}-comp-query`).attr("href", link);
+  }
+
 }
-linkQuery('mappings',mappingsCompQuery)
-linkQuery('generic',genericCompQuery)
-linkQuery('wikidata',wikidataCompQuery)
+linkQuery('marvin','mappings',mappingsCompQuery)
+linkQuery('marvin','generic',genericCompQuery)
+linkQuery('marvin','wikidata',wikidataCompQuery)
+linkQuery('dbpedia','mappings',mappingsCompQuery)
+linkQuery('dbpedia','generic',genericCompQuery)
+linkQuery('dbpedia','wikidata',wikidataCompQuery)
 
+function checkCompleteness(publisherName, group, expectedArtifacts) {
 
-function checkCompleteness(group, expectedArtifacts) {
+  var mappingsCompletenessTable = $(`#${publisherName}-${group}-completeness-table`)
 
-  var mappingsCompletenessTable = $(`#${group}-completeness-table`)
-
-  $.getJSON(api + `release/completeness/${group}/${version}`, function (data) {
+  $.getJSON(api + `release/completeness/${publisherName}/${group}/${version}`, function (data) {
     var expectedFilesTotal = 0
     var actualFilesTotal = 0
     var actualArtifacts = 0
@@ -342,7 +352,7 @@ function checkCompleteness(group, expectedArtifacts) {
     releaseCompleteness.sort((a, b) => b.missing - a.missing)
     mappingsCompletenessTable.bootstrapTable({ 'data': releaseCompleteness })
 
-    let progBarArt = $(`#${group}-completeness-artifacts`)
+    let progBarArt = $(`#${publisherName}-${group}-completeness-artifacts`)
     setProgressBar(progBarArt, actualArtifacts, expectedArtifacts)
     // progBarArt.html(`${actualArtifacts}/${expectedArtifacts} `)
     // let progArt = actualArtifacts * 100 / expectedArtifacts
@@ -351,7 +361,7 @@ function checkCompleteness(group, expectedArtifacts) {
     // else if (progArt < 50) progBarArt.addClass('bg-danger')
     // else progBarArt.addClass('bg-warning')
 
-    let progBarFil = $(`#${group}-completeness-files`)
+    let progBarFil = $(`#${publisherName}-${group}-completeness-files`)
     setProgressBar(progBarFil, actualFilesTotal, expectedFilesTotal)
     // progBarFil.html(`${actualFilesTotal}/${expectedFilesTotal}`)
     // let progFil = actualFilesTotal * 100 / expectedFilesTotal
@@ -376,7 +386,11 @@ function setProgressBar(bar, actual, max) {
 }
 
 $(function () {
-  checkCompleteness('mappings', 6)
-  checkCompleteness('generic', 20)
-  checkCompleteness('wikidata', 16)
+  checkCompleteness('marvin','mappings', 6)
+  checkCompleteness('marvin','generic', 20)
+  checkCompleteness('marvin','wikidata', 16)
+  checkCompleteness('dbpedia','mappings', 6)
+  checkCompleteness('dbpedia','generic', 20)
+  checkCompleteness('dbpedia','wikidata', 16)
 })
+

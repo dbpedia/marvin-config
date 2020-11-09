@@ -12,4 +12,5 @@ class ReleaseDashboardServletTests extends ScalatraFunSuite {
     }
   }
 
+  override def header = {}
 }
