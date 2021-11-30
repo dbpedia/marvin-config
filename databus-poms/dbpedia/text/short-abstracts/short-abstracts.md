@@ -3,3 +3,4 @@ The text before the table of contents of Wikipedia articles is shortened to appr
 
 Using the property rdfs:comment all full sentences within a certain amount of characters are saved in the different files. 
  
+Extractor that produces short abstracts: `HtmlAbstractExtractor`
