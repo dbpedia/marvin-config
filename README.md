@@ -1,7 +1,7 @@
 # MARVIN-config
 
 MARVIN is the release bot that does automated DBpedia releases each month on three different servers for generic, mappings, wikidata, abstract extraction. 
-[This repository](https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config) can be used to fork the architecture for creating extensions, developing new extractors or debugging old ones. 
+[This repository](https://github.com/dbpedia/marvin-config) can be used to fork the architecture for creating extensions, developing new extractors or debugging old ones. 
 Fixes and patches will be deployed on the DBpedia servers each month via a fresh `git clone` from the `master` branch of the [DIEF (DBpedia Information Extraction Framework)](https://github.com/dbpedia/extraction-framework/). 
 
 ## Contributions & License
@@ -15,7 +15,7 @@ Implementation note: the scripts creates a folder `marvin-extraction` where the 
 
 ```
 # check out this repo with all config files
-git clone https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config
+git clone https://github.com/dbpedia/marvin-config
 cd marvin-config
 
 
@@ -78,7 +78,7 @@ If you want to adapt some paths you can edit them inside `fucntions.sh`.
 ./marvin-extraction-run.sh
 ```
 ### Post-Processing
-Some extractions require postprocessing. The exact setup can be found in [functions.sh](https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config/-/blob/master/functions.sh#L41)
+Some extractions require postprocessing. The exact setup can be found in [functions.sh](https://github.com/dbpedia/marvin-config/blob/35b1b6d5b85ca0e8d47bdf0dcd27356eca797483/functions.sh#L41)
 More info about [post-processing](http://dev.dbpedia.org/Post-Processing).
 
 ## Deploy MARVIN on Databus

@@ -60,7 +60,7 @@ For more technical information on how these datasets were generated, please visi
     <databus.license>http://purl.oclc.org/NET/rdflicense/cc-by3.0</databus.license>
     <databus.codeReference>https://github.com/dbpedia/extraction-framework/blob/master/core/src/main/scala/org/dbpedia/extraction/mappings/MappingExtractor.scala</databus.codeReference>
     <databus.issueTracker>https://github.com/dbpedia/extraction-framework/issues</databus.issueTracker>
-    <databus.documentationLocation>https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config/-/tree/master/databus-poms/dbpedia/${project.groupId}/${project.artifactId}</databus.documentationLocation>
+    <databus.documentationLocation>https://github.com/dbpedia/marvin-config/tree/master/databus-poms/dbpedia/${project.groupId}/${project.artifactId}</databus.documentationLocation>
     <databus.downloadUrlPath>https://downloads.dbpedia.org/repo/dbpedia/${project.groupId}/${project.artifactId}/${project.version}/</databus.downloadUrlPath>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <databus.packageDirectory>${project.build.directory}/databus/repo/dbpedia/${project.groupId}/${project.artifactId}</databus.packageDirectory>

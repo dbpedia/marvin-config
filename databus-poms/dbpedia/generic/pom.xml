@@ -39,7 +39,7 @@
     <properties>
         <databus.codeReference>https://github.com/dbpedia/extraction-framework/blob/master/core/src/main/scala/org/dbpedia/extraction/mappings/</databus.codeReference>
         <databus.issueTracker>https://github.com/dbpedia/extraction-framework/issues</databus.issueTracker>
-        <databus.documentationLocation>https://git.informatik.uni-leipzig.de/dbpedia-assoc/marvin-config/-/tree/master/databus-poms/dbpedia/${project.groupId}/${project.artifactId}</databus.documentationLocation>
+        <databus.documentationLocation>https://github.com/dbpedia/marvin-config/tree/master/databus-poms/dbpedia/${project.groupId}/${project.artifactId}</databus.documentationLocation>
         <databus.feedbackChannel>https://forum.dbpedia.org/c/data/databus/14</databus.feedbackChannel>
         <databus.tryVersionAsIssuedDate>true</databus.tryVersionAsIssuedDate>
         <databus.packageDirectory>${project.build.directory}/databus/repo/dbpedia/${project.groupId}/${project.artifactId}</databus.packageDirectory>
