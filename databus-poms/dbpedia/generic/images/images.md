@@ -23,7 +23,7 @@ Examples of triples:
 ​
 ```
 
-Property `dbo:thumbnail` is applied only for the first image. Other properties like `foaf:depiction`, `rdf:type`, `dc:rights`, `foaf:thumbnail`  are applied for all images from the page.
+Property `dbo:thumbnail` is applied only for the first image from the wikipage. Other properties like `foaf:depiction`, `rdf:type`, `dc:rights`, `foaf:thumbnail`  are applied for all images from the page.
 
 
 ### Changelog
